@@ -1,0 +1,90 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="kieronqtran (generated)" id="1510839667236-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-2">
+        <createTable tableName="answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="answerPK"/>
+            </column>
+            <column name="content" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_correct_answer" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="question_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-3">
+        <createTable tableName="question">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="questionPK"/>
+            </column>
+            <column name="content" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="test_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-4">
+        <createTable tableName="result">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="resultPK"/>
+            </column>
+            <column name="numberOfCorrectAnswer" type="INT"/>
+            <column name="test_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-5">
+        <createTable tableName="test">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="size" type="INT"/>
+            <column name="test_time" type="BIGINT"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-6">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="usersPK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="password_hash" type="VARCHAR(60)"/>
+            <column name="phone" type="VARCHAR(15)"/>
+            <column name="role" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-7">
+        <addPrimaryKey columnNames="id" constraintName="testPK" tableName="test"/>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-8">
+        <addUniqueConstraint columnNames="email" constraintName="UC_USERSEMAIL_COL" tableName="users"/>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-9">
+        <addForeignKeyConstraint baseColumnNames="question_id" baseTableName="answer" constraintName="FK8frr4bcabmmeyyu60qt7iiblo" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="question"/>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-10">
+        <addForeignKeyConstraint baseColumnNames="test_id" baseTableName="question" constraintName="FK8hejcpbbiq1qje11346akp3uj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="test"/>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-11">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="result" constraintName="FKkfepddltqde0pif3dlrqaupss" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users"/>
+    </changeSet>
+    <changeSet author="kieronqtran (generated)" id="1510839667236-12">
+        <addForeignKeyConstraint baseColumnNames="test_id" baseTableName="result" constraintName="FKsyvhlvlv6k1d4gkqvu12rha0j" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="test"/>
+    </changeSet>
+</databaseChangeLog>

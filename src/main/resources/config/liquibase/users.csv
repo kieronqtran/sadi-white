@@ -1,0 +1,6 @@
+id;email;password_hash;first_name;last_name;phone;role
+1;admin@localhost;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;6538941938;ROLE_ADMIN
+2;user@localhost;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;1798952603;ROLE_USER
+3;isummerley0@reuters.com;$2y$10$0zVqxgY/mPe6H8jpvcbf0O60geI410dEa7bY5fYfaZETqcmHKj8YK;Ike;Summerley;6524163566;ROLE_USER
+4;roloinn1@dyndns.org;$2y$10$n1o75Dk.R5yoXXnvTwnxceCdK6SSQb8krXMLjSoLOTiAaOq/jlPpW;Rosalinda;O'Loinn;8379858799;ROLE_USER
+5;mogriffin2@utexas.edu;$2y$10$8H3Gc1in2cwhVLflP1lNuOxI3WLvduPxR7T0UVFMsjYKKC5UkwenG;Marvin;O'Griffin;1499598492;ROLE_USER
