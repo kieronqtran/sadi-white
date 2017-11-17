@@ -29,9 +29,9 @@ public class HelloWorldController {
                 .stream(this.userRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
     }
-
-    @GetMapping("/user/${firstName}")
-    public User getUserByEmail(@PathVariable() String firstName) {
-        return userRepository.findUserByFirstName(firstName);
-    }
+//
+//    @GetMapping("/user/${firstName}")
+//    public User getUserByEmail(@PathVariable() String firstName) {
+//        return userRepository.findUserByFirstName(firstName);
+//    }
 }
