@@ -4,6 +4,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import sadi.whitegroup.assignment1.entity.User;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends CrudRepository<User,Long> {
+    User findByEmail(String email);
+    User findUserByFirstName(String firstName);
 }

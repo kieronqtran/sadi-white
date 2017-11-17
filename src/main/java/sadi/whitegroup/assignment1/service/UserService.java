@@ -1,5 +1,6 @@
 package sadi.whitegroup.assignment1.service;
 
+import liquibase.util.StreamUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,6 +11,7 @@ import sadi.whitegroup.assignment1.repository.UserRepository;
 import sadi.whitegroup.assignment1.security.Role;
 
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -23,6 +25,10 @@ public class UserService {
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<User> getAllUsers() {
+        return (List<User>) userRepository.findAll();
     }
 
     public User registerUser(ManagedUserDTO userDTO) {

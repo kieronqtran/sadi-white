@@ -2,6 +2,7 @@ package sadi.whitegroup.assignment1.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sadi.whitegroup.assignment1.entity.User;
@@ -27,5 +28,10 @@ public class HelloWorldController {
         return StreamSupport
                 .stream(this.userRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/user/${firstName}")
+    public User getUserByEmail(@PathVariable() String firstName) {
+        return userRepository.findUserByFirstName(firstName);
     }
 }

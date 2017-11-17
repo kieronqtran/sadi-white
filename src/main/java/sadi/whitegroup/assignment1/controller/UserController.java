@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import sadi.whitegroup.assignment1.controller.dto.ManagedUserDTO;
 import sadi.whitegroup.assignment1.controller.dto.UserDTO;
+import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.service.UserService;
 
 import javax.validation.Valid;
@@ -19,10 +20,10 @@ public class UserController {
     }
 
 //
-//    @RequestMapping(path = "/user", method = RequestMethod.GET)
-//    public List<UserDTO> getAllUser() {
-//        return userService.getAllUsers();
-//    }
+    @RequestMapping(path = "/user", method = RequestMethod.GET)
+    public List<User> getAllUser() {
+        return userService.getAllUsers();
+    }
 
     //Create a new User
 //    @RequestMapping(path = "/", method = RequestMethod.POST)
