@@ -28,20 +28,14 @@ import java.util.stream.Stream;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private UserDetailsService userDetailsService;
+    @Autowired
+	private UserDetailsService userDetailsService;
 
     @Autowired
     private DataSource dataSource;
-
-    /**
-     * Creates an instance with the default configuration enabled.
-     */
-    public SecurityConfiguration(UserDetailsService userDetailsService) {
-        super();
-        this.userDetailsService = userDetailsService;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -70,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password("admin")
                 .roles("ADMIN");
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select email,password, true as enabled from \"user\" where  email=?");
+                .usersByUsernameQuery("select email, password, role from \"user\" where  email=?");
     }
 
     @Override
