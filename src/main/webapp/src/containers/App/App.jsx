@@ -5,11 +5,14 @@ import {
     Redirect
 } from 'react-router-dom';
 
+import { connect } from 'react-redux'
+
+import { signUP } from "../../actions/order-actions";
+
 import Sidebar from 'components/Sidebar/Sidebar';
-
 import {style} from "variables/Variables.jsx";
-
 import appRoutes from 'routes/app.jsx';
+
 
 class App extends Component {
     constructor(props){
@@ -30,14 +33,9 @@ class App extends Component {
         alert(info.email + " - " + info.password);
     }
 
-    startSignup(info){
-        alert(info.firstname + " - " + info.lastname + " - " +
-            info.email + " - " + info.password);
-    }
-
     render() {
+        const { dispatch } = this.props
         return (
-
                 <div className="wrapper">
                     <Sidebar {...this.props} />
                     <div id="main-panel" className="main-panel">
@@ -64,7 +62,7 @@ class App extends Component {
                                                     render={routeProps =>
                                                         <prop.component
                                                             {...routeProps}
-                                                            handleSignup={(info) => this.startSignup(info)}
+                                                            handleSignup={(info) => dispatch(signUP(info))}
                                                         />}
                                                 />
                                             );
@@ -84,4 +82,10 @@ class App extends Component {
     }
 }
 
-export default App;
+function mapStateToProps(centralState) {
+    return {
+        signUpUser: centralState.userReducer
+    }
+}
+
+export default connect(mapStateToProps)(App);
