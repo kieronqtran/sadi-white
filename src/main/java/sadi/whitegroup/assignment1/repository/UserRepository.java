@@ -6,4 +6,5 @@ import sadi.whitegroup.assignment1.entity.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User,Long> {
+   User findByEmail(String email);
 }

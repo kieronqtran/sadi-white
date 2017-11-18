@@ -34,7 +34,8 @@ class Signup extends Component {
             firstname : '',
             lastname : '',
             email : '',
-            password : ''
+            password : '',
+            phone: ''
         }
 
         this.state = signup;
@@ -114,6 +115,21 @@ class Signup extends Component {
                                             ]}
                                         />
 
+                                        <FormInputs
+                                            ncols = {["col-md-12" ]}
+                                            proprieties = {[
+
+                                                {
+                                                    label : "Phone",
+                                                    name : "phone",
+                                                    type : "text",
+                                                    bsClass : "form-control",
+                                                    placeholder : "Phone",
+                                                    value : this.state.phone,
+                                                    onChange : this.handleChanges.bind(this)
+                                                }
+                                            ]}
+                                        />
                                         <Button
                                             color="#123456"
                                             bsStyle="info"

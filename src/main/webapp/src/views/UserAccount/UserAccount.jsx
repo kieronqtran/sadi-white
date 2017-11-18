@@ -29,13 +29,15 @@ class UserAccount extends Component {
                                                     label : "First Name",
                                                     type : "text",
                                                     bsClass : "form-control",
-                                                    placeholder : "First Name"
+                                                    placeholder : "First Name",
+                                                    value : this.props.firstname
                                                 },
                                                 {
                                                     label : "Last Name",
                                                     type : "text",
                                                     bsClass : "form-control",
-                                                    placeholder : "Last Name"
+                                                    placeholder : "Last Name",
+                                                    value : this.props.lastname
                                                 }
                                             ]}
                                         />
@@ -46,13 +48,15 @@ class UserAccount extends Component {
                                                  label : "Email address",
                                                  type : "email",
                                                  bsClass : "form-control",
-                                                 placeholder : "Email"
+                                                 placeholder : "Email",
+                                                    value: this.props.email
                                                 },
                                                 {
                                                  label : "Phone",
                                                  type : "text",
                                                  bsClass : "form-control",
-                                                 placeholder : "Phone"
+                                                 placeholder : "Phone",
+                                                    value: this.props.phone
                                                 }
                                             ]}
                                         />
@@ -63,7 +67,8 @@ class UserAccount extends Component {
                                                     label : "Password",
                                                     type : "text",
                                                     bsClass : "form-control",
-                                                    placeholder : "Password"
+                                                    placeholder : "Password",
+                                                    value : this.props.password
                                                 }
                                             ]}
                                         />

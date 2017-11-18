@@ -15,7 +15,6 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/api")
 public class HelloWorldController {
 
-
     private final UserRepository userRepository;
 
     public HelloWorldController(UserRepository userRepository) {

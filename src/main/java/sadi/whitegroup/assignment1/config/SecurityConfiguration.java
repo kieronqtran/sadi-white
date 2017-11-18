@@ -3,21 +3,30 @@ package sadi.whitegroup.assignment1.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import sadi.whitegroup.assignment1.service.AppUserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import sadi.whitegroup.assignment1.security.JWTAuthenticationFilter;
+import sadi.whitegroup.assignment1.security.JWTLoginFilter;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private AuthenticationManagerBuilder authenticationManagerBuilder;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    private DataSource dataSource;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -26,14 +35,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.inMemoryAuthentication()
+                .withUser("Admin")
+                .password("admin")
+                .roles("ROLE_ADMIN");
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select email,password, true as enabled from \"user\" where  email=?")
+                .authoritiesByUsernameQuery("select emai;, 'ROLE_ADMIN' as role from \"user\" where email=?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // missing add  allow Cross Origin for all
-        http
-            .authorizeRequests()
-            .antMatchers("/**").permitAll();
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(
+                        new JWTLoginFilter( "/login",authenticationManager() ),
+                        UsernamePasswordAuthenticationFilter.class
+                )
+                .addFilterBefore(
+                        new JWTAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class
+                );
     }
 }
