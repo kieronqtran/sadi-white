@@ -38,10 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("Admin")
                 .password("admin")
-                .roles("ROLE_ADMIN");
+                .roles("ADMIN");
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select email,password, true as enabled from \"user\" where  email=?")
-                .authoritiesByUsernameQuery("select emai;, 'ROLE_ADMIN' as role from \"user\" where email=?");
+                .usersByUsernameQuery("select email, password, role from \"user\" where  email=?");
     }
 
     @Override
@@ -52,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(
-                        new JWTLoginFilter( "/login",authenticationManager() ),
+                        new JWTLoginFilter( "/login", authenticationManager() ),
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .addFilterBefore(

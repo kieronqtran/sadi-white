@@ -26,6 +26,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
    public Authentication attemptAuthentication(HttpServletRequest req,
                                                HttpServletResponse res)
            throws AuthenticationException, IOException, ServletException {
+
       UserVM userVM = new UserVM(req.getParameter("email"), req.getParameter("password"));
 
       return getAuthenticationManager().authenticate(
@@ -41,8 +42,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
    protected void successfulAuthentication(HttpServletRequest req,
                                            HttpServletResponse res,
                                            FilterChain fchain,
-                                           Authentication authen)
-           throws IOException, ServletException {
+                                           Authentication authen) throws IOException, ServletException {
+
       TokenAuthenticationService.addAuthentication(res, authen.getName());
    }
 }
