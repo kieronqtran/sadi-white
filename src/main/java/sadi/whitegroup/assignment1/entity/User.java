@@ -42,14 +42,23 @@ public class User {
     @Column(name = "phone", length = 15)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 20)
-    private Role role;
+    private String role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Result> resultList = new ArrayList<>();
 
     public User() {
+    }
+
+    public User(String email, String password, String firstName, String lastName, String phone, String role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.role = role;
     }
 
     public Long getId() {
@@ -100,11 +109,11 @@ public class User {
         this.phone = phone;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }

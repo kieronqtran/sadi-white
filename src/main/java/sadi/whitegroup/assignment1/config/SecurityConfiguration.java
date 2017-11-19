@@ -29,13 +29,7 @@ import java.util.stream.Stream;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AuthenticationManagerBuilder authenticationManagerBuilder;
-
-    @Autowired
 	private UserDetailsService userDetailsService;
-
-    @Autowired
-    private DataSource dataSource;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -59,12 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("Admin")
-                .password("admin")
-                .roles("ADMIN");
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select email, password, role from \"user\" where  email=?");
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -74,6 +63,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .csrf().disable().authorizeRequests()
             .antMatchers("/").permitAll()
+            .antMatchers(HttpMethod.GET, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/register").permitAll()
             .antMatchers(HttpMethod.POST, "/login").permitAll()
             .anyRequest().authenticated()
         .and()

@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: assignment1
+
+  devtools:
+      restart:
+          enabled: true
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:test-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username:
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: H2
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        ddl-auto: none
+
+server:
+  port: ${PORT:8080}
+
+liquibase:
+  change-log: classpath:config/liquibase/master.xml
+  enabled: true
+  url: jdbc:h2:mem:test-db
+  user:
+  password:

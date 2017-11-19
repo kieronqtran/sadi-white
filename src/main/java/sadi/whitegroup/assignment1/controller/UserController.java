@@ -1,12 +1,15 @@
 package sadi.whitegroup.assignment1.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import sadi.whitegroup.assignment1.controller.dto.RegisterDTO;
 import sadi.whitegroup.assignment1.controller.dto.UserDTO;
 import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -24,13 +27,15 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/{email}", method = RequestMethod.GET)
-    public User getUser(@PathVariable String email){
-        return userService.findByEmail(email);
+    public UserDTO getUser(@PathVariable String email){
+        return userService.findByEmail(email)
+                .map(UserDTO::new)
+                .orElseThrow(() -> new RuntimeException("User Not Found."));
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccount(@Valid @RequestBody UserDTO userDTO) {
+    public void registerAccount(@RequestBody RegisterDTO userDTO) {
         userService.registerUser(userDTO);
     }
 }

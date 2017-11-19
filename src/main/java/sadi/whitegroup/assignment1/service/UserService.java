@@ -1,17 +1,15 @@
 package sadi.whitegroup.assignment1.service;
 
-import liquibase.util.StreamUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import sadi.whitegroup.assignment1.controller.dto.UserDTO;
+import sadi.whitegroup.assignment1.controller.dto.RegisterDTO;
 import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.repository.UserRepository;
 import sadi.whitegroup.assignment1.security.Role;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 
 @Service
@@ -28,19 +26,19 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User findByEmail(String email){
+    public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
-    public User registerUser(UserDTO userDTO) {
+    public User registerUser(RegisterDTO userDTO) {
         User newUser = new User();
         // new user gets initially a generated password
         newUser.setEmail(userDTO.getEmail());
         newUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        newUser.setFirstName(userDTO.getFirstname());
-        newUser.setLastName(userDTO.getLastname());
+        newUser.setFirstName(userDTO.getFirstName());
+        newUser.setLastName(userDTO.getLastName());
         newUser.setPhone(userDTO.getPhone());
-        newUser.setRole(Role.ROLE_USER);
+        newUser.setRole(Role.ROLE_USER.toString());
 
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
