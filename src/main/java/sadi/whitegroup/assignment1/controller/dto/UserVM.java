@@ -5,7 +5,7 @@ import sadi.whitegroup.assignment1.security.Role;
 
 import javax.validation.constraints.Size;
 
-public class UserVM extends UserDTO {
+public class UserVM extends RegisterDTO {
    public static final int PASSWORD_MIN_LENGTH = 4;
    public static final int PASSWORD_MAX_LENGTH = 100;
 
@@ -21,12 +21,6 @@ public class UserVM extends UserDTO {
       this.email = email;
       this.password = password;
    }
-
-//   public UserVM(Long id, String email, String password, String firstName, String lastName, String phone, Role role) {
-//      super(id, firstName, lastName, phone, role);
-//      this.password = password;
-//      this.email = email;
-//   }
 
    @Override
    public String getEmail() {

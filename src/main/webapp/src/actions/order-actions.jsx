@@ -2,10 +2,10 @@ export function signUP(info){
     return function(dispatch){
         fetch(`/api/signup`, {
             headers: {
-                'Accept': 'application/json, text/plain, */*',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
               },
-            method: 'post', 
+            method: 'POST',
             body: JSON.stringify(info)
         })
         .then((res)=>{
@@ -19,3 +19,5 @@ export function signUP(info){
         })
     }
 }
+
+

@@ -7,8 +7,6 @@ import {
 
 import { connect } from 'react-redux'
 
-import { signUP } from "../../actions/order-actions";
-
 import Sidebar from 'components/Sidebar/Sidebar';
 import {style} from "variables/Variables.jsx";
 import appRoutes from 'routes/app.jsx';
@@ -33,8 +31,12 @@ class App extends Component {
         alert(info.email + " - " + info.password);
     }
 
+    startSignup(info){
+        this.props.signUp(info);
+    }
+
     render() {
-        const { dispatch } = this.props
+        // const { dispatch } = this.props
         return (
                 <div className="wrapper">
                     <Sidebar {...this.props} />
@@ -62,7 +64,7 @@ class App extends Component {
                                                     render={routeProps =>
                                                         <prop.component
                                                             {...routeProps}
-                                                            handleSignup={(info) => dispatch(signUP(info))}
+                                                            handleSignup={(info) => this.startSignup(info)}
                                                         />}
                                                 />
                                             );

@@ -31,8 +31,8 @@ class Signup extends Component {
         super(props);
 
         const signup = {
-            firstname : '',
-            lastname : '',
+            firstName : '',
+            lastName : '',
             email : '',
             password : '',
             phone: ''
@@ -67,20 +67,20 @@ class Signup extends Component {
                                             proprieties = {[
                                                 {
                                                     label : "First Name",
-                                                    name : "firstname",
+                                                    name : "firstName",
                                                     type : "text",
                                                     bsClass : "form-control",
                                                     placeholder : "First Name",
-                                                    value : this.state.firstname,
+                                                    value : this.state.firstName,
                                                     onChange : this.handleChanges.bind(this)
                                                 },
                                                 {
                                                     label : "Last Name",
-                                                    name : 'lastname',
+                                                    name : 'lastName',
                                                     type : "text",
                                                     bsClass : "form-control",
                                                     placeholder : "Last Name",
-                                                    value : this.state.lastname,
+                                                    value : this.state.lastName,
                                                     onChange : this.handleChanges.bind(this)
                                                 }
                                             ]}
