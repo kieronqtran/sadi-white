@@ -33,7 +33,7 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User Not Found."));
     }
 
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/signup", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void registerAccount(@RequestBody RegisterDTO userDTO) {
         userService.registerUser(userDTO);

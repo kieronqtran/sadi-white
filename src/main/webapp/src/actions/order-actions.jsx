@@ -1,6 +1,6 @@
 export function signUP(info){
     return function(dispatch){
-        fetch(`/api/register`, {
+        fetch(`/api/signup`, {
             headers: {
                 'Accept': 'application/json, text/plain, */*',
                 'Content-Type': 'application/json'

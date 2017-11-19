@@ -16,10 +16,21 @@ import './assets/css/demo.css';
 import './assets/css/pe-icon-7-stroke.css';
 
 
+import { createStore, applyMiddleware } from 'redux'
+import combinedReducer from './reducers/reducers.js'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+
+let store = createStore(combinedReducer, applyMiddleware(thunk))
+
 ReactDOM.render((
     <HashRouter>
+        <Provider store={store}>
         <Switch>
+            <App />
             <Route path="/" name="Home" component={App}/>
         </Switch>
+        </Provider>
     </HashRouter>
+
 ),document.getElementById('root'));
