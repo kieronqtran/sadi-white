@@ -32,7 +32,7 @@ public class UserController {
 
     @RequestMapping(path = "/signup", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccount(@RequestBody RegisterDTO userDTO) {
-        userService.registerUser(userDTO);
+    public User registerAccount(@RequestBody RegisterDTO userDTO) {
+        return userService.registerUser(userDTO);
     }
 }

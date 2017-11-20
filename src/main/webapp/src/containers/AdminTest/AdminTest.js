@@ -9,8 +9,8 @@ import {
   OverlayTrigger,
 } from 'react-bootstrap';
 
-import Card from 'components/Card/Card.jsx';
-import { testData } from 'variables/mockData.jsx';
+import Card from 'components/Card/Card';
+import { testData } from 'variables/mockData';
 
 class AdminTest extends Component {
   constructor() {
