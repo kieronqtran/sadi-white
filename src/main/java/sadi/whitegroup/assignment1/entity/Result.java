@@ -25,6 +25,13 @@ public class Result implements Serializable {
     public Result() {
     }
 
+    public Result(Long id, int numberOfCorrectAnswer, User user, Test test){
+        this.id = id;
+        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
+        this.user = user;
+        this.test = test;
+    }
+
     public Long getId() {
         return id;
     }
