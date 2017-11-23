@@ -1,5 +1,8 @@
 import jwtDecode from 'jwt-decode';
 
+export const SIGN_UP_SUCCESSFUL = 'SIGN_UP_SUCCESSFUL';
+export const SIGN_UP_FAILED = 'SIGN_UP_FAILED';
+
 export function signUp(info) {
   return function(dispatch) {
     fetch(`/api/signup`, {
@@ -11,13 +14,16 @@ export function signUp(info) {
       body: JSON.stringify(info),
     })
       .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        dispatch({
-          type: 'SIGN_UP',
-          user: data,
-        });
+        if(res.status === 201) {
+          dispatch({
+            type: SIGN_UP_SUCCESSFUL,
+          });
+        }
+        if(res.status === 500) {
+          dispatch({
+            type: SIGN_UP_FAILED
+          })
+        }
       });
   };
 }
@@ -26,7 +32,7 @@ export const AUTHENTICATED = 'AUTHENTICATED_USER';
 export const UNAUTHENTICATED = 'UNAUTHENTICATED_USER';
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR';
 
-export function signInAction({ email, password }, history) {
+export function signInAction({ email, password }) {
   return async dispatch => {
     fetch('/api/authenticate', {
       headers: {

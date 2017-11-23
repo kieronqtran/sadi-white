@@ -3,29 +3,35 @@ package sadi.whitegroup.assignment1.controller.dto;
 import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.security.Role;
 
-public class RegisterDTO {
+public class UserDTO {
+
     private String email;
-    private String password;
+
     private String firstName;
+
     private String lastName;
+
     private String phone;
+
     private Role role;
 
-    public RegisterDTO() {
+    public UserDTO() {
     }
 
-    public RegisterDTO(String email, String password, String firstName, String lastName, String phone, Role role) {
+    public UserDTO(User user) {
+        this(user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPhone(),
+                Role.valueOf(user.getRole()));
+    }
+
+    public UserDTO(String email, String firstName, String lastName, String phone, Role role) {
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phone = phone;
         this.role = role;
-    }
-
-    public RegisterDTO(User user) {
-        this(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
-                user.getPhone(), Role.valueOf(user.getRole()));
     }
 
     public String getEmail() {
@@ -34,14 +40,6 @@ public class RegisterDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getFirstName() {

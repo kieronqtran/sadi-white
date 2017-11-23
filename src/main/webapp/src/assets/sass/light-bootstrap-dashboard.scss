@@ -42,9 +42,16 @@
   width: 95%;
 }
 
-.login-container {
+.flex-container {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  text-align: center;
+}
+
+.login-container {
+  @extend .flex-container;
+}
+
+.sign-up-container {
+  @extend .flex-container;
 }

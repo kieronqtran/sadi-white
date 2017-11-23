@@ -2,10 +2,8 @@ package sadi.whitegroup.assignment1.service;
 
 import org.springframework.stereotype.Service;
 import sadi.whitegroup.assignment1.controller.dto.TestTypeDTO;
-import sadi.whitegroup.assignment1.entity.Test;
 import sadi.whitegroup.assignment1.repository.TestRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -20,7 +18,7 @@ public class TestService {
 
     public List<TestTypeDTO> getTypes() {
         return StreamSupport.stream(testRepository
-                .findAll().spliterator(),false)
+                .findAll().spliterator(), false)
                 .map(TestTypeDTO::new)
                 .collect(Collectors.toList());
     }

@@ -14,12 +14,15 @@ import {
   FormGroup,
   ControlLabel,
   FormControl,
+  HelpBlock
 } from 'react-bootstrap';
 
 import { Field, reduxForm, propTypes } from 'redux-form';
 
 import { signInAction } from '../../actions/authentication-actions';
 import ReactDOM from 'react-dom'
+import LoginForm from './components/LoginForm'
+
 const renderTextField = ({ input, label, meta: { touched, error }, ...custom }) => {
   let comRef;
   return (
@@ -49,7 +52,7 @@ class Login extends Component {
     this.setState(change);
   }
 
-  submit = values => {
+  submit (values) {
     // this.props.handleLogin(this.state);
     this.props.signInAction(values);
   };
@@ -64,34 +67,10 @@ class Login extends Component {
                 <Card
                   title="Login Profile"
                   content={
-                    <form onSubmit={handleSubmit(this.submit.bind(this))}>
-                      <Field
-                        ncols = {["col-md-12"]}
-                        name="email"
-                        component={renderTextField}
-                        label="Email"
-                        bsClass="form-control"
-                        placeholder="Email"
-                      />
-                      <Field
-                        ncols={["col-md-12"]}
-                        name="password"
-                        component={renderTextField}
-                        type="password"
-                        label="Password"
-                        placeholder="Password"
-                        bsClass="form-control"
-                        />
-                      <Button
-                        bsStyle="info"
-                        pullRight
-                        fill
-                        type="submit"
-                      >
-                        Sign In
-                      </Button>
-                      <div className="clearfix"></div>
-                    </form>
+                    <div>
+                      <LoginForm onSubmit={this.submit.bind(this)}/>
+                      {this.errorMessage && (<HelpBlock>this.errorMessage</HelpBlock>)}
+                    </div>
                   }
                   />
             </Col>
@@ -109,10 +88,6 @@ function mapStateToProps(state) {
   };
 }
 
-const reduxFormSignIn = reduxForm({
-  form: 'login',
-})(Login);
-
 export default withRouter(
-  connect(mapStateToProps, { signInAction })(reduxFormSignIn)
+  connect(mapStateToProps, { signInAction })(Login)
 );

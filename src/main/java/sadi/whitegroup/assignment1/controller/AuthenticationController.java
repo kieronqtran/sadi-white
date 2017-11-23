@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import sadi.whitegroup.assignment1.controller.dto.LoginDTO;
-import sadi.whitegroup.assignment1.security.TokenProvider;
+import sadi.whitegroup.assignment1.security.jwt.TokenProvider;
 
 @RestController
 @RequestMapping("/api")

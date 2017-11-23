@@ -2,6 +2,7 @@ package sadi.whitegroup.assignment1.controller.dto;
 
 
 public class LoginDTO {
+
     private String email;
     private String password;
 

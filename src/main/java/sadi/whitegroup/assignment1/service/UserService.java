@@ -4,13 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sadi.whitegroup.assignment1.controller.dto.RegisterDTO;
 import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.repository.UserRepository;
 import sadi.whitegroup.assignment1.security.Role;
+import sadi.whitegroup.assignment1.security.SecurityUtils;
 
 import java.util.Optional;
-import javax.transaction.Transactional;
 
 @Service
 @Transactional
@@ -26,8 +27,12 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> findByEmail(String email){
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public Optional<User> findByEmailWithResults(String email) {
+        return this.userRepository.findOneWithResultByEmail(email);
     }
 
     public User registerUser(RegisterDTO userDTO) {
@@ -45,7 +50,7 @@ public class UserService {
         return newUser;
     }
 
-    public User updateUser(User user){
+    public User updateUser(User user) {
         User found_user = userRepository.findOne(user.getId());
         found_user.setEmail(user.getEmail());
         found_user.setPassword(user.getPassword());
@@ -53,5 +58,15 @@ public class UserService {
         found_user.setLastName(user.getLastName());
         found_user.setPhone(user.getPhone());
         return found_user;
+    }
+
+    public User getCurrentUser() {
+        return userRepository
+                .findByEmail(SecurityUtils.getCurrentUserLogin())
+                .orElse(null);
+    }
+
+    public void deleteUser(Long id) {
+        this.userRepository.delete(id);
     }
 }

@@ -9,26 +9,16 @@ import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.test.util.ReflectionTestUtils;
-import sadi.whitegroup.assignment1.service.TokenAuthenticationService;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.Collections;
 import java.util.Date;
 
 public class JWTFilterTest {
 
-    private JWTAuthenticationFilter jwtFilter = new JWTAuthenticationFilter();
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    private TokenAuthenticationService tokenAuthenticationService = new TokenAuthenticationService();
 
     @Before
     public void setUp() {
@@ -47,7 +37,7 @@ public class JWTFilterTest {
         request.setRequestURI("/api/test");
         MockHttpServletResponse response = new MockHttpServletResponse();
         MockFilterChain filterChain = new MockFilterChain();
-        jwtFilter.doFilter(request, response, filterChain);
+//        jwtFilter.doFilter(request, response, filterChain);
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(SecurityContextHolder.getContext().getAuthentication().getName()).isEqualTo("test-user");
         assertThat(SecurityContextHolder.getContext().getAuthentication().getCredentials().toString()).isEqualTo(jwt);
