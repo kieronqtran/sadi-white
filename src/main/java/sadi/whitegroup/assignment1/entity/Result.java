@@ -12,7 +12,8 @@ public class Result implements Serializable {
     private Long id;
 
     @Column
-    private int numberOfCorrectAnswer;
+    private
+    int numberOfCorrectAnswer;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
@@ -23,6 +24,13 @@ public class Result implements Serializable {
     private Test test;
 
     public Result() {
+    }
+
+    public Result(Long id, int numberOfCorrectAnswer, User user, Test test){
+        this.id = id;
+        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
+        this.user = user;
+        this.test = test;
     }
 
     public Long getId() {
