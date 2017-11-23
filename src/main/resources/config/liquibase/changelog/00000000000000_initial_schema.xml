@@ -1,15 +1,15 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <property dbms="postgresql" name="ROLE_ENUM" value="user_role"/>
-    <property dbms="h2" name="ROLE_ENUM" value="VARCHAR(20)"/>
+    <!--<property dbms="postgresql" name="ROLE_ENUM" value="user_role"/>-->
+    <!--<property dbms="h2" name="ROLE_ENUM" value="VARCHAR(20)"/>-->
 
     <changeSet author="whitegroup" id="1510839667236-1">
         <createSequence sequenceName="hibernate_sequence"/>
-        <sql dbms="postgresql">
-            DROP TYPE IF EXISTS user_role;
-            CREATE TYPE user_role AS ENUM ('ROLE_ADMIN', 'ROLE_USER');
-        </sql>
+        <!--<sql dbms="postgresql">-->
+            <!--DROP TYPE IF EXISTS user_role;-->
+            <!--CREATE TYPE user_role AS ENUM ('ROLE_ADMIN', 'ROLE_USER');-->
+        <!--</sql>-->
 
         <createTable tableName="users">
             <column autoIncrement="true" name="id" type="BIGINT">
@@ -30,7 +30,7 @@
             <column name="phone" type="VARCHAR(15)">
                 <constraints nullable="false"/>
             </column>
-            <column name="role" type="${ROLE_ENUM}">
+            <column name="role" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -38,6 +38,12 @@
         <addUniqueConstraint columnNames="email"
                              constraintName="UC_USER_EMAIL"
                              tableName="users"/>
+
+        <createIndex indexName="idx_user_email"
+                     tableName="users"
+                     unique="true">
+            <column name="email" type="VARCHAR(255)"/>
+        </createIndex>
 
         <createTable tableName="test">
             <column name="id" type="BIGINT">
@@ -82,7 +88,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="pk_result"/>
             </column>
-            <column name="numberOfCorrectAnswer" type="INT"/>
+            <column name="number_of_correct_answer" type="INT"/>
             <column name="test_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -131,6 +137,30 @@
                   file="config/liquibase/users.csv"
                   separator=";"
                   tableName="users">
+        </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/test.csv"
+                  separator=";"
+                  tableName="test">
+        </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/question.csv"
+                  separator=";"
+                  tableName="question">
+        </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/answer.csv"
+                  separator=";"
+                  tableName="answer">
+        </loadData>
+
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/result.csv"
+                  separator=";"
+                  tableName="result">
         </loadData>
 
     </changeSet>

@@ -1,0 +1,19 @@
+   version: "2"
+   services:
+     web:
+       image: assignmnent1-web
+       build: .
+       ports:
+        - 8080:8080
+       links:
+        - postgres-db
+       environment:
+        - SPRING_PROFILES_ACTIVE=prod
+        - DATABASE_URL=jdbc:postgresql://postgres-db:5432/assignment1-db
+        - DATABASE_USERNAME=assignment1-db
+        - DATABASE_PASSWORD=
+     postgres-db:
+       image: postgres:9.6-alpine
+       environment:
+        - POSTGRES_USER=assignment1-db
+        - POSTGRES_PASSWORD=

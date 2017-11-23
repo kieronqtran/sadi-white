@@ -1,14 +1,16 @@
 package sadi.whitegroup.assignment1.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Email;
-import sadi.whitegroup.assignment1.security.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users", schema = "public")
@@ -29,7 +31,7 @@ public class User {
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash",length = 60)
+    @Column(name = "password_hash", length = 60)
     private String password;
 
     @Size(max = 50)
@@ -42,14 +44,23 @@ public class User {
     @Column(name = "phone", length = 15)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
+    //    @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 20)
-    private Role role;
+    private String role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Result> resultList = new ArrayList<>();
 
     public User() {
+    }
+
+    public User(String email, String password, String firstName, String lastName, String phone, String role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.role = role;
     }
 
     public Long getId() {
@@ -100,11 +111,19 @@ public class User {
         this.phone = phone;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public List<Result> getResultList() {
+        return resultList;
+    }
+
+    public void setResultList(List<Result> resultList) {
+        this.resultList = resultList;
     }
 }

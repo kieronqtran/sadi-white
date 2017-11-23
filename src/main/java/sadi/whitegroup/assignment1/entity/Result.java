@@ -11,9 +11,8 @@ public class Result implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column
-    private
-    int numberOfCorrectAnswer;
+    @Column(name = "number_of_correct_answer")
+    private int numberOfCorrectAnswer;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)

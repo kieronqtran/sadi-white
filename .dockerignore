@@ -1,0 +1,5 @@
+.idea/
+.classpath/
+src/main/webapp/node_modules/
+src/main/webapp/build/
+*.iml

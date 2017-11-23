@@ -1,37 +1,21 @@
-import { combineReducers } from 'redux'
-function orderReducer(state = [], action){
-  switch(action.type){
-    case 'FETCH_ORDER_SUCCESS':
-      state = action.orders
-      return state
-    case 'DELETE_ORDER':
-      var newOrders = state.filter(order=>{
-        return order.id!=action.id
-      })
-      return newOrders
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+import authReducer from './auth';
 
-    case 'ADD_ORDER_SUCCESS':
-      var newOrders = [...state, action.order] 
-      return newOrders;
+function userReducer(state = {}, action) {
+  switch (action.type) {
+    case 'SIGN_UP':
+      state = action.user;
+      return state;
     default:
-      return state
-  }
-}
-
-
-function editedOrderReducer(state = {}, action){
-  switch(action.type){
-    case 'EDIT_ORDER_SUCCESS':
-      return action.editedOrder
-    case 'ADDNEW_ORDER':
-      return initialEditedOrder
-    default: 
-      return state
+      return state;
   }
 }
 
 const combinedReducer = combineReducers({
-   orderReducer, editedOrderReducer
-})
+  userReducer,
+  form: formReducer,
+  auth: authReducer,
+});
 
-export default combinedReducer
+export default combinedReducer;

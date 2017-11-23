@@ -24,7 +24,7 @@ public class DatabaseConfiguration {
     private Environment env;
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory(DataSource dataSource){
+    public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setPackagesToScan("model");
         sessionFactoryBean.setDataSource(dataSource);

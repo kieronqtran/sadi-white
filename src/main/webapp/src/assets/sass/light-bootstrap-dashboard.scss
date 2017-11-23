@@ -41,3 +41,17 @@
 .custom-modal {
   width: 95%;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.login-container {
+  @extend .flex-container;
+}
+
+.sign-up-container {
+  @extend .flex-container;
+}

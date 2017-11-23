@@ -9,7 +9,6 @@ import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.Test;
 import sadi.whitegroup.assignment1.repository.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -29,7 +28,7 @@ public class TestService {
 
     public List<TestTypeDTO> getTypes() {
         return StreamSupport.stream(testRepository
-                .findAll().spliterator(),false)
+                .findAll().spliterator(), false)
                 .map(TestTypeDTO::new)
                 .collect(Collectors.toList());
     }
