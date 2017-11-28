@@ -46,7 +46,7 @@ class UserAccount extends Component {
                       ]}
                     />
                     <FormInputs
-                      ncols={['col-md-7', 'col-md-5']}
+                      ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
                         {
                           label: 'Email address',
