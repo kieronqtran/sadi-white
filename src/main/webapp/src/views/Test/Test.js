@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Alert } from 'react-bootstrap';
-import Button from 'elements/CustomButton/CustomButton';
-import Card from 'components/Card/Card';
+import { Grid, Row, Col, Table } from 'react-bootstrap';
 
-class Test extends Component {
+import Card from 'components/Card/Card'
+import { testSample, testTh } from 'variables/mockData.js';
+
+class TestList extends Component {
+
   render() {
     return (
       <div className="content">
@@ -11,110 +13,46 @@ class Test extends Component {
           <Row>
             <Col md={12}>
               <Card
-                title="**Test Time**"
-                category="**Total Mark**"
-                content={
-                  <div>
-                    <div>
-                      <h1>
-                        <b>Test Name</b>
-                      </h1>
-                      <div className="place-buttons">
-                        <Col md={10} mdOffset={1}>
-                          <Button bsStyle="Success" block>
-                            Start
-                          </Button>
-                        </Col>
-                      </div>
-                    </div>
-
-                    <div className="typo-line">
-                      <h2>Question 1</h2>
-                      <div className="places-buttons">
-                        <Row>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="default" block>
-                              Answer 1
-                            </Button>
-                          </Col>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="info" block>
-                              Answer 2
-                            </Button>
-                          </Col>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="default" block>
-                              Answer 3
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-
-                    <div className="typo-line">
-                      <h2>Question 2</h2>
-                      <div className="places-buttons">
-                        <Row>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="default" block>
-                              Answer 1
-                            </Button>
-                          </Col>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="default" block>
-                              Answer 2
-                            </Button>
-                          </Col>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="info" block>
-                              Answer 3
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-
-                    <div className="typo-line">
-                      <h2>Question 3</h2>
-                      <div className="places-buttons">
-                        <Row>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="info" block>
-                              Answer 1
-                            </Button>
-                          </Col>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="default" block>
-                              Answer 2
-                            </Button>
-                          </Col>
-                          <Col md={11} className="text-center">
-                            <Button bsStyle="default" block>
-                              Answer 3
-                            </Button>
-                          </Col>
-                        </Row>
-                      </div>
-                    </div>
-
-                    <div className="place-buttons">
-                      <Row>
-                        <Col md={4} mdPush={8}>
-                          <Button bsStyle="Success" block fill>
-                            Submit
-                          </Button>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
+                title="List of Test"
+                ctTableFullWidth ctTableResponsive
+                content = {
+                  <Table class="table" striped hover>
+                    <thead>
+                      <tr>
+                        {
+                          testTh.map((prop, key) => {
+                              return (
+                                  <th key = {key}>{prop}</th>
+                              );
+                          })
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        testSample.map((prop, key) => {
+                          const testUrl = "#/takeTest/" + prop.id;
+                          return (
+                            <tr key={key}>
+                              <td>{prop.id}</td>
+                              <td>{prop.name}</td>
+                              <td>{prop.size}</td>
+                              <td>{prop.duration}</td>
+                              <td><a href={testUrl}>Take this test</a></td>
+                            </tr>
+                          )
+                        })
+                      }
+                    </tbody>
+                  </Table>
                 }
               />
             </Col>
           </Row>
-        </Grid>
+          </Grid>
       </div>
     );
   }
 }
 
-export default Test;
+export default TestList;

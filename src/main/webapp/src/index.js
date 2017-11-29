@@ -12,7 +12,6 @@ import './assets/css/demo.css';
 import './assets/css/pe-icon-7-stroke.css';
 
 import { signUp } from 'actions/authentication-actions';
-
 import { createStore, applyMiddleware } from 'redux';
 import combinedReducer from './reducers/reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -39,6 +38,7 @@ ReactDOM.render(
       <Switch>
         <App signUp={info => store.dispatch(signUp(info))} />
         <Route path="/" name="Home" component={App} />
+
       </Switch>
     </Router>
   </Provider>,
