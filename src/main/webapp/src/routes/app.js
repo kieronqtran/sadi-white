@@ -1,16 +1,16 @@
-import UserAccount from 'views/UserAccount/UserAccount';
-import Login from 'views/Login/Login';
-import Signup from '../views/Signup/Signup';
-import Test from 'views/Test/Test';
-import AdminTest from 'containers/AdminTest/AdminTest';
-import TestForm from 'views/Test/TestForm';
+import UserAccount from 'views/UserAccount/UserAccount'
+import Login from 'views/Login/Login'
+import Signup from '../views/Signup/Signup'
+import Test from 'views/Test/Test'
+import AdminTest from 'containers/AdminTest/AdminTest'
+import TestForm from 'views/Test/TestForm'
 
 const appRoutes = [
   {
     path: '/login',
     name: 'Login',
     icon: 'pe-7s-id',
-    component: Login
+    component: Login,
   },
   {
     path: '/signup',
@@ -28,7 +28,7 @@ const appRoutes = [
     path: '/test',
     name: 'Test',
     icon: 'pe-7s-news-paper',
-    component: Test
+    component: Test,
   },
   {
     path: '/takeTest/:testId',
@@ -52,10 +52,8 @@ const appRoutes = [
     redirect: true,
     path: '/',
     to: '/login',
-    name: 'Login'
+    name: 'Login',
   },
+]
 
-
-];
-
-export default appRoutes;
+export default appRoutes

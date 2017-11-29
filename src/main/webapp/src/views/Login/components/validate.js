@@ -1,4 +1,3 @@
-
 const validate = values => {
   const errors = {}
   if (!values.firstName) {
@@ -20,11 +19,11 @@ const validate = values => {
   } else if (values.password !== values.reenter_password) {
     errors.reenter_password = 'Reentered password is not match'
   }
-  // if(!values.phone) {
-  //   errors.phone = 'Required'
-  // } else if (!/^[0-9]$/i.test(values.phone)) {
-  //   errors.phone = 'Invalid phone format'
-  // }
+  if (!values.phone) {
+    errors.phone = 'Required'
+  } else if (!/^[0-9]$/i.test(values.phone)) {
+    errors.phone = 'Invalid phone format'
+  }
   return errors
 }
 

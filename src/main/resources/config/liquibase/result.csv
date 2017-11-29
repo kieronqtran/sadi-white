@@ -1,4 +1,4 @@
-id;number_of_correct_answer;user_id;test_id
+id;number_of_correct_answer;user_id;testing_id
 1;7;3;1
 2;5;3;1
 3;3;4;2

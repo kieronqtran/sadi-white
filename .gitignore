@@ -267,10 +267,6 @@ typings/
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 .history
 
 ### Windows ###
@@ -300,3 +296,5 @@ bower_components/
 *.iml
 src/main/webapp/build/
 src/main/webapp/src/assets/sass/light-bootstrap-dashboard.css
+/src/main/webapp/package-lock.json
+.vscode/settings.json

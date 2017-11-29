@@ -1,58 +1,58 @@
-import React, { Component } from 'react';
-import { Navbar } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Navbar } from 'react-bootstrap'
 
-import HeaderLinks from './HeaderLinks';
+import HeaderLinks from './HeaderLinks'
 
-import appRoutes from 'routes/app';
+import appRoutes from 'routes/app'
 
 class Header extends Component {
   constructor(props) {
-    super(props);
-    this.mobileSidebarToggle = this.mobileSidebarToggle.bind(this);
+    super(props)
+    this.mobileSidebarToggle = this.mobileSidebarToggle.bind(this)
     this.state = {
       sidebarExists: false,
-    };
+    }
   }
   mobileSidebarToggle(e) {
     if (this.state.sidebarExists === false) {
       this.setState({
         sidebarExists: true,
-      });
+      })
     }
-    e.preventDefault();
-    document.documentElement.classList.toggle('nav-open');
-    const node = document.createElement('div');
-    node.id = 'bodyClick';
+    e.preventDefault()
+    document.documentElement.classList.toggle('nav-open')
+    const node = document.createElement('div')
+    node.id = 'bodyClick'
     node.onclick = function() {
-      this.parentElement.removeChild(this);
-      document.documentElement.classList.toggle('nav-open');
-    };
-    document.body.appendChild(node);
+      this.parentElement.removeChild(this)
+      document.documentElement.classList.toggle('nav-open')
+    }
+    document.body.appendChild(node)
   }
   getBrand() {
-    let name;
+    let name
     appRoutes.map((prop, key) => {
       if (prop.collapse) {
         prop.views.map((prop, key) => {
           if (prop.path === this.props.location.pathname) {
-            name = prop.name;
+            name = prop.name
           }
-          return null;
-        });
+          return null
+        })
       } else {
         if (prop.redirect) {
           if (prop.path === this.props.location.pathname) {
-            name = prop.name;
+            name = prop.name
           }
         } else {
           if (prop.path === this.props.location.pathname) {
-            name = prop.name;
+            name = prop.name
           }
         }
       }
-      return null;
-    });
-    return name;
+      return null
+    })
+    return name
   }
   render() {
     return (
@@ -67,8 +67,8 @@ class Header extends Component {
           <HeaderLinks />
         </Navbar.Collapse>
       </Navbar>
-    );
+    )
   }
 }
 
-export default Header;
+export default Header

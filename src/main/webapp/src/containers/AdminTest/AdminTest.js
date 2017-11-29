@@ -1,52 +1,79 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
-  Grid, Row, Col, Table, Button, Modal, OverlayTrigger, Tab, Nav, NavItem, FormGroup, Radio, FormControl, ControlLabel, InputGroup
-} from 'react-bootstrap';
+  Grid,
+  Row,
+  Col,
+  Table,
+  Button,
+  Modal,
+  OverlayTrigger,
+  Tab,
+  Nav,
+  NavItem,
+  FormGroup,
+  Radio,
+  FormControl,
+  ControlLabel,
+  InputGroup,
+} from 'react-bootstrap'
 
-import Card from 'components/Card/Card';
-import { testData } from 'variables/mockData';
-import CustomButton from "../../elements/CustomButton/CustomButton";
+import Card from 'components/Card/Card'
+import { testData } from 'variables/mockData'
+import CustomButton from '../../elements/CustomButton/CustomButton'
 
-import ModalNewTest from './ModalNewTest';
+import ModalNewTest from './ModalNewTest'
 
 class AdminTest extends Component {
   constructor() {
-    super();
-    this.thArray = ['ID', 'Name', 'Size', 'Duration', 'Edit'];
+    super()
+    this.thArray = ['ID', 'Name', 'Size', 'Duration', 'Edit']
 
     this.state = {
       showModalNew: false,
       showModalEdit: false,
-        questions: [
-            {content: 'Hello?', answer:[{content: "this is false", isCorrect: true}, {content: "this is true", isCorrect: false}]},
-            {content: 'How are you?', answer:[{content: "this is false", isCorrect: true}, {content: "this is true", isCorrect: false}]}
-        ],
-        testData: testData,
-        sizeValue: 0
-    };
+      questions: [
+        {
+          content: 'Hello?',
+          answer: [
+            { content: 'this is false', isCorrect: true },
+            { content: 'this is true', isCorrect: false },
+          ],
+        },
+        {
+          content: 'How are you?',
+          answer: [
+            { content: 'this is false', isCorrect: true },
+            { content: 'this is true', isCorrect: false },
+          ],
+        },
+      ],
+      testData: testData,
+      sizeValue: 0,
+    }
   }
 
-
   handleChange(event) {
-      this.setState({sizeValue: parseInt(event.target.value)});
+    this.setState({ sizeValue: parseInt(event.target.value) })
   }
 
   onChange(event, question) {
-    const index = this.state.testData[0].questions.findIndex(e => e.id === question.id);
-    this.state.testData[0].questions[index].content = event.target.value;
-    this.setState({testData: this.state.testData})
+    const index = this.state.testData[0].questions.findIndex(
+      e => e.id === question.id,
+    )
+    this.state.testData[0].questions[index].content = event.target.value
+    this.setState({ testData: this.state.testData })
   }
 
   openNew() {
-    this.setState({ showModalNew: true, showModalEdit: false });
+    this.setState({ showModalNew: true, showModalEdit: false })
   }
 
   openEdit() {
-    this.setState({showModalNew: false, showModalEdit: true});
+    this.setState({ showModalNew: false, showModalEdit: true })
   }
 
   close() {
-    this.setState({showModalNew: false, showModalEdit: false});
+    this.setState({ showModalNew: false, showModalEdit: false })
   }
 
   render() {
@@ -58,9 +85,10 @@ class AdminTest extends Component {
               <Card
                 title="Create test"
                 content={
-                  <Button beStyle="primary" onClick={this.openNew.bind(this)} >
+                  <Button beStyle="primary" onClick={this.openNew.bind(this)}>
                     New test
-                  </Button>}
+                  </Button>
+                }
               />
             </Col>
 
@@ -90,7 +118,7 @@ class AdminTest extends Component {
                           <td>
                             <Button
                               bsStyle="primary"
-                              onCLick={this.openEdit.bind(this)}
+                              onClick={this.openEdit.bind(this)}
                             >
                               Edit
                             </Button>
@@ -117,48 +145,58 @@ class AdminTest extends Component {
             <Tab.Container id="left-tabs" defaultActiveKey="1">
               <Row className="clearfix">
                 <Col md={12}>
-                <label>Choose the time duration:{' '}
-                  <input list="duration" name="testDuration" /> minute</label>
-                <datalist id="duration">
-                  <option value="5"/>
-                  <option value="10"/>
-                  <option value="20"/>
-                </datalist>
-               </Col>
+                  <label>
+                    Choose the time duration:{' '}
+                    <input list="duration" name="testDuration" /> minute
+                  </label>
+                  <datalist id="duration">
+                    <option value="5" />
+                    <option value="10" />
+                    <option value="20" />
+                  </datalist>
+                </Col>
                 <Col md={12}>
-                  <label>Choose the number of questions:{' '}
-                   <input list="numQuestion" name="testSize" /> questions</label>
+                  <label>
+                    Choose the number of questions:{' '}
+                    <input list="numQuestion" name="testSize" /> questions
+                  </label>
                   <datalist id="numQuestion">
-                   <option value="5"/>
-                   <option value="10"/>
-                   <option value="15"/>
+                    <option value="5" />
+                    <option value="10" />
+                    <option value="15" />
                   </datalist>
                 </Col>
                 <Col sm={3}>
                   <Nav bsStyle="pills" stacked>
-                      {
-                          this.state.testData[0].questions.map((e, index) => (<NavItem eventKey={(index+1).toString()}>Question{index+1}</NavItem>))
-                      }
+                    {this.state.testData[0].questions.map((e, index) => (
+                      <NavItem eventKey={(index + 1).toString()}>
+                        Question{index + 1}
+                      </NavItem>
+                    ))}
                   </Nav>
                 </Col>
                 <Col sm={9}>
                   <Tab.Content animation>
-
-                      {
-                        this.state.testData[0].questions.map((e, i) =>
-                            <Tab.Pane eventKey={(i+1).toString()}>
-                              <FormGroup>
-                              <ControlLabel>Question</ControlLabel>
-                                <FormControl type="text" value={e.content} onChange={(event) =>this.onChange(event, e)}/>
-                              </FormGroup>
-                            </Tab.Pane>
-                        )
-                      }
+                    {this.state.testData[0].questions.map((e, i) => (
+                      <Tab.Pane eventKey={(i + 1).toString()}>
+                        <FormGroup>
+                          <ControlLabel>Question</ControlLabel>
+                          <FormControl
+                            type="text"
+                            value={e.content}
+                            onChange={event => this.onChange(event, e)}
+                          />
+                        </FormGroup>
+                      </Tab.Pane>
+                    ))}
 
                     <Tab.Pane eventKey="1">
                       <FormGroup>
                         <ControlLabel>Question</ControlLabel>
-                        <FormControl type="text" placeholder="Enter a Question." />
+                        <FormControl
+                          type="text"
+                          placeholder="Enter a Question."
+                        />
                       </FormGroup>
                       <FormGroup>
                         <ControlLabel>Choices</ControlLabel>
@@ -192,18 +230,10 @@ class AdminTest extends Component {
                         </InputGroup>
                       </FormGroup>
                     </Tab.Pane>
-                    <Tab.Pane eventKey="2">
-                      Tab 2 content
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="3">
-                      Tab 3 content
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="4">
-                      Tab 4 content
-                    </Tab.Pane>
-                    <Tab.Pane eventKey="5">
-                      Tab 5 content
-                    </Tab.Pane>
+                    <Tab.Pane eventKey="2">Tab 2 content</Tab.Pane>
+                    <Tab.Pane eventKey="3">Tab 3 content</Tab.Pane>
+                    <Tab.Pane eventKey="4">Tab 4 content</Tab.Pane>
+                    <Tab.Pane eventKey="5">Tab 5 content</Tab.Pane>
                   </Tab.Content>
                 </Col>
               </Row>
@@ -219,8 +249,8 @@ class AdminTest extends Component {
           </Modal.Footer>
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default AdminTest;
+export default AdminTest

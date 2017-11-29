@@ -1,0 +1,11 @@
+version: '2'
+services:
+    assignment1-app:
+        image: assignment1
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://assignment1-postgresql:5432/assignment1
+    assignment1-postgresql:
+        extends:
+            file: postgresql.yml
+            service: assignment1-postgresql

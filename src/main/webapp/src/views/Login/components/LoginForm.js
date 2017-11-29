@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import renderTextField from './renderField'
 import validate from './validate'
 
-import Button from '../../../elements/CustomButton/CustomButton';
+import Button from '../../../elements/CustomButton/CustomButton'
 import { Field, reduxForm } from 'redux-form'
 
 class LoginForm extends Component {
@@ -16,7 +16,7 @@ class LoginForm extends Component {
     return (
       <form onSubmit={handleSubmit}>
         <Field
-          ncols = {["col-md-12"]}
+          ncols={['col-md-12']}
           name="email"
           component={renderTextField}
           label="Email"
@@ -24,7 +24,7 @@ class LoginForm extends Component {
           placeholder="Email"
         />
         <Field
-          ncols={["col-md-12"]}
+          ncols={['col-md-12']}
           name="password"
           component={renderTextField}
           type="password"
@@ -32,24 +32,19 @@ class LoginForm extends Component {
           placeholder="Password"
           bsClass="form-control"
         />
-        <Button
-          bsStyle="primary"
-          pullRight
-          fill
-          type="submit"
-        >
-          Sign In
+        <Button bsStyle="primary" pullRight fill type="submit">
+          Log In
         </Button>
-        <div className="clearfix"></div>
+        <div className="clearfix" />
       </form>
     )
   }
 }
 
 LoginForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 }
 
 export default reduxForm({
   form: 'login',
-})(LoginForm);
+})(LoginForm)
