@@ -5,17 +5,20 @@ import QuestionForm from './components/Question.js';
 
 // import Card from 'components/Card/Card'
 import {testSample} from 'variables/mockData.js'
+console.log(+window.location.href.slice(34));
 
-
+// const testData =
 class TestForm extends Component {
   constructor(props) {
     super(props);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
+    this.answerQuestion = this.answerQuestion.bind(this);
     this.state = {
       currentQuestion: 1,
-      test: testSample,
+      test: testSample.find(e => e.id === +(window.location.href.slice(34))),
       testID : this.props.match.params.testId,
+      answer: {}
     };
   }
   nextQuestion() {
@@ -30,9 +33,22 @@ class TestForm extends Component {
       });
   }
 
+  answerQuestion(questionId, answerId){
+    const temp = this.state.answer;
+    temp[questionId] = answerId;
+    this.setState({
+      answer: temp,
+    });
+    console.log(this.state.answer);
+  }
+
+  submitTest(){
+    const finalResult = {testId: this.state.test.id, answer: this.state.answer};
+    console.log(finalResult);
+  }
+
   render() {
-    console.log("here is the test ID: " + this.props.match.params.testId);
-    console.log(this.props.match.params.testId);
+    const setResult = this.answerQuestion.bind(this);
     const { onSubmit } = this.props;
     const { currentQuestion, test } = this.state;
     return (
@@ -43,13 +59,15 @@ class TestForm extends Component {
             onSubmit={this.nextQuestion}
             test={test}
             currentQuestion={currentQuestion}
+            setResult = {this.answerQuestion.bind(this)}
           />}
         {currentQuestion === test.size &&
           <QuestionForm
             previousQuestion={this.previousQuestion}
-            onSubmit={onSubmit}
+            onSubmit={this.submitTest.bind(this)}
             test={test}
             currentQuestion={currentQuestion}
+            setResult = {setResult}
           />}
       </div>
     );

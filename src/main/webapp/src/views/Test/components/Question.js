@@ -6,15 +6,14 @@ import answerForm from './Answer';
 import Card from 'components/Card/Card'
 
 const QuestionForm = props => {
-  const { handleSubmit, test, currentQuestion, previousQuestion } = props;
-  console.log(currentQuestion);
-  console.log(test);
+  const { handleSubmit, test, currentQuestion, previousQuestion, setResult } = props;
+
   const nameQuestion = "question" + test.questions.find(e => e.id === currentQuestion).id.toString();
-  console.log(nameQuestion);
+
   return (
     <div className="card">
       <div className="header">
-        <h3 className="title text-info">
+        <h3 className="title text-success">
           {test.questions.find(e => e.id === currentQuestion).content}
         </h3>
       </div>
@@ -27,16 +26,19 @@ const QuestionForm = props => {
               <Field
                 key={ans.id}
                 nameQues={nameQuestion}
+                quesId = {currentQuestion}
                 name={nameQuestion}
                 value={ans.id}
                 component={answerForm}
                 label={ans.content}
+                setNewResult={({questionId, answerId}) => (event) => setResult(currentQuestion.toString(), ans.id)}
               />
             )}
           </tbody>
         </table>
         <div>
           {currentQuestion < test.size && <button type="submit" className="btn-fill pull-right btn btn-info"  onClick={handleSubmit}>Next</button>}
+          {currentQuestion === test.size && <button type="submit" className="btn-fill pull-right btn btn-success"  onClick={handleSubmit}>Submit</button>}
           {currentQuestion > 1 && <button type="submit" className="btn-fill pull-right btn btn-warning" onClick={previousQuestion}>Previous</button>}
         </div>
         <div className="clearfix"></div>

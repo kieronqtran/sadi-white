@@ -35,11 +35,11 @@ const testData = [
     ],
   },
   {
-    "id": 1,
+    "id": 2,
     "type": "Information Technology",
     "name": "SADI - Assignment 1",
     "size": 10,
-    "test_time": 600000,
+    "duration": 600000,
     "questions": [
       {
         "id": 1,
@@ -265,7 +265,7 @@ const testData = [
   },
 ];
 
-const testSample =
+const testSample =[
 {
   "id": 1,
     "type": "Information Technology",
@@ -494,6 +494,131 @@ const testSample =
                 ]
               }
             ]
+},
+{
+  "id": 2,
+    "type": "Information Technology",
+      "name": "SADI - Assignment 1",
+        "size": 5,
+          "test_time": 600000,
+            "questions": [
+              {
+                "id": 1,
+                "content": "Question Number 1 - Nemo nam architecto et commodi est.",
+                "answers": [
+                  {
+                    "id": 1,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 2,
+                    "content": "this is true answer.",
+                    "is_correct_answer": true
+                  }
+                ]
+              },
+              {
+                "id": 2,
+                "content": "Question Number 2 - Aut nam odio sit sunt molestiae dolores necessitatibus molestiae.",
+                "answers": [
+                  {
+                    "id": 3,
+                    "content": "this is true answer.",
+                    "is_correct_answer": true
+                  },
+                  {
+                    "id": 4,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 5,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  }
+                ]
+              },
+              {
+                "id": 3,
+                "content": "Question Number 3 - Doloribus nisi quia nostrum nostrum nulla sit.",
+                "answers": [
+                  {
+                    "id": 6,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 7,
+                    "content": "this is true answer.",
+                    "is_correct_answer": true
+                  },
+                  {
+                    "id": 8,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 9,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 10,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  }
+                ]
+              },
+              {
+                "id": 4,
+                "content": "Question Number 4 - Expedita in numquam.",
+                "answers": [
+                  {
+                    "id": 11,
+                    "content": "this is true answer.",
+                    "is_correct_answer": true
+                  },
+                  {
+                    "id": 12,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 13,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  }
+                ]
+              },
+              {
+                "id": 5,
+                "content": "Question Number 5 - Repudiandae sequi et aut non et quisquam.",
+                "answers": [
+                  {
+                    "id": 14,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 15,
+                    "content": "this is true answer.",
+                    "is_correct_answer": true
+                  },
+                  {
+                    "id": 16,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  },
+                  {
+                    "id": 17,
+                    "content": "this is false answer.",
+                    "is_correct_answer": false
+                  }
+                ]
+              },
+            ]
 }
+]
 
 export { testData, testTh, testSample };

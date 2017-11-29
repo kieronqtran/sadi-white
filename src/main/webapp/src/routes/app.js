@@ -32,8 +32,6 @@ const appRoutes = [
   },
   {
     path: '/takeTest',
-    name: 'Take Test',
-    icon: 'pe-7s-news-paper',
     component: TestForm,
   },
   {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
 
 import Card from 'components/Card/Card'
-import { testData, testTh } from 'variables/mockData.js';
+import { testSample, testTh } from 'variables/mockData.js';
 
 class TestList extends Component {
 
@@ -30,7 +30,7 @@ class TestList extends Component {
                     </thead>
                     <tbody>
                       {
-                        testData.map((prop, key) => {
+                        testSample.map((prop, key) => {
                           const testUrl = "#/takeTest/" + prop.id;
                           return (
                             <tr key={key}>
