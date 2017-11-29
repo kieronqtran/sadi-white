@@ -31,7 +31,7 @@ const appRoutes = [
     component: Test
   },
   {
-    path: '/takeTest',
+    path: '/takeTest/:testId',
     component: TestForm,
   },
   // {
