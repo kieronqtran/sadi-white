@@ -31,15 +31,8 @@ const appRoutes = [
     component: Test
   },
   {
-    path: '/takeTest',
+    path: '/takeTest/:testId',
     component: TestForm,
-  },
-  {
-    redirect: true,
-    from: "/test",
-    to: '/takeTest/:testId',
-    component: TestForm,
-    name: "Taking Test"
   },
   {
     path: '/admintest',

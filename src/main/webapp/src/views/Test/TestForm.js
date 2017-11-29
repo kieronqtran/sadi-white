@@ -2,21 +2,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import QuestionForm from './components/Question.js';
-
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 // import Card from 'components/Card/Card'
 import {testSample} from 'variables/mockData.js'
-console.log(+window.location.href.slice(34));
+
 
 // const testData =
 class TestForm extends Component {
   constructor(props) {
     super(props);
+    console.log(window.location.href.slice(33));
+    console.log(props.match.params.testId);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
     this.state = {
       currentQuestion: 1,
-      test: testSample.find(e => e.id === +(window.location.href.slice(34))),
+      test: testSample.find(e => e.id === +props.match.params.testId),
       testID : this.props.match.params.testId,
       answer: {}
     };
