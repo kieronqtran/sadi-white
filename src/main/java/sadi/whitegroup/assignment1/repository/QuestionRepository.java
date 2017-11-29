@@ -1,12 +1,14 @@
 package sadi.whitegroup.assignment1.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import sadi.whitegroup.assignment1.entity.Question;
 
+
 /**
- * Created by 전소연 on 11/17/2017.
+ * Spring Data JPA repository for the Question entity.
  */
 @Repository
-public interface QuestionRepository extends CrudRepository<Question, Long>{
+public interface QuestionRepository extends JpaRepository<Question, Long> {
+
 }

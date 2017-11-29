@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export class UserCard extends Component {
   render() {
@@ -28,8 +28,8 @@ export class UserCard extends Component {
         <hr />
         <div className="text-center">{this.props.socials}</div>
       </div>
-    );
+    )
   }
 }
 
-export default UserCard;
+export default UserCard

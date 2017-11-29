@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Grid,
   Row,
@@ -6,14 +6,17 @@ import {
   FormGroup,
   ControlLabel,
   FormControl,
-} from 'react-bootstrap';
+} from 'react-bootstrap'
 
-import { Card } from 'components/Card/Card';
-import { FormInputs } from 'components/FormInputs/FormInputs';
-import { UserCard } from 'components/UserCard/UserCard';
-import Button from 'elements/CustomButton/CustomButton';
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { Card } from 'components/Card/Card'
+import { FormInputs } from 'components/FormInputs/FormInputs'
+import { UserCard } from 'components/UserCard/UserCard'
+import Button from 'elements/CustomButton/CustomButton'
+import { signInAction } from '../../actions/authentication-actions'
 
-import avatar from 'assets/img/faces/face-3.jpg';
+import avatar from 'assets/img/faces/face-3.jpg'
 
 class UserAccount extends Component {
   render() {
@@ -34,45 +37,33 @@ class UserAccount extends Component {
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'First Name',
-                          value: this.props.firstname,
+                          value: this.props.logInUser.firstName,
                         },
                         {
                           label: 'Last Name',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Last Name',
-                          value: this.props.lastname,
+                          value: this.props.logInUser.lastName,
                         },
                       ]}
                     />
                     <FormInputs
-                      ncols={['col-md-6', 'col-md-6']}
+                      ncols={['col-md-7', 'col-md-5']}
                       proprieties={[
                         {
                           label: 'Email address',
                           type: 'email',
                           bsClass: 'form-control',
                           placeholder: 'Email',
-                          value: this.props.email,
+                          value: this.props.logInUser.email,
                         },
                         {
                           label: 'Phone',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Phone',
-                          value: this.props.phone,
-                        },
-                      ]}
-                    />
-                    <FormInputs
-                      ncols={['col-md-7']}
-                      proprieties={[
-                        {
-                          label: 'Password',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Password',
-                          value: this.props.password,
+                          value: this.props.logInUser.phone,
                         },
                       ]}
                     />
@@ -90,8 +81,16 @@ class UserAccount extends Component {
           </Row>
         </Grid>
       </div>
-    );
+    )
   }
 }
 
-export default UserAccount;
+function mapStateToProps(state) {
+  return {
+    logInUser: state.logInReducer,
+  }
+}
+
+export default withRouter(
+  connect(mapStateToProps, { signInAction })(UserAccount),
+)

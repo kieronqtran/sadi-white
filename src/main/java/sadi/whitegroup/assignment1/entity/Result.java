@@ -2,35 +2,32 @@ package sadi.whitegroup.assignment1.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
+/**
+ * A Result.
+ */
 @Entity
-@Table(name = "result", schema = "public")
+@Table(name = "result")
 public class Result implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "number_of_correct_answer")
-    private int numberOfCorrectAnswer;
+    private Integer numberOfCorrectAnswer;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "testing_id", nullable = false)
+    private Testing testing;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "test_id", nullable = false)
-    private Test test;
-
-    public Result() {
-    }
-
-    public Result(Long id, int numberOfCorrectAnswer, User user, Test test){
-        this.id = id;
-        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
-        this.user = user;
-        this.test = test;
-    }
 
     public Long getId() {
         return id;
@@ -40,27 +37,66 @@ public class Result implements Serializable {
         this.id = id;
     }
 
-    public int getNumberOfCorrectAnswer() {
+    public Integer getNumberOfCorrectAnswer() {
         return numberOfCorrectAnswer;
     }
 
-    public void setNumberOfCorrectAnswer(int numberOfCorrectAnswer) {
+    public void setNumberOfCorrectAnswer(Integer numberOfCorrectAnswer) {
         this.numberOfCorrectAnswer = numberOfCorrectAnswer;
+    }
+
+    public Result numberOfCorrectAnswer(Integer numberOfCorrectAnswer) {
+        this.numberOfCorrectAnswer = numberOfCorrectAnswer;
+        return this;
+    }
+
+    public Testing getTesting() {
+        return testing;
+    }
+
+    public void setTesting(Testing testing) {
+        this.testing = testing;
+    }
+
+    public Result testing(Testing testing) {
+        this.testing = testing;
+        return this;
+    }
+
+    public Result user(User user) {
+        this.user = user;
+        return this;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Result result = (Result) o;
+        if (result.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), result.getId());
     }
 
-    public Test getTest() {
-        return test;
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    @Override
+    public String toString() {
+        return "Result{" +
+            "id=" + getId() +
+            ", numberOfCorrectAnswer='" + getNumberOfCorrectAnswer() + "'" +
+            "}";
     }
 }

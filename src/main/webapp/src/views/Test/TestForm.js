@@ -1,87 +1,87 @@
 // generate test form with start button, click start, display question and answers
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import QuestionForm from './components/Question.js';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import QuestionForm from './components/Question.js'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 // import Card from 'components/Card/Card'
-import {testSample} from 'variables/mockData.js'
-
+import { testSample } from 'variables/mockData.js'
 
 // const testData =
 class TestForm extends Component {
   constructor(props) {
-    super(props);
-    console.log(window.location.href.slice(33));
-    console.log(props.match.params.testId);
-    this.nextQuestion = this.nextQuestion.bind(this);
-    this.previousQuestion = this.previousQuestion.bind(this);
-    this.answerQuestion = this.answerQuestion.bind(this);
+    super(props)
+    console.log(window.location.href.slice(33))
+    console.log(props.match.params.testId)
+    this.nextQuestion = this.nextQuestion.bind(this)
+    this.previousQuestion = this.previousQuestion.bind(this)
+    this.answerQuestion = this.answerQuestion.bind(this)
     this.state = {
       currentQuestion: 1,
       test: testSample.find(e => e.id === +props.match.params.testId),
-      testID : this.props.match.params.testId,
-      answer: {}
-    };
+      testID: this.props.match.params.testId,
+      answer: {},
+    }
   }
   nextQuestion() {
     this.setState({
       currentQuestion: this.state.currentQuestion + 1,
-    });
+    })
   }
 
   previousQuestion() {
-      this.setState({
-        currentQuestion: this.state.currentQuestion - 1 ,
-      });
+    this.setState({
+      currentQuestion: this.state.currentQuestion - 1,
+    })
   }
 
-  answerQuestion(questionId, answerId){
-    const temp = this.state.answer;
-    temp[questionId] = answerId;
+  answerQuestion(questionId, answerId) {
+    const temp = this.state.answer
+    temp[questionId] = answerId
     this.setState({
       answer: temp,
-    });
-    console.log(this.state.answer);
+    })
+    console.log(this.state.answer)
   }
 
-  submitTest(){
-    const finalResult = {testId: this.state.test.id, answer: this.state.answer};
-    console.log(finalResult);
+  submitTest() {
+    const finalResult = {
+      testId: this.state.test.id,
+      answer: this.state.answer,
+    }
+    console.log(finalResult)
   }
 
   render() {
-    const setResult = this.answerQuestion.bind(this);
-    const { onSubmit } = this.props;
-    const { currentQuestion, test } = this.state;
+    const setResult = this.answerQuestion.bind(this)
+    const { onSubmit } = this.props
+    const { currentQuestion, test } = this.state
     return (
       <div className="content">
-        {currentQuestion < test.size &&
+        {currentQuestion < test.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion.bind(this)}
             onSubmit={this.nextQuestion}
             test={test}
             currentQuestion={currentQuestion}
-            setResult = {this.answerQuestion.bind(this)}
-          />}
-        {currentQuestion === test.size &&
+            setResult={this.answerQuestion.bind(this)}
+          />
+        )}
+        {currentQuestion === test.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion}
             onSubmit={this.submitTest.bind(this)}
             test={test}
             currentQuestion={currentQuestion}
-            setResult = {setResult}
-          />}
+            setResult={setResult}
+          />
+        )}
       </div>
-    );
+    )
   }
 }
 
 TestForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-};
+}
 
-export default TestForm;
+export default TestForm

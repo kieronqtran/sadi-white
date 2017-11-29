@@ -4,7 +4,7 @@
 // //
 //
 const defaultWidth =
-  window.screen.width > 768 ? window.screen.width * 1 / 3 : window.screen.width;
+  window.screen.width > 768 ? window.screen.width * 1 / 3 : window.screen.width
 
 const style = {
   Wrapper: {},
@@ -240,14 +240,14 @@ const style = {
       padding: 0,
     },
   },
-};
+}
 
 //
 // //
 // // // For tables
 // //
 //
-const thArray = ['ID', 'Name', 'Salary', 'Country', 'City'];
+const thArray = ['ID', 'Name', 'Salary', 'Country', 'City']
 const tdArray = [
   ['1', 'Dakota Rice', '$36,738', 'Niger', 'Oud-Turnhout'],
   ['2', 'Minerva Hooper', '$23,789', 'Curaçao', 'Sinaai-Waas'],
@@ -255,7 +255,7 @@ const tdArray = [
   ['4', 'Philip Chaney', '$38,735', 'Korea, South', 'Overland Park'],
   ['5', 'Doris Greene', '$63,542', 'Malawi', 'Feldkirchen in Kärnten'],
   ['6', 'Mason Porter', '$78,615', 'Chile', 'Gloucester'],
-];
+]
 
 //
 // //
@@ -465,7 +465,7 @@ const iconsArray = [
   'pe-7s-albums',
   'pe-7s-alarm',
   'pe-7s-airplay',
-];
+]
 
 //
 // //
@@ -476,11 +476,11 @@ const iconsArray = [
 const dataPie = {
   labels: ['40%', '20%', '40%'],
   series: [40, 20, 40],
-};
+}
 const legendPie = {
   names: ['Open', 'Bounce', 'Unsubscribe'],
   types: ['info', 'danger', 'warning'],
-};
+}
 
 // Data for Line Chart
 const dataSales = {
@@ -499,7 +499,7 @@ const dataSales = {
     [67, 152, 143, 240, 287, 335, 435, 437],
     [23, 113, 67, 108, 190, 239, 307, 308],
   ],
-};
+}
 const optionsSales = {
   low: 0,
   high: 800,
@@ -515,23 +515,23 @@ const optionsSales = {
   chartPadding: {
     right: 50,
   },
-};
+}
 const responsiveSales = [
   [
     'screen and (max-width: 640px)',
     {
       axisX: {
         labelInterpolationFnc: function(value) {
-          return value[0];
+          return value[0]
         },
       },
     },
   ],
-];
+]
 const legendSales = {
   names: ['Open', 'Click', 'Click Second Time'],
   types: ['info', 'danger', 'warning'],
-};
+}
 
 // Data for Bar Chart
 const dataBar = {
@@ -553,14 +553,14 @@ const dataBar = {
     [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
     [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695],
   ],
-};
+}
 const optionsBar = {
   seriesBarDistance: 10,
   axisX: {
     showGrid: false,
   },
   height: '245px',
-};
+}
 const responsiveBar = [
   [
     'screen and (max-width: 640px)',
@@ -568,16 +568,16 @@ const responsiveBar = [
       seriesBarDistance: 5,
       axisX: {
         labelInterpolationFnc: function(value) {
-          return value[0];
+          return value[0]
         },
       },
     },
   ],
-];
+]
 const legendBar = {
   names: ['Tesla Model S', 'BMW 5 Series'],
   types: ['info', 'danger'],
-};
+}
 
 module.exports = {
   style, // For notifications (App container and Notifications view)
@@ -594,4 +594,4 @@ module.exports = {
   optionsBar,
   responsiveBar,
   legendBar, // For charts (Dashboard view)
-};
+}

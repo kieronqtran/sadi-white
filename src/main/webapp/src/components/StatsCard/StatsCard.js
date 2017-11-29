@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { Row, Col } from 'react-bootstrap'
 
 export class StatsCard extends Component {
   render() {
@@ -27,8 +27,8 @@ export class StatsCard extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default StatsCard;
+export default StatsCard

@@ -1,6 +1,6 @@
 package sadi.whitegroup.assignment1.controller.dto;
 
-import sadi.whitegroup.assignment1.entity.Test;
+import sadi.whitegroup.assignment1.entity.Testing;
 
 public class TestTypeDTO {
     private Long id;
@@ -10,7 +10,7 @@ public class TestTypeDTO {
     public TestTypeDTO() {
     }
 
-    public TestTypeDTO(Test test) {
+    public TestTypeDTO(Testing test) {
         id = test.getId();
         type = test.getType();
         name = test.getName();

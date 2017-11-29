@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import { Button } from 'react-bootstrap'
+import cx from 'classnames'
+import PropTypes from 'prop-types'
 
 class CustomButton extends Component {
   render() {
-    const { fill, simple, pullRight, round, block, ...rest } = this.props;
+    const { fill, simple, pullRight, round, block, ...rest } = this.props
 
     const btnClasses = cx({
       'btn-fill': fill,
@@ -13,7 +13,7 @@ class CustomButton extends Component {
       'pull-right': pullRight,
       'btn-block': block,
       'btn-round': round,
-    });
+    })
 
     return (
       <Button
@@ -24,7 +24,7 @@ class CustomButton extends Component {
         className={btnClasses}
         {...rest}
       />
-    );
+    )
   }
 }
 
@@ -34,6 +34,6 @@ CustomButton.propTypes = {
   pullRight: PropTypes.bool,
   block: PropTypes.bool,
   round: PropTypes.bool,
-};
+}
 
-export default CustomButton;
+export default CustomButton

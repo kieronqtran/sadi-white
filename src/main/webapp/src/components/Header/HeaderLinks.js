@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
+import React, { Component } from 'react'
+import { NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap'
 
 class HeaderLinks extends Component {
   render() {
@@ -10,7 +10,7 @@ class HeaderLinks extends Component {
         <span className="notification">5</span>
         <p className="hidden-lg hidden-md">Notification</p>
       </div>
-    );
+    )
     return (
       <div>
         <Nav pullRight>
@@ -32,8 +32,8 @@ class HeaderLinks extends Component {
           </NavItem>
         </Nav>
       </div>
-    );
+    )
   }
 }
 
-export default HeaderLinks;
+export default HeaderLinks

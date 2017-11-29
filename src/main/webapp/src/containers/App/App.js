@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import Sidebar from 'components/Sidebar/Sidebar';
-import { style } from 'variables/Variables';
-import appRoutes from 'routes/app';
+import Sidebar from 'components/Sidebar/Sidebar'
+import { style } from 'variables/Variables'
+import appRoutes from 'routes/app'
 import Header from '../../components/Header/Header'
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super(props)
   }
 
   componentDidUpdate(e) {
@@ -19,7 +19,7 @@ class App extends Component {
       e.history.location.pathname !== e.location.pathname &&
       document.documentElement.className.indexOf('nav-open') !== -1
     ) {
-      document.documentElement.classList.toggle('nav-open');
+      document.documentElement.classList.toggle('nav-open')
     }
   }
 
@@ -28,26 +28,27 @@ class App extends Component {
       <div className="wrapper">
         <Sidebar {...this.props} />
         <div id="main-panel" className="main-panel">
-          <Header {...this.props}/>
+          <Header {...this.props} />
           <Switch>
             {appRoutes.map((prop, key) => {
               if (prop.redirect)
-                return <Redirect from={prop.path} to={prop.to} key={key} />;
+                return <Redirect from={prop.path} to={prop.to} key={key} />
               return (
                 <Route path={prop.path} component={prop.component} key={key} />
-              );
+              )
             })}
           </Switch>
         </div>
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(centralState) {
   return {
     signUpUser: centralState.userReducer,
-  };
+    logInUser: centralState.logInReducer,
+  }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
