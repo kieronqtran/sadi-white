@@ -32,7 +32,33 @@ const testData = [
           },
         ],
       },
-    ],
+      {
+          type: 'multiple-choice',
+          content: 'example question 1',
+          answer: [
+              {
+                  content: 'the true answer',
+                  isCorrectAnswer: true,
+              },
+              {
+                  content: 'the false answer 1',
+                  isCorrectAnswer: false,
+              },
+              {
+                  content: 'the false answer 2',
+                  isCorrectAnswer: false,
+              },
+              {
+                  content: 'the false answer 3',
+                  isCorrectAnswer: false,
+              },
+              {
+                  content: 'the false answer 4',
+                  isCorrectAnswer: false,
+              },
+          ],
+      }
+    ]
   },
   {
     "id": 2,
