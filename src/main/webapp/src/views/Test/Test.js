@@ -14,9 +14,9 @@ import {
 class TestList extends Component {
   constructor(props){
     super(props);
-    console.log("hello");
+    console.log("hello"); // Hi, there - Quang
     this.props.getListTest();
-    getListTest();
+    getListTest(); // Why you find the need to do this?
   }
   render() {
     return (
@@ -39,6 +39,7 @@ class TestList extends Component {
                     </thead>
                     <tbody>
                       {
+												//  this cause errors b/c you need to create a default value in the reducer
                         this.props.testList.map((prop, key) => {
                           const testUrl = "#/takeTest/" + prop.id;
                           return (
@@ -64,7 +65,7 @@ class TestList extends Component {
   }
 }
 
-function mapStateToProps(state,ownProps){
+function mapStateToProps(state, ownProps){
   console.log(state)
   return {
     testList: state.testList,

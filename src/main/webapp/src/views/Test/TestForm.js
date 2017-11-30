@@ -83,7 +83,7 @@ TestForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 }
 
-
+// remember put the default action in the reducers or undefine error
 function mapStateToProps(state) {
   return {
     // currentTest: state.takeTest.currentTest,
