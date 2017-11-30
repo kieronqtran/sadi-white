@@ -8,9 +8,9 @@ spring:
 
   datasource:
     driverClassName: org.postgresql.Driver
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/test-db}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/assignment1}
     username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:default}
+    password: ${DATABASE_PASSWORD:123456}
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

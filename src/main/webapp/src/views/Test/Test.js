@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
-
+import { withRouter } from 'react-router';
 import Card from 'components/Card/Card'
 import { testSample, testTh } from 'variables/mockData.js';
+import { connect } from 'react-redux';
+import {getListTest} from '../../actions/test-actions.js'
+import {
+  GET_LIST_TEST,
+  GET_LIST_TEST_ERROR,
+} from '../../actions/test-actions.js';
+
 
 class TestList extends Component {
-
+  constructor(props){
+    super(props);
+    console.log("hello");
+    this.props.getListTest();
+    getListTest();
+  }
   render() {
     return (
       <div className="content">
@@ -30,7 +42,7 @@ class TestList extends Component {
                     </thead>
                     <tbody>
                       {
-                        testSample.map((prop, key) => {
+                        this.props.testList.map((prop, key) => {
                           const testUrl = "#/takeTest/" + prop.id;
                           return (
                             <tr key={key}>
@@ -55,4 +67,11 @@ class TestList extends Component {
   }
 }
 
-export default TestList;
+function mapStateToProps(state,ownProps){
+  console.log(state)
+  return {
+    testList: state.testList,
+  };
+}
+
+export default connect(mapStateToProps, {getListTest})(TestList);

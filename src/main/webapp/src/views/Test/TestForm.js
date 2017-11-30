@@ -7,56 +7,53 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-// import Card from 'components/Card/Card'
 import {testSample} from 'variables/mockData.js'
+import { connect } from 'react-redux'
+import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest} from '../../actions/takeTest-actions'
 
-
-// const testData =
 class TestForm extends Component {
   constructor(props) {
     super(props);
-    console.log(window.location.href.slice(33));
-    console.log(props.match.params.testId);
+    console.log(this.props.params.testId);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
-    this.state = {
-      currentQuestion: 1,
-      test: testSample.find(e => e.id === +props.match.params.testId),
-      testID : this.props.match.params.testId,
-      answer: {}
-    };
+    this.props.takeTest(this.props.params.testId);
   }
   nextQuestion() {
-    this.setState({
-      currentQuestion: this.state.currentQuestion + 1,
-    });
+    this.dispatch(
+      {
+        type: NEXT_QUESTION,
+      }
+    )
   }
 
   previousQuestion() {
-      this.setState({
-        currentQuestion: this.state.currentQuestion - 1 ,
-      });
+    this.dispatch(
+      {
+        type: PREVIOUS_QUESTION,
+      }
+    )
   }
 
   answerQuestion(questionId, answerId){
-    const temp = this.state.answer;
-    temp[questionId] = answerId;
-    this.setState({
-      answer: temp,
-    });
-    console.log(this.state.answer);
+    this.dispatch(
+      {
+        type: ANSWER_QUESTION,
+        action: {questionId, answerId},
+      }
+    )
   }
 
   submitTest(){
-    const finalResult = {testId: this.state.test.id, answer: this.state.answer};
-    console.log(finalResult);
+    // const finalResult = {this.currentTest.id, answer}
+    // this.props.submitTest(finalResult);
+    // console.log(finalResult);
   }
 
   render() {
     const setResult = this.answerQuestion.bind(this);
-    const { onSubmit } = this.props;
-    const { currentQuestion, test } = this.state;
+    const { onSubmit, currentQuestion, currentTest } = this.props;
     return (
       <div className="content">
         {currentQuestion < test.size &&
@@ -84,4 +81,13 @@ TestForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default TestForm;
+
+function mapStateToProps(state) {
+  return {
+    // currentTest: state.takeTest.currentTest,
+    // currentQuestion: state.takeTest.currentQuestion,
+    // answer: state.takeTest.answer,
+  };
+}
+
+export default connect(mapStateToProps, {takeTest, submitTest})(TestForm);
