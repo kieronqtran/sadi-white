@@ -3,3 +3,4 @@ id;password;first_name;last_name;email;phone
 2;$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO;Anonymous;User;anonymous@localhost;0123456789
 3;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;0123456789
 4;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;0123456789
+5;$2a$10$uQRA4U.kNu6mYG1gYyGbTuXa7in66SgHwXhzmqcNWAv8F92Repfxy;Adam;Smith;adamSmith@gmail.com;0999999999

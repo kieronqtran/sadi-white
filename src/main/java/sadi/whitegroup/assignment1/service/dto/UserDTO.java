@@ -2,9 +2,11 @@ package sadi.whitegroup.assignment1.service.dto;
 
 import org.hibernate.validator.constraints.Email;
 import sadi.whitegroup.assignment1.entity.Authority;
+import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.User;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,9 +30,19 @@ public class UserDTO {
     @Size(min = 11, max = 13)
     private String phone;
 
-    private boolean activated = false;
-
     private Set<String> authorities;
+
+    private List<Result> resultList;
+
+    public UserDTO(Long id, String firstName, String lastName, String email, String phone, Set<String> authorities, List<Result> resultList) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.authorities = authorities;
+        this.resultList = resultList;
+    }
 
     public UserDTO() {}
 
@@ -38,7 +50,8 @@ public class UserDTO {
         this(user.getId(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getPhone(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()),
+                user.getResultList());
     }
 
     public UserDTO(Long id, String firstName, String lastName,
@@ -78,6 +91,11 @@ public class UserDTO {
     public Set<String> getAuthorities() {
         return authorities;
     }
+
+    public List<Result> getResultList() {
+        return resultList;
+    }
+
 
     @Override
     public String toString() {

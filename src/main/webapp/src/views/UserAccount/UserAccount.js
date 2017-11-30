@@ -14,13 +14,17 @@ import { Card } from 'components/Card/Card'
 import { FormInputs } from 'components/FormInputs/FormInputs'
 import { UserCard } from 'components/UserCard/UserCard'
 import Button from 'elements/CustomButton/CustomButton'
-import { signInAction } from '../../actions/authentication-actions'
+import { signInAction, logOut } from '../../actions/authentication-actions'
 
 import avatar from 'assets/img/faces/face-3.jpg'
 
 class UserAccount extends Component {
+  logOutAction(){
+    this.props.logOut();
+    this.props.history.push('/login')
+  }
   render() {
-    return (
+      return (
       <div className="content">
         <Grid fluid>
           <Row>
@@ -67,8 +71,9 @@ class UserAccount extends Component {
                         },
                       ]}
                     />
-                    <Button bsStyle="info" pullRight fill type="submit">
-                      Update Profile
+                    <Button bsStyle="info" pullRight fill type="submit"
+                    onClick={this.logOutAction.bind(this)}>
+                        Log Out
                     </Button>
                   </form>
                 }
@@ -92,5 +97,5 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { signInAction })(UserAccount),
+  connect(mapStateToProps, { signInAction, logOut })(UserAccount),
 )

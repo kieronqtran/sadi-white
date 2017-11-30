@@ -7,10 +7,16 @@ import Sidebar from 'components/Sidebar/Sidebar'
 import { style } from 'variables/Variables'
 import appRoutes from 'routes/app'
 import Header from '../../components/Header/Header'
+import {refreshToken} from "../../actions/authentication-actions";
+
 
 class App extends Component {
   constructor(props) {
     super(props)
+      const app = this;
+      setInterval(function() {
+          app.props.refreshToken();
+      }, 10000);
   }
 
   componentDidUpdate(e) {
@@ -51,4 +57,4 @@ function mapStateToProps(centralState) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, { refreshToken })(App)
