@@ -1,23 +1,17 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
-import { withRouter } from 'react-router';
 import Card from 'components/Card/Card'
-import { testSample, testTh } from 'variables/mockData.js';
+import { testTh } from 'variables/mockData.js';
 import { connect } from 'react-redux';
 import {getListTest} from '../../actions/test-actions.js'
-import {
-  GET_LIST_TEST,
-  GET_LIST_TEST_ERROR,
-} from '../../actions/test-actions.js';
-
 
 class TestList extends Component {
   constructor(props){
     super(props);
-    console.log("hello"); // Hi, there - Quang
-    this.props.getListTest();
-    getListTest(); // Why you find the need to do this?
+    props.getListTest();
+    console.log(this.props.testList.testList)
   }
+
   render() {
     return (
       <div className="content">
@@ -39,15 +33,15 @@ class TestList extends Component {
                     </thead>
                     <tbody>
                       {
-												//  this cause errors b/c you need to create a default value in the reducer
                         this.props.testList.map((prop, key) => {
-                          const testUrl = "#/takeTest/" + prop.id;
+                          const testUrl = "#/takeTest/" + prop.id; // user this.props.history.push(`/takeTest/${prop.id}`) b/c we could ignore the # annoyinghash
+// so that we could easily remove the hash. yep, not 100% sure but 80%
                           return (
                             <tr key={key}>
                               <td>{prop.id}</td>
                               <td>{prop.name}</td>
-                              <td>{prop.size}</td>
-                              <td>{prop.duration}</td>
+                              // <td>{prop.size}</td>
+                              <td>{prop.testTime}</td>
                               <td><a href={testUrl}>Take this test</a></td>
                             </tr>
                           )
@@ -65,10 +59,10 @@ class TestList extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state, ownProps) {
   console.log(state)
   return {
-    testList: state.testList,
+    testList: state.test.testList, // the state params is the whole state of appliation so you need to access it through propertes assigned in the reducer
   };
 }
 

@@ -1,15 +1,45 @@
 export const GET_LIST_TEST = "RECEIVED_LIST_TEST";
 export const GET_LIST_TEST_ERROR = "FAILED_TO_RECEIVE_LIST_TEST";
 
+
 export function getListTest(){
 	return async dispatch => {
-    const res = await fetch('/api/test') // /api/testing
-    const data = await res.json()
-    console.log(data)
-    try {
-      dispatch({ type: GET_LIST_TEST, testList: data })
-    } catch (error) {
-      dispatch({ type: GET_LIST_TEST_ERROR, error: error.message })
-    }
-  }
-}
+		const token = sessionStorage.getItem('token')
+		const response = await fetch('/api/testings', { // ;always return promise
+		  method: 'GET',
+		  headers: {
+		    Accept: 'application/json',
+		    'Content-Type': 'application/json',
+		    Authorization: `Bearer ${token}`,
+		  },
+		})
+		const data = await response.json()
+			console.log(data)
+			// try {
+      //
+			// } catch (error) {
+			// 	dispatch({ type: GET_LIST_TEST_ERROR, error: error.message});
+			// }
+			if (response.status === 200) {
+				return dispatch({ type: GET_LIST_TEST, testList: data })
+			} else {
+				dispatch({ type: GET_LIST_TEST_ERROR, error: "error 500 or 401 or 404"});
+			}
+
+
+			// if(data.status === 201){
+      //
+      //
+			// } else {
+		  //   dispatch({ type: GET_LIST_TEST_ERROR, error: "error getting data" })
+			// }
+		}
+	}
+
+// export function getListTest(){
+// 	return async dispatch => {
+//     const res = await fetch('/api/testing')
+//     const data = await res.json()
+//
+//   }
+// }

@@ -21,6 +21,7 @@ class TestForm extends Component {
     this.props.takeTest(this.props.params.testId);
   }
   nextQuestion() {
+    // how about this.props.nextQuestion() ?
     this.dispatch(
       {
         type: NEXT_QUESTION,
@@ -83,7 +84,7 @@ TestForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 }
 
-// remember put the default action in the reducers or undefine error
+// remember put the default value in the reducers or undefine error
 function mapStateToProps(state) {
   return {
     // currentTest: state.takeTest.currentTest,
