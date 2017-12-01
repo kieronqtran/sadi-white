@@ -8,18 +8,18 @@ import sadi.whitegroup.assignment1.controller.dto.StudentAnswerDTO;
 import sadi.whitegroup.assignment1.controller.dto.TestTypeDTO;
 import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.Testing;
+import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.repository.AnswerRepository;
 import sadi.whitegroup.assignment1.repository.ResultRepository;
 import sadi.whitegroup.assignment1.repository.TestingRepository;
 import sadi.whitegroup.assignment1.repository.UserRepository;
+import sadi.whitegroup.assignment1.security.SecurityUtils;
+import sadi.whitegroup.assignment1.service.dto.ResultDTO;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Service Implementation for managing Testing.
- */
 @Service
 @Transactional
 public class TestingService {
@@ -40,13 +40,6 @@ public class TestingService {
         this.userRepository = userRepository;
         this.resultRepository = resultRepository;
     }
-
-    /**
-     * Save a testing.
-     *
-     * @param testing the entity to save
-     * @return the persisted entity
-     */
 
     public Testing save(Testing testing) {
         log.debug("Request to save Testing : {}", testing);
@@ -78,24 +71,12 @@ public class TestingService {
         return resultRepository.save(result);
     }
 
-    /**
-     * Get all the testings.
-     *
-     * @return the list of entities
-     */
-
     @Transactional(readOnly = true)
     public List<Testing> findAll() {
         log.debug("Request to get all Testings");
         return testingRepository.findAll();
     }
 
-    /**
-     * Get one testing by id.
-     *
-     * @param id the id of the entity
-     * @return the entity
-     */
 
     @Transactional(readOnly = true)
     public Optional<Testing> findOne(Long id) {
@@ -103,15 +84,20 @@ public class TestingService {
         return Optional.ofNullable(testingRepository.findOne(id));
     }
 
-    /**
-     * Delete the  testing by id.
-     *
-     * @param id the id of the entity
-     */
 
     public void delete(Long id) {
         log.debug("Request to delete Testing : {}", id);
         testingRepository.delete(id);
     }
 
+    @Transactional(readOnly = true)
+    public List<Result> getResultForCurrentAccount() {
+        User user = userRepository.findOneWithAuthoritiesByEmail(SecurityUtils.getCurrentUserLogin())
+                .orElse(null);
+
+        return user.getResultList().stream().map(e -> { // EAGER FETCHING Result
+            e.getTesting();
+            return e;
+        }).collect(Collectors.toList()); // we perform mapping to ResultDTO at the controller
+    }
 }

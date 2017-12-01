@@ -34,7 +34,7 @@ public class DomainUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(final String email) {
         log.debug("Authenticating {}", email);
-        Optional<User> userFromDatabase = userRepository.findOneWithAuthoritiesAndResultByEmail(email);
+        Optional<User> userFromDatabase = userRepository.findOneWithAuthoritiesByEmail(email);
         return userFromDatabase.map(user -> {
 
             List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()

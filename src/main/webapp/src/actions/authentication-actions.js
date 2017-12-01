@@ -115,3 +115,77 @@ export function signInAction({ email, password }) {
   }
 }
 
+<<<<<<< HEAD
+=======
+    export function signInAction({email, password}) {
+        return async dispatch => {
+            fetch('/oauth/token', {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    Authorization: 'Basic d2ViX2FwcDpjaGFuZ2VpdA==',
+                },
+                method: 'POST',
+                body: `grant_type=password&username=${email}&password=${password}`,
+            })
+            .then(res => res.json())
+            .then(res => {
+                    try {
+                        sessionStorage.setItem('token', res.access_token)
+                        sessionStorage.setItem('refresh_token', res.refresh_token)
+                        const payload = jwtDecode(res.access_token)
+                        dispatch({type: AUTHENTICATED, payload})
+                    } catch (error) {
+                        dispatch({
+                            type: AUTHENTICATION_ERROR,
+                            payload: 'Invalid email or password',
+                        })
+                    }
+                })
+            .then(() => {
+                    const token = sessionStorage.getItem('token');
+                    fetch('/api/account', {
+                        method: 'GET',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
+                        .then(res => res.json())
+                        .then(res =>
+                            dispatch({
+                                type: 'USER_INFO',
+                                user: res,
+                            }),
+                        )
+                        .then(res => {
+                            if (res) {
+                                redirect: window.location.assign('http://localhost:3000/#/user')
+                            }
+                            document.getElementById('User Account').style.display = 'inline'
+                            document.getElementById('Login').style.display = 'none'
+                            document.getElementById('Signup').style.display = 'none'
+                        })
+                })
+                .then(() =>{
+                    const token = sessionStorage.getItem('token');
+                    fetch('/api/result', {
+                        method: 'GET',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
+                        .then(res => res.json())
+                        .then(res =>
+                            dispatch({
+                                type: 'USER_RESULT',
+                                result: res
+                            }),
+                        )
+                })
+        }
+}
+>>>>>>> 9e32a7983bbe0a2ae27f0c811ff86f5f6ad5b6fa

@@ -1,8 +1,10 @@
 package sadi.whitegroup.assignment1.controller.vm;
 
+import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.service.dto.UserDTO;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 
 /**

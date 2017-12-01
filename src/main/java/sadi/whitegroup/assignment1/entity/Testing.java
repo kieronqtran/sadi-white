@@ -31,6 +31,9 @@ public class Testing implements Serializable {
     @Column(name = "test_time")
     private Long testTime;
 
+    @Column(name = "size")
+    private int size;
+
     @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Question> questions = new HashSet<>();
@@ -72,6 +75,13 @@ public class Testing implements Serializable {
     public void setTestTime(Long testTime) {
         this.testTime = testTime;
     }
+    public int getSize() {
+        return size;
+    }
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     public Testing testtime(Long testtime) {
         this.testTime = testtime;
         return this;
@@ -116,6 +126,7 @@ public class Testing implements Serializable {
         result.setTesting(null);
         return this;
     }
+
 
     @Override
     public boolean equals(Object o) {
