@@ -14,11 +14,12 @@ import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest}
 class TestForm extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.params.testId);
+
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
-    this.props.takeTest(this.props.params.testId);
+    this.props.takeTest(props.match.params.testId);
+    console.log(props)
   }
   nextQuestion() {
     // how about this.props.nextQuestion() ?
@@ -57,7 +58,7 @@ class TestForm extends Component {
     const { onSubmit, currentQuestion, currentTest } = this.props;
     return (
       <div className="content">
-        {currentQuestion < test.size && (
+        {currentQuestion < currentTest.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion.bind(this)}
             onSubmit={this.nextQuestion}
@@ -66,7 +67,7 @@ class TestForm extends Component {
             setResult={this.answerQuestion.bind(this)}
           />
         )}
-        {currentQuestion === test.size && (
+        {currentQuestion === currentTest.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion}
             onSubmit={this.submitTest.bind(this)}
@@ -87,9 +88,9 @@ TestForm.propTypes = {
 // remember put the default value in the reducers or undefine error
 function mapStateToProps(state) {
   return {
-    // currentTest: state.takeTest.currentTest,
-    // currentQuestion: state.takeTest.currentQuestion,
-    // answer: state.takeTest.answer,
+    currentTest: state.takeTest.currentTest,
+    currentQuestion: state.takeTest.currentQuestion,
+    answer: state.takeTest.answer,
   };
 }
 
