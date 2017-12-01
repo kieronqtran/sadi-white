@@ -72,14 +72,13 @@ export function logOut(){
                 method: 'POST',
                 body: `grant_type=password&username=${email}&password=${password}`,
             })
-                .then(res => res.json())
-                .then(res => {
+            .then(res => res.json())
+            .then(res => {
                     try {
                         sessionStorage.setItem('token', res.access_token)
                         sessionStorage.setItem('refresh_token', res.refresh_token)
                         const payload = jwtDecode(res.access_token)
                         dispatch({type: AUTHENTICATED, payload})
-                        // history.push('/test')
                     } catch (error) {
                         dispatch({
                             type: AUTHENTICATION_ERROR,
@@ -87,8 +86,8 @@ export function logOut(){
                         })
                     }
                 })
-                .then(() => {
-                    const token = sessionStorage.getItem('token')
+            .then(() => {
+                    const token = sessionStorage.getItem('token');
                     fetch('/api/account', {
                         method: 'GET',
                         headers: {
@@ -112,22 +111,24 @@ export function logOut(){
                             document.getElementById('Login').style.display = 'none'
                             document.getElementById('Signup').style.display = 'none'
                         })
-                        .then(() => {
-                            const token = sessionStorage.getItem('token');
-                            fetch('/api/result', {
-                                method: 'GET',
-                                headers: {
-                                    Accept: 'application/json',
-                                    'Content-Type': 'application/json',
-                                    Authorization: `Bearer ${token}`,
-                                },
-                            })
-                                .then(res => res.json())
-                                .then(res => dispatch({
-                                    type: 'USER_RESULT',
-                                    result: res
-                                }))
-                        })
+                })
+                .then(() =>{
+                    const token = sessionStorage.getItem('token');
+                    fetch('/api/result', {
+                        method: 'GET',
+                        headers: {
+                            Accept: 'application/json',
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    })
+                        .then(res => res.json())
+                        .then(res =>
+                            dispatch({
+                                type: 'USER_RESULT',
+                                result: res
+                            }),
+                        )
                 })
         }
 }

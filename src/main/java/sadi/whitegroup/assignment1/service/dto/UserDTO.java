@@ -32,26 +32,13 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    private List<Result> resultList;
-
-    public UserDTO(Long id, String firstName, String lastName, String email, String phone, Set<String> authorities, List<Result> resultList) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.authorities = authorities;
-        this.resultList = resultList;
-    }
 
     public UserDTO() {}
 
     public UserDTO(User user) {
         this(user.getId(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getPhone(),
-            user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()),
-                user.getResultList());
+            user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
     }
 
     public UserDTO(Long id, String firstName, String lastName,
@@ -91,11 +78,6 @@ public class UserDTO {
     public Set<String> getAuthorities() {
         return authorities;
     }
-
-    public List<Result> getResultList() {
-        return resultList;
-    }
-
 
     @Override
     public String toString() {

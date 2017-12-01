@@ -23,7 +23,43 @@ class UserAccount extends Component {
     this.props.logOut();
     this.props.history.push('/login')
   }
-  render() {
+
+  getAllResult(){
+      var rows = [];
+      for (var i = 0; i < this.props.result.length; i++) {
+          rows.push(
+              <FormInputs
+                  ncols={['col-md-4', 'col-md-4', 'col-md-4']}
+                  proprieties={[
+                      {
+                          label: 'Test Name',
+                          type: 'text',
+                          bsClass: 'form-control',
+                          placeholder: 'Test Name',
+                          value: this.props.result[i].testName,
+                      },
+                      {
+                          label: 'Correct Answers',
+                          type: 'text',
+                          bsClass: 'form-control',
+                          placeholder: 'Last Name',
+                          value: this.props.result[i].numberOfCorrectAnswer,
+                      },
+                      {
+                          label: 'Total Questions',
+                          type: 'text',
+                          bsClass: 'form-control',
+                          placeholder: 'Total Questions',
+                          value: this.props.result[i].size,
+                      }
+                  ]}
+              />
+          );
+      }
+      return <form>{rows}</form>;
+  }
+
+  render(){
       return (
       <div className="content">
         <Grid fluid>
@@ -80,7 +116,7 @@ class UserAccount extends Component {
               />
               <Card
                 title="Grade"
-                category="Your grade from the previous tests."
+                content={this.getAllResult()}
               />
             </Col>
           </Row>
@@ -90,9 +126,13 @@ class UserAccount extends Component {
   }
 }
 
+
+
+
 function mapStateToProps(state) {
   return {
     logInUser: state.logInReducer,
+      result: state.resultReducer
   }
 }
 
