@@ -41,33 +41,33 @@ class UserAccount extends Component {
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'First Name',
-                          value: this.props.logInUser.firstName,
+                          value: this.props.user.firstName,
                         },
                         {
                           label: 'Last Name',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Last Name',
-                          value: this.props.logInUser.lastName,
+                          value: this.props.user.lastName,
                         },
                       ]}
                     />
                     <FormInputs
-                      ncols={['col-md-7', 'col-md-5']}
+                      ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
                         {
                           label: 'Email address',
                           type: 'email',
                           bsClass: 'form-control',
                           placeholder: 'Email',
-                          value: this.props.logInUser.email,
+                          value: this.props.user.email,
                         },
                         {
                           label: 'Phone',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Phone',
-                          value: this.props.logInUser.phone,
+                          value: this.props.user.phone,
                         },
                       ]}
                     />
@@ -75,6 +75,7 @@ class UserAccount extends Component {
                     onClick={this.logOutAction.bind(this)}>
                         Log Out
                     </Button>
+                    <div className="clearfix"></div>
                   </form>
                 }
               />
@@ -92,10 +93,8 @@ class UserAccount extends Component {
 
 function mapStateToProps(state) {
   return {
-    logInUser: state.logInReducer,
+    user: state.user.userProfile,
   }
 }
 
-export default withRouter(
-  connect(mapStateToProps, { signInAction, logOut })(UserAccount),
-)
+export default withRouter(connect(mapStateToProps, { logOut })(UserAccount))

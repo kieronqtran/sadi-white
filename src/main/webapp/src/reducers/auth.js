@@ -2,20 +2,33 @@ import {
   AUTHENTICATED,
   UNAUTHENTICATED,
   AUTHENTICATION_ERROR,
+  REFRESH_TOKEN
 } from '../actions/authentication-actions'
 
-export default function authReducer(state = {}, action) {
+const initState = {
+	isAuthenticated: false,
+  isAdmin: false,
+  tokenInfo: {}
+}
+
+export default function authReducer(state = initState, action) {
   switch (action.type) {
     case AUTHENTICATED:
       return {
-        authenticated: true,
-        isAdmin: action.payload.auth === 'ROLE_ADMIN',
-        user: action.payload,
+        isAuthenticated: true,
+        isAdmin: action.payload.authorities.includes('ROLE_ADMIN'),
+        tokenInfo: action.payload,
+      }
+    case REFRESH_TOKEN:
+      return {
+        isAuthenticated: true,
+        isAdmin: action.payload.authorities.includes('ROLE_ADMIN'),
+        tokenInfo: action.payload,
       }
     case UNAUTHENTICATED:
-      return { authenticated: false, user: action.payload }
+      return { ...initState }
     case AUTHENTICATION_ERROR:
-      return { authenticated: false, error: action.payload }
+      return { ...initState , error: action.message }
   }
   return state
 }

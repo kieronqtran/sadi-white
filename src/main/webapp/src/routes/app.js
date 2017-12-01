@@ -23,31 +23,28 @@ const appRoutes = [
     name: 'User Account',
     icon: 'pe-7s-user',
     component: UserAccount,
+    requiredLogin: true,
   },
   {
     path: '/test',
     name: 'Test',
     icon: 'pe-7s-news-paper',
     component: Test,
+    requiredLogin: true,
   },
   {
     path: '/takeTest/:testId',
+    name: 'TakeTest',
     component: TestForm,
+    hiddenLink: true,
   },
-  // {
-  //   redirect: true,
-  //   from: "/test",
-  //   to: '/takeTest/:testId',
-  //   component: TestForm,
-  //   name: "Taking Test"
-  // },
   {
     path: '/admintest',
     name: 'Manage Test',
     icon: 'pe-7s-bookmarks',
     component: AdminTest,
+    adminOnly: true,
   },
-
   {
     redirect: true,
     path: '/',

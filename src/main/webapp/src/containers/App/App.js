@@ -16,7 +16,7 @@ class App extends Component {
       const app = this;
       setInterval(function() {
           app.props.refreshToken();
-      }, 10000);
+      }, 1200000);
   }
 
   componentDidUpdate(e) {

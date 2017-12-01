@@ -68,8 +68,8 @@ class Login extends Component {
                 content={
                   <div>
                     <LoginForm onSubmit={this.submit.bind(this)} />
-                    {this.errorMessage && (
-                      <HelpBlock>this.errorMessage</HelpBlock>
+                    {this.props.errorMessage && (
+                      <HelpBlock bsClass="danger">{this.props.errorMessage}</HelpBlock>
                     )}
                   </div>
                 }
@@ -84,8 +84,7 @@ class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    errorMessage: state.auth.error,
-    authenticated: state.auth.authenticated,
+    errorMessage: state.auth.error? state.auth.error : state.user.error ? state.user.error: ''
   }
 }
 

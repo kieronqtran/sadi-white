@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar } from 'react-bootstrap'
-
 import HeaderLinks from './HeaderLinks'
-
 import appRoutes from 'routes/app'
 
 class Header extends Component {
@@ -13,6 +11,7 @@ class Header extends Component {
       sidebarExists: false,
     }
   }
+
   mobileSidebarToggle(e) {
     if (this.state.sidebarExists === false) {
       this.setState({
@@ -29,31 +28,37 @@ class Header extends Component {
     }
     document.body.appendChild(node)
   }
+
   getBrand() {
-    let name
-    appRoutes.map((prop, key) => {
-      if (prop.collapse) {
-        prop.views.map((prop, key) => {
-          if (prop.path === this.props.location.pathname) {
-            name = prop.name
-          }
-          return null
-        })
-      } else {
-        if (prop.redirect) {
-          if (prop.path === this.props.location.pathname) {
-            name = prop.name
-          }
-        } else {
-          if (prop.path === this.props.location.pathname) {
-            name = prop.name
-          }
-        }
-      }
-      return null
-    })
-    return name
+    // let name
+    // appRoutes.map((prop, key) => {
+    //   if (prop.collapse) {
+    //     prop.views.map((prop, key) => {
+    //       if (prop.path === this.props.location.pathname) {
+    //         name = prop.name
+    //       }
+    //       return null
+    //     })
+    //   } else {
+    //     if (prop.redirect) {
+    //       if (prop.path === this.props.location.pathname) {
+    //         name = prop.name
+    //       }
+    //     } else {
+    //       if (prop.path === this.props.location.pathname) {
+    //         name = prop.name
+    //       }
+    //     }
+    //   }
+    //   return null
+    // })
+    return appRoutes.find(e =>{
+      if(e.path.startsWith('/takeTest'))
+        return true
+      return e.path.startsWith(this.props.location.pathname)
+    }).name
   }
+
   render() {
     return (
       <Navbar fluid>
