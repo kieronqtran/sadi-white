@@ -39,7 +39,7 @@ const combinedReducer = combineReducers({
     resultReducer,
   form: formReducer,
   auth: authReducer,
-  test: getTestList,
+  test: getTestList, 
 });
 
 export default combinedReducer

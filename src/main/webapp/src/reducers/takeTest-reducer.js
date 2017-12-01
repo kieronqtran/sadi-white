@@ -6,7 +6,11 @@ import {GET_TEST,
         SUBMIT_RESULT_FAIL,
         ANSWER_QUESTION} from '../actions/takeTest-actions';
 
-export default function newQuestion(state={}, action){
+// TODO: create an empty state over here b/c so that in the components won't throught null exeception
+const initValue = {
+  
+};
+export default function newQuestion(state= initValue, action){
   switch(action.type){
     case GET_TEST:
       console.log("")
@@ -31,6 +35,6 @@ export default function newQuestion(state={}, action){
     case SUBMIT_RESULT_FAIL:
       console.log("Submit answer of test failed");
     default:
-      return state;
+      return {...state, currentTest: {}, currentQuestion: None, answer: {}, };
   }
 }
