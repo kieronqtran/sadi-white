@@ -41,6 +41,7 @@ class TestList extends Component {
                               <td>{prop.id}</td>
                               <td>{prop.name}</td>
                               // <td>{prop.size}</td>
+                              // remove comment when u add the size
                               <td>{prop.testTime}</td>
                               <td><a href={testUrl}>Take this test</a></td>
                             </tr>
@@ -60,7 +61,6 @@ class TestList extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state)
   return {
     testList: state.test.testList, // the state params is the whole state of appliation so you need to access it through propertes assigned in the reducer
   };
