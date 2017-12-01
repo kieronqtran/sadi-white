@@ -10,15 +10,17 @@ import sadi.whitegroup.assignment1.controller.dto.StudentAnswerDTO;
 import sadi.whitegroup.assignment1.controller.dto.TestTypeDTO;
 import sadi.whitegroup.assignment1.controller.errors.BadRequestAlertException;
 import sadi.whitegroup.assignment1.controller.util.HeaderUtil;
+import sadi.whitegroup.assignment1.entity.Question;
 import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.Testing;
 import sadi.whitegroup.assignment1.security.AuthoritiesConstants;
 import sadi.whitegroup.assignment1.service.TestingService;
-import sadi.whitegroup.assignment1.service.dto.UserDTO;
+import sadi.whitegroup.assignment1.service.dto.TestDTO;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,5 +124,15 @@ public class TestController {
         log.debug("REST request to delete Testing : {}", id);
         testingService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("Testing", id.toString())).build();
+    }
+
+    @GetMapping("/testings/{id}")
+    public TestDTO getTestQuestions(@PathVariable Long id) {
+        Optional<Testing> testing = testingService.findOne(id);
+        List<Question> questions = (List<Question>) testing.get().getQuestions();
+        Collections.shuffle(questions);
+        testing.get().setQuestions(questions);
+        return testing.map(TestDTO::new)
+            .orElseThrow(() -> new RuntimeException("Test not found/"));
     }
 }
