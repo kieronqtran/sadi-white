@@ -22,9 +22,20 @@ function logInReducer(state = {}, action) {
   }
 }
 
+function resultReducer(state = [], action) {
+    switch (action.type) {
+        case 'USER_RESULT':
+            state = action.result
+            return state
+        default:
+            return state
+    }
+}
+
 const combinedReducer = combineReducers({
   logInReducer,
   userReducer,
+    resultReducer,
   form: formReducer,
   auth: authReducer,
 })

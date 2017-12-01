@@ -12,12 +12,16 @@ import sadi.whitegroup.assignment1.controller.errors.InvalidPasswordException;
 import sadi.whitegroup.assignment1.controller.errors.LoginAlreadyUsedException;
 import sadi.whitegroup.assignment1.controller.vm.ManagedUserVM;
 import sadi.whitegroup.assignment1.repository.UserRepository;
+import sadi.whitegroup.assignment1.service.TestingService;
 import sadi.whitegroup.assignment1.service.UserService;
+import sadi.whitegroup.assignment1.service.dto.ResultDTO;
 import sadi.whitegroup.assignment1.service.dto.UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -28,10 +32,12 @@ public class AccountController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final TestingService testingService;
 
-    public AccountController(UserRepository userRepository, UserService userService) {
+    public AccountController(UserRepository userRepository, UserService userService, TestingService testingService) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.testingService = testingService;
     }
 
     private static boolean checkPasswordLength(String password) {
@@ -70,6 +76,13 @@ public class AccountController {
             .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
     }
 
+    @GetMapping("/result")
+    public List<ResultDTO> getResult(){ // get the result list of user in the db
+        return testingService.getResultForCurrentAccount()
+                .stream()
+                .map(ResultDTO::new)
+                .collect(Collectors.toList());
+    }
 
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {

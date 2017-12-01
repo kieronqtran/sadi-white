@@ -4,11 +4,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import sadi.whitegroup.assignment1.entity.User;
+import sadi.whitegroup.assignment1.repository.UserRepository;
+import sadi.whitegroup.assignment1.service.dto.UserDTO;
+
+import java.util.Optional;
 
 public final class SecurityUtils {
 
-    private SecurityUtils() {
-    }
+    private SecurityUtils() {}
+
 
     public static String getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -25,11 +30,6 @@ public final class SecurityUtils {
         return userName;
     }
 
-    /**
-     * Check if a user is authenticated.
-     *
-     * @return true if the user is authenticated, false otherwise
-     */
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();

@@ -25,9 +25,9 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/assignment1_new
+        url: jdbc:postgresql://localhost:2112/assignment1_new
         username: postgres
-        password: 123456
+        password: 29C1_57000
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         database: POSTGRESQL

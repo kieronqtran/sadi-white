@@ -14,13 +14,53 @@ import { Card } from 'components/Card/Card'
 import { FormInputs } from 'components/FormInputs/FormInputs'
 import { UserCard } from 'components/UserCard/UserCard'
 import Button from 'elements/CustomButton/CustomButton'
-import { signInAction } from '../../actions/authentication-actions'
+import { signInAction, logOut } from '../../actions/authentication-actions'
 
 import avatar from 'assets/img/faces/face-3.jpg'
 
 class UserAccount extends Component {
-  render() {
-    return (
+  logOutAction(){
+    this.props.logOut();
+    this.props.history.push('/login')
+  }
+
+  getAllResult(){
+      var rows = [];
+      for (var i = 0; i < this.props.result.length; i++) {
+          rows.push(
+              <FormInputs
+                  ncols={['col-md-4', 'col-md-4', 'col-md-4']}
+                  proprieties={[
+                      {
+                          label: 'Test Name',
+                          type: 'text',
+                          bsClass: 'form-control',
+                          placeholder: 'Test Name',
+                          value: this.props.result[i].testName,
+                      },
+                      {
+                          label: 'Correct Answers',
+                          type: 'text',
+                          bsClass: 'form-control',
+                          placeholder: 'Last Name',
+                          value: this.props.result[i].numberOfCorrectAnswer,
+                      },
+                      {
+                          label: 'Total Questions',
+                          type: 'text',
+                          bsClass: 'form-control',
+                          placeholder: 'Total Questions',
+                          value: this.props.result[i].size,
+                      }
+                  ]}
+              />
+          );
+      }
+      return <form>{rows}</form>;
+  }
+
+  render(){
+      return (
       <div className="content">
         <Grid fluid>
           <Row>
@@ -37,45 +77,47 @@ class UserAccount extends Component {
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'First Name',
-                          value: this.props.logInUser.firstName,
+                          value: this.props.user.firstName,
                         },
                         {
                           label: 'Last Name',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Last Name',
-                          value: this.props.logInUser.lastName,
+                          value: this.props.user.lastName,
                         },
                       ]}
                     />
                     <FormInputs
-                      ncols={['col-md-7', 'col-md-5']}
+                      ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
                         {
                           label: 'Email address',
                           type: 'email',
                           bsClass: 'form-control',
                           placeholder: 'Email',
-                          value: this.props.logInUser.email,
+                          value: this.props.user.email,
                         },
                         {
                           label: 'Phone',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Phone',
-                          value: this.props.logInUser.phone,
+                          value: this.props.user.phone,
                         },
                       ]}
                     />
-                    <Button bsStyle="info" pullRight fill type="submit">
-                      Update Profile
+                    <Button bsStyle="info" pullRight fill type="submit"
+                    onClick={this.logOutAction.bind(this)}>
+                        Log Out
                     </Button>
+                    <div className="clearfix"></div>
                   </form>
                 }
               />
               <Card
                 title="Grade"
-                category="Your grade from the previous tests."
+                content={this.getAllResult()}
               />
             </Col>
           </Row>
@@ -85,12 +127,14 @@ class UserAccount extends Component {
   }
 }
 
+
+
+
 function mapStateToProps(state) {
   return {
-    logInUser: state.logInReducer,
+    user: state.user.userProfile,
+    result: state.resultReducer,
   }
 }
 
-export default withRouter(
-  connect(mapStateToProps, { signInAction })(UserAccount),
-)
+export default withRouter(connect(mapStateToProps, { logOut })(UserAccount))

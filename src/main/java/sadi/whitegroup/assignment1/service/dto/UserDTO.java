@@ -2,9 +2,11 @@ package sadi.whitegroup.assignment1.service.dto;
 
 import org.hibernate.validator.constraints.Email;
 import sadi.whitegroup.assignment1.entity.Authority;
+import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.User;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,17 +30,15 @@ public class UserDTO {
     @Size(min = 11, max = 13)
     private String phone;
 
-    private boolean activated = false;
-
     private Set<String> authorities;
+
 
     public UserDTO() {}
 
     public UserDTO(User user) {
         this(user.getId(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getPhone(),
-            user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+            user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()));
     }
 
     public UserDTO(Long id, String firstName, String lastName,

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "history": "^4.7.2",
+    "react-router-redux": "^5.0.0-alpha.8",
+    "whatwg-fetch": "^2.0.3"
+  }
+}
