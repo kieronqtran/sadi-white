@@ -9,35 +9,27 @@ import {
 } from 'react-router-dom'
 import {testSample} from 'variables/mockData.js'
 import { connect } from 'react-redux'
-import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest} from '../../actions/takeTest-actions'
+import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
 
 class TestForm extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.params.testId);
+    console.log(this.props.match.params.testId);
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
-    this.props.takeTest(this.props.params.testId);
+    this.props.takeTest(this.props.match.params.testId);
   }
   nextQuestion() {
-    this.dispatch(
-      {
-        type: NEXT_QUESTION,
-      }
-    )
+    this.props.nextQuestion()
   }
 
   previousQuestion() {
-    this.dispatch(
-      {
-        type: PREVIOUS_QUESTION,
-      }
-    )
+    this.props.previousQuestion()
   }
 
   answerQuestion(questionId, answerId){
-    this.dispatch(
+    this.props.dispatch(
       {
         type: ANSWER_QUESTION,
         action: {questionId, answerId},
@@ -56,20 +48,20 @@ class TestForm extends Component {
     const { onSubmit, currentQuestion, currentTest } = this.props;
     return (
       <div className="content">
-        {currentQuestion < test.size && (
+        {currentQuestion < currentTest.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion.bind(this)}
             onSubmit={this.nextQuestion}
-            test={test}
+            test={currentTest}
             currentQuestion={currentQuestion}
             setResult={this.answerQuestion.bind(this)}
           />
         )}
-        {currentQuestion === test.size && (
+        {currentQuestion === currentTest.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion}
             onSubmit={this.submitTest.bind(this)}
-            test={test}
+            test={currentTest}
             currentQuestion={currentQuestion}
             setResult={setResult}
           />
@@ -83,13 +75,13 @@ TestForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 }
 
-// remember put the default action in the reducers or undefine error
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  console.log(state);
   return {
-    // currentTest: state.takeTest.currentTest,
-    // currentQuestion: state.takeTest.currentQuestion,
-    // answer: state.takeTest.answer,
+    currentTest: state.takeTest.currentTest,
+    currentQuestion: state.takeTest.currentQuestion,
+    answer: state.takeTest.answer,
   };
 }
 
-export default connect(mapStateToProps, {takeTest, submitTest})(TestForm);
+export default connect(mapStateToProps, {takeTest, submitTest, nextQuestion, previousQuestion})(TestForm);

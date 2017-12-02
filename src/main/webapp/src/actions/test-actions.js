@@ -3,7 +3,14 @@ export const GET_LIST_TEST_ERROR = "FAILED_TO_RECEIVE_LIST_TEST";
 
 export function getListTest(){
 	return async dispatch => {
-    const res = await fetch('/api/test') // /api/testing
+    const token = sessionStorage.getItem('token')
+    const res = await fetch('/api/testings',{
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    }) // /api/testing
     const data = await res.json()
     console.log(data)
     try {

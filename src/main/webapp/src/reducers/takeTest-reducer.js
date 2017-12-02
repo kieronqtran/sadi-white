@@ -6,31 +6,41 @@ import {GET_TEST,
         SUBMIT_RESULT_FAIL,
         ANSWER_QUESTION} from '../actions/takeTest-actions';
 
-export default function newQuestion(state={}, action){
+const initState = {currentTest: {
+  id:0,
+  name:'',
+  type:'',
+  testTime: 0,
+  size: 0,
+  questions: []
+}, answer: [], currentQuestion: 1}
+export default function newQuestion(state=initState, action){
   switch(action.type){
     case GET_TEST:
-      console.log("")
+      console.log(state);
       return {...state, currentTest: action.test};
     case GET_TEST_ERROR:
       console.log("Does not exist this test");
-      return {...state, currentTest: action.test};
+      return {...state, currentTest: initState.currentTest};
     case ANSWER_QUESTION:
       console.log("Answered one question");
       const new_answer = state.takeTest.answer;
-      new_answer[action.questionId] = action.answerId;
+      new_answer.add(action.answerId);
       return {...state, answer: new_answer}
     case NEXT_QUESTION:
       console.log("Next question");
-      return {...state, currentQuestion: state.takeTest.currentQuestion + 1};
+      var new_question = state.currentQuestion + 1;
+      return {...state, currentQuestion:  new_question};
     case PREVIOUS_QUESTION:
       console.log("Previous question");
-      return {...state, currentQuestion: state.takeTest.currentQuestion - 1};
+      var new_question = state.currentQuestion - 1;
+      return {...state, currentQuestion:  new_question};
     case SUBMIT_RESULT_SUCCESSFUL:
       console.log("Submit answer of test succeed");
       return {...state, answer_test: {testId: state.takeTest.currentTest.id, answer: state.takeTest.answer}};
     case SUBMIT_RESULT_FAIL:
       console.log("Submit answer of test failed");
-      return state;
+      return {...state, answer_test: {}};
     default:
       return state;
   }

@@ -6,9 +6,28 @@ export const SUBMIT_RESULT_SUCCESSFUL = "SUBMIT_RESULT_SUCCESS";
 export const SUBMIT_RESULT_FAIL = "SUBMIT_RESULT_FAIL";
 export const ANSWER_QUESTION = "ANSWER_QUESTION";
 
-export function takeTest({testId}){
+export function nextQuestion(){
+  return {
+    type: NEXT_QUESTION,
+  }
+}
+export function previousQuestion(){
+  return {
+    type: PREVIOUS_QUESTION
+  }
+}
+
+
+export function takeTest(testId){
+  const token = sessionStorage.getItem('token')
   return async dispatch => {
-    fetch('/api/test/'+testId)
+    fetch('/api/testings/'+testId, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then(res => res.json())
       .then(res => {
         try {
