@@ -143,18 +143,26 @@ export function signInAction({ email, password }) {
   }
 }
 
+export const GET_CURRENT_USER_RESULT_SUCCESSFUL = 'GET_CURRENT_USER_RESULT_SUCCESSFUL'
+export const GET_CURRENT_USER_RESULT_FAIL = 'GET_CURRENT_USER_RESULT_FAIL'
+
 export function getResult() {
-	return async dispatch => {
-      const token =  sessionStorage.getItem('token')
-      const response = await fetch('/api/result', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      const data = await response.json()
-      dispatch({ type: 'USER_RESULT', result: data })
-	}
+  return async (dispatch) => {
+    const token = sessionStorage.getItem('token')
+    const response = await fetch('/api/account/result', {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'GET',
+    })
+    if (response.status === 201) {
+      const data = response.json();
+      dispatch({ type: GET_CURRENT_USER_RESULT_SUCCESSFUL, payload: data, })
+    }
+    if (response.status === 500) {
+      dispatch({ type: GET_CURRENT_USER_RESULT_FAIL, message: 'Something wrong in the connection' })
+    }
+  }
 }

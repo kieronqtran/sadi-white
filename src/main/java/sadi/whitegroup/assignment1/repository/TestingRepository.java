@@ -14,6 +14,5 @@ import java.util.Optional;
 @Repository
 public interface TestingRepository extends JpaRepository<Testing, Long> {
 
-    @Query("SELECT t FROM Testing t INNER JOIN FETCH t.questions WHERE t.id = :id ")
     Optional<Testing> findOneWithQuestionAndAnswerById (Long id);
 }

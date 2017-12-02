@@ -98,7 +98,7 @@ public class UaaConfiguration extends AuthorizationServerConfigurerAdapter imple
      * @return the JwtTokenStore managing the tokens.
      */
     @Bean
-    public JwtTokenStore tokenStore() {
+    public TokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 

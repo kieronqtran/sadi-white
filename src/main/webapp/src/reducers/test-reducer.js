@@ -11,7 +11,7 @@ export default function getTestList(state = defaultList, action){
       console.log(action.testList)
       return {testList: action.testList};
     case GET_LIST_TEST_ERROR:
-      return {testList: defaultList.testList}
+      return {testList: []}
       console.log(action.error); // why console.log after the return has been called ???
   }
   return state;

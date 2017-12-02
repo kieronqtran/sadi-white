@@ -16,7 +16,7 @@ export default function newQuestion(state={}, action){
       return {...state, currentTest: action.test};
     case ANSWER_QUESTION:
       console.log("Answered one question");
-      var new_answer = state.takeTest.answer;
+      const new_answer = state.takeTest.answer;
       new_answer[action.questionId] = action.answerId;
       return {...state, answer: new_answer}
     case NEXT_QUESTION:
