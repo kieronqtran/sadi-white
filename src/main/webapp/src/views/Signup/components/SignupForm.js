@@ -26,7 +26,10 @@ class SignupForm extends Component {
     const { page } = this.state
     return (
       <div>
-        {page === 1 && <SignupFormFirstPage onSubmit={this.nextPage} />}
+        {page === 1 && (
+          <SignupFormFirstPage
+            onSubmit={this.nextPage} />
+        )}
         {page === 2 && (
           <SignupFormSecondPage
             previousPage={this.previousPage}

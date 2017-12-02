@@ -5,7 +5,7 @@ import {
   Col,
   FormGroup,
   ControlLabel,
-  FormControl,
+  FormControl
 } from 'react-bootstrap'
 
 import { withRouter } from 'react-router'
@@ -14,49 +14,20 @@ import { Card } from 'components/Card/Card'
 import { FormInputs } from 'components/FormInputs/FormInputs'
 import { UserCard } from 'components/UserCard/UserCard'
 import Button from 'elements/CustomButton/CustomButton'
-import { signInAction, logOut } from '../../actions/authentication-actions'
+import { signInAction, logOut, updateInfo, getResult } from '../../actions/authentication-actions'
+import UserProfile from './UserProfile'
+import ResultList from './ResultList'
 
-import avatar from 'assets/img/faces/face-3.jpg'
 
 class UserAccount extends Component {
-  logOutAction(){
-    this.props.logOut();
-    this.props.history.push('/login')
+
+  constructor(props){
+    super(props)
+    this.props.getResult()
   }
 
-  getAllResult(){
-      var rows = [];
-      for (var i = 0; i < this.props.result.length; i++) {
-          rows.push(
-              <FormInputs
-                  ncols={['col-md-4', 'col-md-4', 'col-md-4']}
-                  proprieties={[
-                      {
-                          label: 'Test Name',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Test Name',
-                          value: this.props.result[i].testName,
-                      },
-                      {
-                          label: 'Correct Answers',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Last Name',
-                          value: this.props.result[i].numberOfCorrectAnswer,
-                      },
-                      {
-                          label: 'Total Questions',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Total Questions',
-                          value: this.props.result[i].size,
-                      }
-                  ]}
-              />
-          );
-      }
-      return <form>{rows}</form>;
+  updateInfo(info){
+    this.props.updateInfo(info);
   }
 
   render(){
@@ -68,56 +39,22 @@ class UserAccount extends Component {
               <Card
                 title="Edit Profile"
                 content={
-                  <form>
-                    <FormInputs
-                      ncols={['col-md-6', 'col-md-6']}
-                      proprieties={[
-                        {
-                          label: 'First Name',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'First Name',
-                          value: this.props.user.firstName,
-                        },
-                        {
-                          label: 'Last Name',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Last Name',
-                          value: this.props.user.lastName,
-                        },
-                      ]}
-                    />
-                    <FormInputs
-                      ncols={['col-md-6', 'col-md-6']}
-                      proprieties={[
-                        {
-                          label: 'Email address',
-                          type: 'email',
-                          bsClass: 'form-control',
-                          placeholder: 'Email',
-                          value: this.props.user.email,
-                        },
-                        {
-                          label: 'Phone',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Phone',
-                          value: this.props.user.phone,
-                        },
-                      ]}
-                    />
-                    <Button bsStyle="info" pullRight fill type="submit"
-                    onClick={this.logOutAction.bind(this)}>
-                        Log Out
-                    </Button>
-                    <div className="clearfix"></div>
-                  </form>
+                  <UserProfile onSubmit={this.updateInfo.bind(this)}
+                               firstName={this.props.user.firstName}
+                               lastName={this.props.user.lastName}
+                               phone={this.props.user.phone}/>
                 }
               />
+              <div className="clearfix"></div>
               <Card
                 title="Grade"
-                content={this.getAllResult()}
+                content={<form>{
+                  this.props.result.map(e => (
+                    <ResultList testName={e.testName}
+                                numberOfCorrectAnswer={e.numberOfCorrectAnswer}
+                                size={e.size}/>
+                  ))
+                }</form>}
               />
             </Col>
           </Row>
@@ -127,14 +64,11 @@ class UserAccount extends Component {
   }
 }
 
-
-
-
 function mapStateToProps(state) {
   return {
     user: state.user.userProfile,
-    result: state.resultReducer,
+    result: state.result,
   }
 }
 
-export default withRouter(connect(mapStateToProps, { logOut })(UserAccount))
+export default withRouter(connect(mapStateToProps, { logOut, updateInfo, getResult })(UserAccount))

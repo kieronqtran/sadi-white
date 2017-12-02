@@ -13,6 +13,10 @@ export const AUTHENTICATED = 'AUTHENTICATED_USER'
 export const UNAUTHENTICATED = 'UNAUTHENTICATED_USER'
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 
+export const UPDATE_SUCCESSFUL = 'UPDATE_SUCCESSFUL'
+export const UPDATE_ERROR = 'UPDATE_ERROR'
+
+
 export function refreshToken() {
 	return async dispatch => {
 		const refresh_token = sessionStorage.getItem('refresh_token')
@@ -48,6 +52,30 @@ export function logOut() {
   }
 }
 
+export function updateInfo(info) {
+  return async dispatch => {
+    try {
+      const token =  sessionStorage.getItem('token')
+      const response = await fetch('/api/account', {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(info)
+      })
+      const data = await response.json()
+      dispatch({type: UPDATE_SUCCESSFUL, user: data})
+
+    } catch (error) {
+      return dispatch({type: UPDATE_ERROR, message: 'Invalid input'})
+    } finally {
+      alert("Profile Updated");
+    }
+  }
+}
+
 export function signUp(info) {
 	return function (dispatch) {
 		fetch('/api/signUp', {
@@ -74,29 +102,29 @@ export function signUp(info) {
 
 export function signInAction({ email, password }) {
 	return async dispatch => {
-		try {
-			const response = await fetch('/oauth/token', {
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/x-www-form-urlencoded',
-					Authorization: 'Basic d2ViX2FwcDpjaGFuZ2VpdA==',
-				},
-				method: 'POST',
-				body: `grant_type=password&username=${email}&password=${password}`,
-			})
-			const data  = await response.json()
-			sessionStorage.setItem('token', data.access_token)
-			sessionStorage.setItem('refresh_token', data.refresh_token)
+    try {
+      const response = await fetch('/oauth/token', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: 'Basic d2ViX2FwcDpjaGFuZ2VpdA==',
+        },
+        method: 'POST',
+        body: `grant_type=password&username=${email}&password=${password}`,
+      })
+      const data = await response.json()
+      sessionStorage.setItem('token', data.access_token)
+      sessionStorage.setItem('refresh_token', data.refresh_token)
       const tokenExpireTime = Date.now() + data.expires_in * 1000
       sessionStorage.setItem('tet', tokenExpireTime.toString())
-			const payload = jwtDecode(data.access_token)
-			dispatch({ type: AUTHENTICATED, payload })
-		} catch (error) {
-			return dispatch({ type: AUTHENTICATION_ERROR, message: 'Invalid email or password' })
+      const payload = jwtDecode(data.access_token)
+      dispatch({type: AUTHENTICATED, payload})
+    } catch (error) {
+      return dispatch({type: AUTHENTICATION_ERROR, message: 'Invalid email or password'})
     }
 
     try {
-      const token =  sessionStorage.getItem('token')
+      const token = sessionStorage.getItem('token')
       const response = await fetch('/api/account', {
         method: 'GET',
         headers: {
@@ -106,12 +134,26 @@ export function signInAction({ email, password }) {
         },
       })
       const data = await response.json()
-      dispatch({ type: GET_CURRENT_USER_DATA_SUCCESSFUL, data })
-      return dispatch(push('/test'))
+      dispatch({type: GET_CURRENT_USER_DATA_SUCCESSFUL, data})
+
     } catch (error) {
-      return dispatch({ type: GET_CURRENT_USER_DATA_FAIL, message: 'Network error.'})
+      return dispatch({type: GET_CURRENT_USER_DATA_FAIL, message: 'Network error.'})
     }
-    return dispatch({ type: GET_CURRENT_USER_DATA_FAIL, message: 'Require user logged in.' })
   }
 }
 
+export function getResult() {
+	return async dispatch => {
+      const token =  sessionStorage.getItem('token')
+      const response = await fetch('/api/result', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      const data = await response.json()
+      dispatch({ type: 'USER_RESULT', result: data })
+	}
+}
