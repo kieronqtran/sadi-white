@@ -6,7 +6,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,8 +35,7 @@ public class Question implements Serializable {
     private Testing testing;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<Answer> answers = new HashSet<>();
+    private List<Answer> answers = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -70,15 +71,15 @@ public class Question implements Serializable {
         return this;
     }
 
-    public Set<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(Set<Answer> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.answers = answers;
     }
 
-    public Question answers(Set<Answer> answers) {
+    public Question answers(List<Answer> answers) {
         this.answers = answers;
         return this;
     }

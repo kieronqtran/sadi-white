@@ -5,6 +5,7 @@ export const PREVIOUS_QUESTION = "GET_PREVIOUS_QUESTION";
 export const SUBMIT_RESULT_SUCCESSFUL = "SUBMIT_RESULT_SUCCESS";
 export const SUBMIT_RESULT_FAIL = "SUBMIT_RESULT_FAIL";
 export const ANSWER_QUESTION = "ANSWER_QUESTION";
+
 export function takeTest({testId}){
   return async dispatch => {
     fetch('/api/test/'+testId)
