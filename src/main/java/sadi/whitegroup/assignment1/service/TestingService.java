@@ -6,15 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sadi.whitegroup.assignment1.controller.dto.StudentAnswerDTO;
 import sadi.whitegroup.assignment1.controller.dto.TestTypeDTO;
-import sadi.whitegroup.assignment1.entity.Result;
-import sadi.whitegroup.assignment1.entity.Testing;
-import sadi.whitegroup.assignment1.entity.User;
-import sadi.whitegroup.assignment1.repository.AnswerRepository;
-import sadi.whitegroup.assignment1.repository.ResultRepository;
-import sadi.whitegroup.assignment1.repository.TestingRepository;
-import sadi.whitegroup.assignment1.repository.UserRepository;
+import sadi.whitegroup.assignment1.entity.*;
+import sadi.whitegroup.assignment1.repository.*;
 import sadi.whitegroup.assignment1.security.SecurityUtils;
-import sadi.whitegroup.assignment1.service.dto.ResultDTO;
+import sadi.whitegroup.assignment1.service.dto.CreateQuestionDTO;
+import sadi.whitegroup.assignment1.service.dto.CreateTestingDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,19 +26,45 @@ public class TestingService {
 
     private final AnswerRepository answerRepository;
 
+    private final QuestionRepository questionRepository;
+
     private final UserRepository userRepository;
 
     private final ResultRepository resultRepository;
 
-    public TestingService(TestingRepository testingRepository, AnswerRepository answerRepository, UserRepository userRepository, ResultRepository resultRepository) {
+    public TestingService(TestingRepository testingRepository, AnswerRepository answerRepository, QuestionRepository questionRepository, UserRepository userRepository, ResultRepository resultRepository) {
         this.testingRepository = testingRepository;
         this.answerRepository = answerRepository;
+        this.questionRepository = questionRepository;
         this.userRepository = userRepository;
         this.resultRepository = resultRepository;
     }
 
-    public Testing save(Testing testing) {
-        log.debug("Request to save Testing : {}", testing);
+    @Transactional
+    public Testing save(CreateTestingDTO testingDTO) {
+        log.debug("Request to save Testing : {}", testingDTO);
+        List<Question> questionList = questionRepository
+            .save(testingDTO.getQuestions()
+                .stream()
+            .map(e -> {
+                List<Answer> answerList = answerRepository.save(
+                    e.getAnswers().stream()
+                    .map(createAnswerDTO -> new Answer()
+                        .isCorrectAnswer(createAnswerDTO.isCorrectAnswer())
+                        .content(createAnswerDTO.getContent())
+                    ).collect(Collectors.toList()));
+                return new Question()
+                    .content(e.getContent())
+                    .answers(answerList);
+            })
+            .collect(Collectors.toList()));
+        Testing testing = new Testing()
+            .name(testingDTO.getName())
+            .type(testingDTO.getType())
+            .testTime(testingDTO.getTestTime())
+            .size(testingDTO.getSize())
+            .questions(questionList);
+
         return testingRepository.save(testing);
     }
 

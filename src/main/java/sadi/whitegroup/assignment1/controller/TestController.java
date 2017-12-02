@@ -15,6 +15,7 @@ import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.Testing;
 import sadi.whitegroup.assignment1.security.AuthoritiesConstants;
 import sadi.whitegroup.assignment1.service.TestingService;
+import sadi.whitegroup.assignment1.service.dto.CreateTestingDTO;
 import sadi.whitegroup.assignment1.service.dto.TestDTO;
 
 import javax.transaction.Transactional;
@@ -57,8 +58,9 @@ public class TestController {
     }
 
     @RequestMapping(value = "/testing/result", method = RequestMethod.POST)
-    public Result saveResult(@Valid @RequestBody StudentAnswerDTO studentAnswer) {
-        return testingService.markingAnswer(studentAnswer);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveResult(@Valid @RequestBody StudentAnswerDTO studentAnswer) {
+        testingService.markingAnswer(studentAnswer);
     }
 
     /**
@@ -69,15 +71,13 @@ public class TestController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/testings")
-    public ResponseEntity<Testing> createTesting(@RequestBody Testing testing) throws URISyntaxException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createTesting(@RequestBody CreateTestingDTO testing) throws URISyntaxException {
         log.debug("REST request to save Testing : {}", testing);
-        if (testing.getId() != null) {
-            throw new BadRequestAlertException("A new testing cannot already have an ID", "Testing", "idexists");
-        }
-        Testing result = testingService.save(testing);
-        return ResponseEntity.created(new URI("/api/testings/" + result.getId()))
-                .headers(HeaderUtil.createEntityCreationAlert("Testing", result.getId().toString()))
-                .body(result);
+        // if (testing.getId() != null) {
+        //     throw new BadRequestAlertException("A new testing cannot already have an ID", "Testing", "idexists");
+        // }
+        testingService.save(testing);
     }
 
     /**
@@ -89,18 +89,16 @@ public class TestController {
      * or with status 500 (Internal Server Error) if the testing couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/testings")
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Testing> updateTesting(@RequestBody Testing testing) throws URISyntaxException {
-        log.debug("REST request to update Testing : {}", testing);
-        if (testing.getId() == null) {
-            return createTesting(testing);
-        }
-        Testing result = testingService.save(testing);
-        return ResponseEntity.ok()
-                .headers(HeaderUtil.createEntityUpdateAlert("Testing", testing.getId().toString()))
-                .body(result);
-    }
+//    @PutMapping("/testings")
+//    @Secured(AuthoritiesConstants.ADMIN)
+//    public ResponseEntity<Testing> updateTesting(@RequestBody Testing testing) throws URISyntaxException {
+//        log.debug("REST request to update Testing : {}", testing);
+//
+//        //        Testing result = testingService.save(testing);
+//        return ResponseEntity.ok()
+//                .headers(HeaderUtil.createEntityUpdateAlert("Testing", testing.getId().toString()))
+//                .body(result);
+//    }
 
     /**
      * GET  /testings : get all the testings.

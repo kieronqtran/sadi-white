@@ -84,9 +84,13 @@ public class Testing implements Serializable {
     public void setSize(int size) {
         this.size = size;
     }
+    public Testing size(int size) {
+        this.size = size;
+        return this;
+    }
 
-    public Testing testtime(Long testtime) {
-        this.testTime = testtime;
+    public Testing testTime(Long testTime) {
+        this.testTime = testTime;
         return this;
     }
     public List<Question> getQuestions() {
