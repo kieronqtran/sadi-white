@@ -32,6 +32,7 @@ public class Question implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "testing_id", nullable = false)
+    @JsonIgnore
     private Testing testing;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
