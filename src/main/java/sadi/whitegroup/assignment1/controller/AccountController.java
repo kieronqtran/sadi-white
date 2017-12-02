@@ -84,7 +84,7 @@ public class AccountController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/account")
+    @PutMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
         userService.updateUser(userDTO);
     }

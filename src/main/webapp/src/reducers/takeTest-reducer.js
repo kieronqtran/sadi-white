@@ -27,10 +27,11 @@ export default function newQuestion(state={}, action){
       return {...state, currentQuestion: state.takeTest.currentQuestion - 1};
     case SUBMIT_RESULT_SUCCESSFUL:
       console.log("Submit answer of test succeed");
-      return {...state, answer_test: {testId: state.takeTest.currentTest.id, answer: state.takeTest.answer}};
+      return {...state, answer_test: {testId: state.takeTest.currentTest.id, answer: state.takeTest.answer}}
     case SUBMIT_RESULT_FAIL:
       console.log("Submit answer of test failed");
-      return state;
+      return state; // quick fixed
+
     default:
       return state;
   }

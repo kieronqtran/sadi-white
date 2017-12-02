@@ -56,7 +56,7 @@ if (token && refresh_token && Date.now() < experied) {
     })
   })
   .then(response => response.json())
-  .then(data => {
+  .then((data) => {
     if(!data.error) {
       const payload = jwtDecode(sessionStorage.getItem('token'))
       store.dispatch({ type: AUTHENTICATED, payload: payload })
