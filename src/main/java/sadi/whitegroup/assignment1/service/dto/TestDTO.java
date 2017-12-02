@@ -6,6 +6,7 @@ import sadi.whitegroup.assignment1.entity.Testing;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class TestDTO {
     private long id;
 
@@ -17,10 +18,9 @@ public class TestDTO {
 
     private int size;
 
-    private List<Question> questions = new ArrayList();
+    private List<Question> questions = new ArrayList<>();
 
     public TestDTO() {}
-
 
     public TestDTO(long id, String name, String type, Long testTime, int size, List<Question> questions) {
         this.id = id;
@@ -32,7 +32,12 @@ public class TestDTO {
     }
 
     public TestDTO(Testing testing) {
-        this(testing.getId(), testing.getName(), testing.getType(), testing.getTestTime(), testing.getSize(), testing.getQuestions());
+        this(testing.getId(),
+         testing.getName(),
+         testing.getType(),
+        testing.getTestTime(),
+        testing.getSize(),
+        testing.getQuestions());
     }
 
     public long getId() {

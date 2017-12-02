@@ -117,7 +117,37 @@ class UserAccount extends Component {
               />
               <Card
                 title="Grade"
-                content={this.getAllResult()}
+                content={<form>
+                  {
+                    this.props.result.map(e =>
+                      (<FormInputs
+                      ncols={['col-md-4', 'col-md-4', 'col-md-4']}
+                      proprieties={[
+                          {
+                              label: 'Test Name',
+                              type: 'text',
+                              bsClass: 'form-control',
+                              placeholder: 'Test Name',
+                              value: e.testName,
+                          },
+                          {
+                              label: 'Correct Answers',
+                              type: 'text',
+                              bsClass: 'form-control',
+                              placeholder: 'Last Name',
+                              value: e.numberOfCorrectAnswer,
+                          },
+                          {
+                              label: 'Total Questions',
+                              type: 'text',
+                              bsClass: 'form-control',
+                              placeholder: 'Total Questions',
+                              value: e.size,
+                          }
+                      ]}
+                  />))
+                  }
+                </form>}
               />
             </Col>
           </Row>
@@ -133,7 +163,7 @@ class UserAccount extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user.userProfile,
-    result: state.resultReducer,
+    result: state.result,
   }
 }
 

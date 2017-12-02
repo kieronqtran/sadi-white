@@ -17,6 +17,7 @@ import sadi.whitegroup.assignment1.security.AuthoritiesConstants;
 import sadi.whitegroup.assignment1.service.TestingService;
 import sadi.whitegroup.assignment1.service.dto.TestDTO;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,13 +43,13 @@ public class TestController {
      * @param id the id of the testing to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the testing, or with status 404 (Not Found)
      */
-    @GetMapping("/testings/{id}")
-    public ResponseEntity<Testing> getTesting(@PathVariable Long id) {
-        log.debug("REST request to get Testing : {}", id);
-        return testingService.findOne(id)
-                .map(response -> ResponseEntity.ok().body(response))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+    // @GetMapping("/testings/{id}")
+    // public ResponseEntity<Testing> getTesting(@PathVariable Long id) {
+    //     log.debug("REST request to get Testing : {}", id);
+    //     return testingService.findOne(id)
+    //             .map(response -> ResponseEntity.ok().body(response))
+    //             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    // }
 
     @RequestMapping(value = "/testing/type", method = RequestMethod.GET)
     public List<TestTypeDTO> getAllTypes() {
@@ -127,12 +128,16 @@ public class TestController {
     }
 
     @GetMapping("/testings/{id}")
+    @Transactional
     public TestDTO getTestQuestions(@PathVariable Long id) {
         Optional<Testing> testing = testingService.findOne(id);
         List<Question> questions = (List<Question>) testing.get().getQuestions();
         Collections.shuffle(questions);
+        questions.forEach(e -> e.getAnswers().size());
         testing.get().setQuestions(questions);
         return testing.map(TestDTO::new)
             .orElseThrow(() -> new RuntimeException("Test not found/"));
     }
+
+
 }

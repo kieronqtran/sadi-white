@@ -34,7 +34,7 @@ public class Testing implements Serializable {
 
     @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Question> questions = new ArrayList();
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
     @JsonIgnore
