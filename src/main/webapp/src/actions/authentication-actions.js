@@ -133,9 +133,10 @@ export function signInAction({ email, password }) {
           Authorization: `Bearer ${token}`,
         },
       })
+      
       const data = await response.json()
       dispatch({type: GET_CURRENT_USER_DATA_SUCCESSFUL, data})
-
+      return dispatch(push('/test'))
     } catch (error) {
       return dispatch({type: GET_CURRENT_USER_DATA_FAIL, message: 'Network error.'})
     }

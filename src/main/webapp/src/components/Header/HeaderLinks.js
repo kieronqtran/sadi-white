@@ -22,11 +22,11 @@ class HeaderLinks extends Component {
                 Hello, {this.props.userFullName}
               </NavItem>
               <NavItem eventKey={3} onClick={(e) => this.handleLogout()}>
-                Log out
+                Log Out
               </NavItem>
             </Nav>) :
             (<Nav pullRight>
-              <NavItem eventKey={3} onClick={(e) => this.handleRoute('/login')}>Log in</NavItem>
+              <NavItem eventKey={3} onClick={(e) => this.handleRoute('/login')}>Log In</NavItem>
             </Nav>)
         )
   }
