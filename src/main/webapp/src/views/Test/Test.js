@@ -41,7 +41,7 @@ class TestList extends Component {
                       {
 												//  this cause errors b/c you need to create a default value in the reducer
                         this.props.testList.map((prop, key) => {
-                          const testUrl = "#/takeTest/" + prop.id;
+                          const testUrl = "#!/takeTest/" + prop.id;
                           return (
                             <tr key={key}>
                               <td>{prop.id}</td>

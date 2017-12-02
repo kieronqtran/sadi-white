@@ -19,14 +19,14 @@ class HeaderLinks extends Component {
     return (this.props.isAuthenticated ?
             (<Nav pullRight>
               <NavItem eventKey={2} onClick={(e) => this.handleRoute('/user')}>
-                Hello {this.props.userFullName}
+                Hello, {this.props.userFullName}
               </NavItem>
               <NavItem eventKey={3} onClick={(e) => this.handleLogout()}>
-                Log out
+                Log Out
               </NavItem>
             </Nav>) :
             (<Nav pullRight>
-              <NavItem eventKey={3} onClick={(e) => this.handleRoute('/login')}>Log in</NavItem>
+              <NavItem eventKey={3} onClick={(e) => this.handleRoute('/login')}>Log In</NavItem>
             </Nav>)
         )
   }

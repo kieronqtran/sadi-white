@@ -27,7 +27,7 @@ public class UserDTO {
     @Size(min = 5, max = 100)
     private String email;
 
-    @Size(min = 11, max = 13)
+    @Size(min = 10, max = 13)
     private String phone;
 
     private Set<String> authorities;
