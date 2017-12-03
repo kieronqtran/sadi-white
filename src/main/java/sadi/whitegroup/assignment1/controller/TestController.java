@@ -138,7 +138,7 @@ public class TestController {
     @DeleteMapping("/testings/{id}")
     @Secured(AuthoritiesConstants.ADMIN)
     public void deleteTesting(@PathVariable Long id) {
-        testingService.deleteTest(id);
+        testingService.delete(id);
     }
 
 }

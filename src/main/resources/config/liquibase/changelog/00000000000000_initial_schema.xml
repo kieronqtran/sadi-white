@@ -148,8 +148,8 @@
             baseTableName="question"
             constraintName="fk_question_testing"
             deferrable="false"
-            onDelete="CASCADE"
-            onUpdate="CASCADE"
+            onDelete="NO ACTION"
+            onUpdate="NO ACTION"
             initiallyDeferred="false"
             referencedColumnNames="id"
             referencedTableName="testing"/>

@@ -113,7 +113,7 @@ public class TestingService {
     }
 
 
-    public void deleteTest(Long id) {
+    public void delete(Long id) {
         testingRepository.deleteById(id);
     }
 
