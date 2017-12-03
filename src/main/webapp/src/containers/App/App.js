@@ -55,9 +55,6 @@ class App extends Component {
               if (prop.requiredLogin && !this.props.isAuthenticated){
                 return <PrivateRoute isAuthenticated={false} redirectPath={"/login"} component={prop.component}/>
               }
-              // if (prop.cannotGetBack && this.props.isLoggedIn==0){
-              //   return <PrivateRoute isAuthenticated={false} redirectPath={"/user"} component={prop.component}/>
-              // }
               else{
                   return (
                     <Route path={prop.path} component={prop.component} key={key} />
