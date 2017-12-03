@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A Testing.
@@ -36,7 +34,7 @@ public class Testing implements Serializable {
 
     @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Question> questions = new HashSet<>();
+    private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -86,13 +84,13 @@ public class Testing implements Serializable {
         this.testTime = testtime;
         return this;
     }
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
-    public Testing questions(Set<Question> questions) {
+    public Testing questions(List<Question> questions) {
         this.questions = questions;
         return this;
     }

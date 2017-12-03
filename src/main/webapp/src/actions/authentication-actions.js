@@ -16,7 +16,8 @@ export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 export const UPDATE_SUCCESSFUL = 'UPDATE_SUCCESSFUL'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
 
-
+export const GET_RESULT_SUCCESSFUL = 'GET_RESULT_SUCCESSFUL'
+export const GET_RESULT_ERROR = 'GET_RESULT_ERROR'
 
 export function refreshToken() {
 	return async dispatch => {
@@ -172,6 +173,6 @@ export function getResult() {
         },
       })
       const data = await response.json()
-      dispatch({ type: 'USER_RESULT', result: data })
+      dispatch({ type: GET_RESULT_SUCCESSFUL, result: data })
 	}
 }
