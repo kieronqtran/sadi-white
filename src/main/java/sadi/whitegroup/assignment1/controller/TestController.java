@@ -142,12 +142,16 @@ public class TestController {
      */
     // NOTE: ignore this temporary
     // TODO: fix the delete on cascade
+//    @DeleteMapping("/testings/{id}")
+//    @Secured(AuthoritiesConstants.ADMIN)
+//    public ResponseEntity<Void> deleteTesting(@PathVariable Long id) {
+//        log.debug("REST request to delete Testing : {}", id);
+//        testingService.delete(id);
+//        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("Testing", id.toString())).build();
+//    }
     @DeleteMapping("/testings/{id}")
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteTesting(@PathVariable Long id) {
-        log.debug("REST request to delete Testing : {}", id);
+    public void deleteTesting(@PathVariable Long id) {
         testingService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("Testing", id.toString())).build();
     }
 
 }

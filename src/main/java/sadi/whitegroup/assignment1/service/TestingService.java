@@ -120,8 +120,7 @@ public class TestingService {
 
 
     public void delete(Long id) {
-        log.debug("Request to delete Testing : {}", id);
-        testingRepository.delete(id);
+        testingRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
