@@ -16,7 +16,7 @@ const combinedReducer = combineReducers({
 	auth: authReducer,
 	router: routerReducer,
   test: getTestList,
-  manageTest: newQuestion,
+  takeTest: newQuestion,
   makeTest: manageTest,
 })
 

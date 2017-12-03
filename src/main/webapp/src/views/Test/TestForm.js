@@ -7,6 +7,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import {testSample} from 'variables/mockData.js'
 import { connect } from 'react-redux'
 import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
 
@@ -19,7 +20,6 @@ class TestForm extends Component {
     this.answerQuestion = this.answerQuestion.bind(this);
     this.props.takeTest(this.props.match.params.testId);
     const testTime = this.props.currentTest.testTime;
-    console.log(testTime);
     const com = this;
     if(this.props.currentTest.size === 0){
     } else {
@@ -28,17 +28,11 @@ class TestForm extends Component {
         a = a + 1000;
         if(a === testTime){
           clearInterval(t);
-          console.log("hello again")
-          if (window.confirm("You will be redirected back to user account page, press cancel if you want to go back to test page") == true) {
-              com.submit("#!/user");
-          } else {
-              com.submit("#!/test");
-          }
-
+          com.submit("#!/user");
+          alert("You will be now redirected to the user page")
         }
       }, 1000);
     }
-
   }
   nextQuestion() {
     this.props.nextQuestion()
@@ -52,10 +46,10 @@ class TestForm extends Component {
     this.props.answerQuestion(questionId, answerId)
   }
 
-  submit(goTo = "#!/user"){
+  submit(){
     const finalResult = {testId: this.props.currentTest.id,
                           answerId: Object.values(this.props.answer)};
-    this.props.submitTest(finalResult, goTo);
+    this.props.submitTest(finalResult);
   }
 
   render() {
