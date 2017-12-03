@@ -50,7 +50,7 @@ export function takeTest(testId){
       })
   }
 }
-export function submitTest(test, redirect = "/user"){
+export function submitTest(test, redirect){
   return function(dispatch) {
     const token = sessionStorage.getItem('token')
     return fetch('/api/testing/result',{
@@ -68,7 +68,7 @@ export function submitTest(test, redirect = "/user"){
             type: SUBMIT_RESULT_SUCCESSFUL,
           });
         }
-        return dispatch(push(redirect))
+        window.location.replace(redirect)
         if(res.status === 500) {
           dispatch({
             type: SUBMIT_RESULT_FAIL,

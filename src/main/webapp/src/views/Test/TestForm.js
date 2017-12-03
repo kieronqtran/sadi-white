@@ -14,27 +14,35 @@ import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest,
 class TestForm extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.match.params.testId);
+
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
     this.props.takeTest(this.props.match.params.testId);
+    const testTime = this.props.currentTest.testTime/100;
+    console.log(testTime);
+    const com = this;
+    if(this.props.currentTest.size === 0){
+    } else {
+      var a = 0
+      var t = setInterval(function(){
+        a = a + 1000;
+        if(a === testTime){
+          clearInterval(t);
+          console.log("hello again")
+          if (window.confirm("You will be redirected back to user account page, press cancel if you want to go back to test page") == true) {
+              com.submit("#!/user");
+          } else {
+              com.submit("#!/test");
+          }
+
+        }
+      }, 1000);
+    }
+
   }
   nextQuestion() {
     this.props.nextQuestion()
-  }
-
-  timeout(timer){
-    var time = 0;
-    time = time + 1000;
-    if(time === 10000){
-      if (window.confirm("You will be redirected back to user account page, press cancel if you want to go back to test page") == true) {
-          this.props.submit("#!/user");
-      } else {
-          this.props.submit("#!/test");
-      }
-    }
-
   }
 
   previousQuestion() {
@@ -54,7 +62,7 @@ class TestForm extends Component {
   render() {
     const setResult = this.answerQuestion.bind(this);
     const { onSubmit, currentQuestion, currentTest } = this.props;
-    var timer = window.setInterval(this.timeout(timer), 1000);
+
     return (
       <div className="content">
         {currentQuestion < currentTest.size && (
