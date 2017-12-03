@@ -16,21 +16,20 @@ const QuestionForm = props => {
 
   const nameQuestion =
     'question' +
-    test.questions.find(e => e.id === currentQuestion).id.toString()
+    test.questions[currentQuestion-1].id.toString()
 
   return (
     <div className="card">
       <div className="header">
         <h3 className="title text-success">
-          {test.questions.find(e => e.id === currentQuestion).content}
+          {test.questions[currentQuestion-1].content}
         </h3>
       </div>
       <div className="content">
         <form>
           <table className="table">
             <tbody>
-              {test.questions
-                .find(e => e.id === currentQuestion)
+              {test.questions[currentQuestion-1]
                 .answers.map(ans => (
                   <Field
                     key={ans.id}
@@ -41,7 +40,7 @@ const QuestionForm = props => {
                     component={answerForm}
                     label={ans.content}
                     setNewResult={({ questionId, answerId }) => event =>
-                      setResult(currentQuestion.toString(), ans.id)}
+                      setResult(test.questions[currentQuestion-1].id.toString(), ans.id)}
                   />
                 ))}
             </tbody>

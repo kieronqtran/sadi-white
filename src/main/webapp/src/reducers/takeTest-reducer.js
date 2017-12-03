@@ -13,7 +13,7 @@ const initState = {currentTest: {
   testTime: 0,
   size: 0,
   questions: []
-}, answer: [], currentQuestion: 1}
+}, answer: {}, currentQuestion: 1}
 export default function newQuestion(state=initState, action){
   switch(action.type){
     case GET_TEST:
@@ -24,8 +24,8 @@ export default function newQuestion(state=initState, action){
       return {...state, currentTest: initState.currentTest};
     case ANSWER_QUESTION:
       console.log("Answered one question");
-      const new_answer = state.takeTest.answer;
-      new_answer.add(action.answerId);
+      var new_answer = state.answer;
+      new_answer[action.ans.question] = action.ans.answer;
       return {...state, answer: new_answer}
     case NEXT_QUESTION:
       console.log("Next question");
