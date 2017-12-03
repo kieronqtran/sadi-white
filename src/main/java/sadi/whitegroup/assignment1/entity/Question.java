@@ -3,6 +3,7 @@ package sadi.whitegroup.assignment1.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,11 +31,11 @@ public class Question implements Serializable {
     @Column(name = "content")
     private String content;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "testing_id", nullable = false)
     private Testing testing;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 
     public Long getId() {
@@ -43,6 +44,11 @@ public class Question implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Question id(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getContent() {

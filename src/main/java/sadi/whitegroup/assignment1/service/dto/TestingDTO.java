@@ -1,14 +1,14 @@
 package sadi.whitegroup.assignment1.service.dto;
 
-import sadi.whitegroup.assignment1.entity.Question;
 import sadi.whitegroup.assignment1.entity.Testing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
-public class TestDTO {
-    private long id;
+public class TestingDTO {
+    private Long id;
 
     private String name;
 
@@ -18,11 +18,11 @@ public class TestDTO {
 
     private int size;
 
-    private List<Question> questions = new ArrayList<>();
+    private List<QuestionDTO> questions = new ArrayList<>();
 
-    public TestDTO() {}
+    public TestingDTO() {}
 
-    public TestDTO(long id, String name, String type, Long testTime, int size, List<Question> questions) {
+    public TestingDTO(long id, String name, String type, Long testTime, int size, List<QuestionDTO> questions) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -31,20 +31,23 @@ public class TestDTO {
         this.questions = questions;
     }
 
-    public TestDTO(Testing testing) {
+    public TestingDTO(Testing testing) {
         this(testing.getId(),
-         testing.getName(),
-         testing.getType(),
-        testing.getTestTime(),
-        testing.getSize(),
-        testing.getQuestions());
+            testing.getName(),
+            testing.getType(),
+            testing.getTestTime(),
+            testing.getSize(),
+            testing.getQuestions()
+            .stream()
+            .map(QuestionDTO::new)
+            .collect(Collectors.toList()));
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -80,11 +83,11 @@ public class TestDTO {
         this.size = size;
     }
 
-    public List<Question> getQuestions() {
+    public List<QuestionDTO> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(List<QuestionDTO> questions) {
         this.questions = questions;
     }
 }

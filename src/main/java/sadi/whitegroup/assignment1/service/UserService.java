@@ -66,28 +66,6 @@ public class UserService {
         return newUser;
     }
 
-    public User createUser(UserDTO userDTO) {
-        User user = new User();
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = userDTO.getAuthorities().stream()
-                .map(authorityRepository::findOne)
-                .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
-        }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
-        user.setPhone(userDTO.getPhone());
-
-        userRepository.save(user);
-        log.debug("Created Information for User: {}", user);
-        return user;
-    }
-
-
-
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
             .findOne(userDTO.getId()))
@@ -114,25 +92,9 @@ public class UserService {
         });
     }
 
-
-    @Transactional(readOnly = true)
-    public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByEmail(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
-    }
-
-
-    @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthorities(String email) {
-        return userRepository.findOneWithAuthoritiesByEmail(email);
-    }
-
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
         return userRepository.findOneWithAuthoritiesByEmail(SecurityUtils.getCurrentUserLogin()).orElse(null);
-    }
-
-    public List<String> getAuthorities() {
-        return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
 
 }

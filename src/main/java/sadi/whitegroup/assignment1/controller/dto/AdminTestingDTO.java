@@ -1,12 +1,14 @@
-package sadi.whitegroup.assignment1.service.dto;
+package sadi.whitegroup.assignment1.controller.dto;
+
+import sadi.whitegroup.assignment1.entity.Testing;
 
 import java.util.ArrayList;
 import java.util.List;
-import  sadi.whitegroup.assignment1.service.dto.CreateQuestionDTO;;
+import java.util.stream.Collectors;
 
 
-public class CreateTestingDTO {
-    private long id;
+public class AdminTestingDTO {
+    private Long id;
 
     private String name;
 
@@ -16,11 +18,11 @@ public class CreateTestingDTO {
 
     private int size;
 
-    private List<CreateQuestionDTO> questions = new ArrayList<>();
+    private List<AdminQuestionDTO> questions = new ArrayList<>();
 
-    public CreateTestingDTO() {}
+    public AdminTestingDTO() {}
 
-    public CreateTestingDTO(long id, String name, String type, Long testTime, int size, List<CreateQuestionDTO> questions) {
+    public AdminTestingDTO(long id, String name, String type, Long testTime, int size, List<AdminQuestionDTO> questions) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -29,11 +31,23 @@ public class CreateTestingDTO {
         this.questions = questions;
     }
 
-    public long getId() {
+    public AdminTestingDTO(Testing testing) {
+        this(testing.getId(),
+            testing.getName(),
+            testing.getType(),
+            testing.getTestTime(),
+            testing.getSize(),
+            testing.getQuestions()
+            .stream()
+            .map(AdminQuestionDTO::new)
+            .collect(Collectors.toList()));
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,11 +83,11 @@ public class CreateTestingDTO {
         this.size = size;
     }
 
-    public List<CreateQuestionDTO> getQuestions() {
+    public List<AdminQuestionDTO> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<CreateQuestionDTO> questions) {
+    public void setQuestions(List<AdminQuestionDTO> questions) {
         this.questions = questions;
     }
 }

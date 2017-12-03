@@ -4,14 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sadi.whitegroup.assignment1.controller.dto.AdminTestingDTO;
 import sadi.whitegroup.assignment1.controller.dto.StudentAnswerDTO;
-import sadi.whitegroup.assignment1.controller.dto.TestTypeDTO;
 import sadi.whitegroup.assignment1.entity.*;
 import sadi.whitegroup.assignment1.repository.*;
 import sadi.whitegroup.assignment1.security.SecurityUtils;
-import sadi.whitegroup.assignment1.service.dto.CreateQuestionDTO;
-import sadi.whitegroup.assignment1.service.dto.CreateTestingDTO;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,43 +39,50 @@ public class TestingService {
         this.resultRepository = resultRepository;
     }
 
-    @Transactional
-    public Testing save(CreateTestingDTO testingDTO) {
+    // NOTE: haven't configure delete the questions or answers.
+    public Testing save(AdminTestingDTO testingDTO) {
         log.debug("Request to save Testing : {}", testingDTO);
-        List<Question> questionList = questionRepository
-            .save(testingDTO.getQuestions()
-                .stream()
-            .map(e -> {
-                List<Answer> answerList = answerRepository.save(
-                    e.getAnswers().stream()
-                    .map(createAnswerDTO -> new Answer()
-                        .isCorrectAnswer(createAnswerDTO.isCorrectAnswer())
-                        .content(createAnswerDTO.getContent())
-                    ).collect(Collectors.toList()));
-                return new Question()
-                    .content(e.getContent())
-                    .answers(answerList);
-            })
-            .collect(Collectors.toList()));
-        Testing testing = new Testing()
+        Testing testing = testingRepository.save(new Testing()
+            .id(testingDTO.getId())
             .name(testingDTO.getName())
             .type(testingDTO.getType())
             .testTime(testingDTO.getTestTime())
-            .size(testingDTO.getSize())
-            .questions(questionList);
+            .size(testingDTO.getSize()));
 
+        // Delete old questions when admin remove it
+        testing.getQuestions().clear();
+
+        testingDTO
+            .getQuestions()
+            .stream()
+            .forEach(createQuestionDTO -> {
+                Question question = questionRepository
+                    .save(new Question()
+                        .id(createQuestionDTO.getId())
+                        .content(createQuestionDTO.getContent())
+                        .testing(testing));
+
+                // Delete old answers when admin remove it
+                question.getAnswers().clear();
+
+                createQuestionDTO.getAnswers()
+                    .stream()
+                    .forEach(createAnswerDTO -> {
+                        Answer answer = new Answer()
+                            .id(createAnswerDTO.getId())
+                            .content(createAnswerDTO.getContent())
+                            .isCorrectAnswer(createAnswerDTO.isCorrectAnswer());
+                        question.addAnswers(answer);
+                        answerRepository.save(answer);
+                    });
+
+                testing.addQuestions(question);
+                questionRepository.save(question);
+            });
         return testingRepository.save(testing);
     }
 
 
-    public List<TestTypeDTO> getTypes() {
-        return testingRepository
-                .findAll().stream()
-                .map(TestTypeDTO::new)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional
     public Result markingAnswer(StudentAnswerDTO studentAnswer) {
         int numCorrectAnswer = 0;
         List<Long> answerList = studentAnswer.getAnswerId();
@@ -89,7 +95,7 @@ public class TestingService {
         Result result  = new Result();
         result.setNumberOfCorrectAnswer(numCorrectAnswer);
         result.testing(testingRepository.findOne(studentAnswer.getTestId()));
-        result.user(userRepository.findOne(studentAnswer.getStudentId()));
+        result.user(userRepository.findOneByEmailIgnoreCase(SecurityUtils.getCurrentUserLogin()).get());
         return resultRepository.save(result);
     }
 

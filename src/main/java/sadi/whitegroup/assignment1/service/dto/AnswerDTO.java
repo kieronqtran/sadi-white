@@ -1,17 +1,28 @@
 package sadi.whitegroup.assignment1.service.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import sadi.whitegroup.assignment1.entity.Answer;
 
-public class CreateQuestionDTO  {
+/**
+ * A Answer.
+ */
+public class AnswerDTO {
 
     private Long id;
 
     private String content;
 
-    private List<CreateAnswerDTO> answers = new ArrayList<>();
+    public AnswerDTO() {
+    }
 
-    public CreateQuestionDTO() {    }
+    public AnswerDTO(Long id, String content) {
+        this.id = id;
+        this.content = content;
+    }
+
+    public AnswerDTO(Answer answer) {
+        this(answer.getId(), answer.getContent());
+    }
+
 
     public Long getId() {
         return id;
@@ -27,15 +38,6 @@ public class CreateQuestionDTO  {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-
-    public List<CreateAnswerDTO> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<CreateAnswerDTO> answers) {
-        this.answers = answers;
     }
 
 }

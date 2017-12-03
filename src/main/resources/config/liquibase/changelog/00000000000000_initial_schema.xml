@@ -9,9 +9,11 @@
     <property name="now" value="now()" dbms="h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
+    <changeSet id="00000000000000" author="whitegroup">
+        <createSequence sequenceName="hibernate_sequence" startValue="1000" incrementBy="50"/>
+    </changeSet>
 
     <changeSet id="00000000000001" author="whitegroup">
-        <createSequence sequenceName="hibernate_sequence"/>
 
         <createTable tableName="user_user">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
@@ -96,7 +98,6 @@
                 <constraints primaryKey="true" primaryKeyName="pk_question"/>
             </column>
             <column name="content" type="VARCHAR(255)"/>
-            <column name="type" type="VARCHAR(255)"/>
             <column name="testing_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -137,6 +138,8 @@
             constraintName="fk_answer_question"
             deferrable="false"
             initiallyDeferred="false"
+            onDelete="CASCADE"
+            onUpdate="CASCADE"
             referencedColumnNames="id"
             referencedTableName="question"/>
 
@@ -145,6 +148,8 @@
             baseTableName="question"
             constraintName="fk_question_testing"
             deferrable="false"
+            onDelete="CASCADE"
+            onUpdate="CASCADE"
             initiallyDeferred="false"
             referencedColumnNames="id"
             referencedTableName="testing"/>
@@ -154,6 +159,8 @@
             baseTableName="result"
             constraintName="fk_result_users"
             deferrable="false"
+            onDelete="CASCADE"
+            onUpdate="CASCADE"
             initiallyDeferred="false"
             referencedColumnNames="id"
             referencedTableName="user_user"/>
@@ -161,6 +168,8 @@
         <addForeignKeyConstraint
             baseColumnNames="testing_id"
             baseTableName="result"
+            onDelete="CASCADE"
+            onUpdate="CASCADE"
             constraintName="fk_result_testing"
             deferrable="false"
             initiallyDeferred="false"
@@ -190,8 +199,6 @@
                   separator=";"
                   tableName="result">
         </loadData>
-
-
 
     </changeSet>
 </databaseChangeLog>
