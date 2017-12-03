@@ -10,9 +10,8 @@ export function getListTest(){
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-    }) // /api/testing
+    }) 
     const data = await res.json()
-    console.log(data)
     try {
       dispatch({ type: GET_LIST_TEST, testList: data })
     } catch (error) {

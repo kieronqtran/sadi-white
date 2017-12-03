@@ -14,9 +14,8 @@ import {
 class TestList extends Component {
   constructor(props){
     super(props);
-    console.log("hello"); // Hi, there - Quang
+    console.log("hello");
     this.props.getListTest();
-    getListTest(); // Why you find the need to do this?
   }
   render() {
     return (

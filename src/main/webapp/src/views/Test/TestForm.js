@@ -9,7 +9,7 @@ import {
 } from 'react-router-dom'
 import {testSample} from 'variables/mockData.js'
 import { connect } from 'react-redux'
-import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
+import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
 
 class TestForm extends Component {
   constructor(props) {
@@ -24,28 +24,37 @@ class TestForm extends Component {
     this.props.nextQuestion()
   }
 
+  timeout(timer){
+    var time = 0;
+    time = time + 1000;
+    if(time === 10000){
+      if (window.confirm("You will be redirected back to user account page, press cancel if you want to go back to test page") == true) {
+          this.props.submit("#!/user");
+      } else {
+          this.props.submit("#!/test");
+      }
+    }
+
+  }
+
   previousQuestion() {
     this.props.previousQuestion()
   }
 
   answerQuestion(questionId, answerId){
-    this.props.dispatch(
-      {
-        type: ANSWER_QUESTION,
-        action: {questionId, answerId},
-      }
-    )
+    this.props.answerQuestion(questionId, answerId)
   }
 
-  submitTest(){
-    // const finalResult = {this.currentTest.id, answer}
-    // this.props.submitTest(finalResult);
-    // console.log(finalResult);
+  submit(goTo = "#!/user"){
+    const finalResult = {testId: this.props.currentTest.id,
+                          answerId: Object.values(this.props.answer)};
+    this.props.submitTest(finalResult, goTo);
   }
 
   render() {
     const setResult = this.answerQuestion.bind(this);
     const { onSubmit, currentQuestion, currentTest } = this.props;
+    var timer = window.setInterval(this.timeout(timer), 1000);
     return (
       <div className="content">
         {currentQuestion < currentTest.size && (
@@ -60,7 +69,7 @@ class TestForm extends Component {
         {currentQuestion === currentTest.size && (
           <QuestionForm
             previousQuestion={this.previousQuestion}
-            onSubmit={this.submitTest.bind(this)}
+            onSubmit={this.submit.bind(this)}
             test={currentTest}
             currentQuestion={currentQuestion}
             setResult={setResult}
@@ -76,7 +85,6 @@ TestForm.propTypes = {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log(state);
   return {
     currentTest: state.takeTest.currentTest,
     currentQuestion: state.takeTest.currentQuestion,
@@ -84,4 +92,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, {takeTest, submitTest, nextQuestion, previousQuestion})(TestForm);
+export default connect(mapStateToProps, {takeTest, submitTest, nextQuestion, previousQuestion, answerQuestion})(TestForm);

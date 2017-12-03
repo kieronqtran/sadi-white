@@ -11,8 +11,6 @@ public class StudentAnswerDTO {
     private List<Long> answerId;
     private int mark;
 
-
-
     public StudentAnswerDTO() {
     }
 

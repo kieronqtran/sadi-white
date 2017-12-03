@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 export const GET_TEST = "RECEIVED_TEST";
 export const GET_TEST_ERROR = "FAILED_TO_RECEIVE_TEST";
 export const NEXT_QUESTION = "GET_NEXT_QUESTION";
@@ -16,7 +17,12 @@ export function previousQuestion(){
     type: PREVIOUS_QUESTION
   }
 }
-
+export function answerQuestion(questionId, answerId){
+  return {
+    type: ANSWER_QUESTION,
+    ans: {question: questionId, answer: answerId},
+  }
+}
 
 export function takeTest(testId){
   const token = sessionStorage.getItem('token')
@@ -44,12 +50,14 @@ export function takeTest(testId){
       })
   }
 }
-export function submitTest(test){
+export function submitTest(test, redirect = "/user"){
   return function(dispatch) {
-    return fetch('/result',{
+    const token = sessionStorage.getItem('token')
+    return fetch('/api/testing/result',{
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       method: "POST",
       body: JSON.stringify(test),
@@ -60,6 +68,7 @@ export function submitTest(test){
             type: SUBMIT_RESULT_SUCCESSFUL,
           });
         }
+        return dispatch(push(redirect))
         if(res.status === 500) {
           dispatch({
             type: SUBMIT_RESULT_FAIL,
