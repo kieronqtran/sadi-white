@@ -134,20 +134,11 @@ public class TestController {
         return testingService.findAll();
     }
 
-    /**
-     * DELETE  /testings/:id : delete the "id" testing.
-     *
-     * @param id the id of the testing to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    // NOTE: ignore this temporary
-    // TODO: fix the delete on cascade
+
     @DeleteMapping("/testings/{id}")
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteTesting(@PathVariable Long id) {
-        log.debug("REST request to delete Testing : {}", id);
-        testingService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("Testing", id.toString())).build();
+    public void deleteTesting(@PathVariable Long id) {
+        testingService.deleteTest(id);
     }
 
 }

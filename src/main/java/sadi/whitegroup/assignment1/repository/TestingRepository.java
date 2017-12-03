@@ -13,6 +13,5 @@ import java.util.Optional;
  */
 @Repository
 public interface TestingRepository extends JpaRepository<Testing, Long> {
-
-    Optional<Testing> findOneWithQuestionAndAnswerById (Long id);
+    void deleteById(long id);
 }

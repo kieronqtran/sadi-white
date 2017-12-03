@@ -16,6 +16,8 @@ export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 export const UPDATE_SUCCESSFUL = 'UPDATE_SUCCESSFUL'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
 
+export const GET_RESULT_SUCCESSFUL = 'GET_RESULT_SUCCESSFUL'
+export const GET_RESULT_ERROR = 'GET_RESULT_ERROR'
 
 export function refreshToken() {
 	return async dispatch => {
@@ -100,6 +102,8 @@ export function signUp(info) {
 	}
 }
 
+
+
 export function signInAction({ email, password }) {
 	return async dispatch => {
     try {
@@ -113,11 +117,16 @@ export function signInAction({ email, password }) {
         body: `grant_type=password&username=${email}&password=${password}`,
       })
       const data = await response.json()
+
       sessionStorage.setItem('token', data.access_token)
       sessionStorage.setItem('refresh_token', data.refresh_token)
+
       const tokenExpireTime = Date.now() + data.expires_in * 1000
+
       sessionStorage.setItem('tet', tokenExpireTime.toString())
+
       const payload = jwtDecode(data.access_token)
+
       dispatch({type: AUTHENTICATED, payload})
     } catch (error) {
       return dispatch({type: AUTHENTICATION_ERROR, message: 'Invalid email or password'})
@@ -133,36 +142,30 @@ export function signInAction({ email, password }) {
           Authorization: `Bearer ${token}`,
         },
       })
-      
+
       const data = await response.json()
       dispatch({type: GET_CURRENT_USER_DATA_SUCCESSFUL, data})
-      return dispatch(push('/test'))
+
+      dispatch(push('/user'))
+
     } catch (error) {
       return dispatch({type: GET_CURRENT_USER_DATA_FAIL, message: 'Network error.'})
     }
   }
 }
 
-export const GET_CURRENT_USER_RESULT_SUCCESSFUL = 'GET_CURRENT_USER_RESULT_SUCCESSFUL'
-export const GET_CURRENT_USER_RESULT_FAIL = 'GET_CURRENT_USER_RESULT_FAIL'
-
 export function getResult() {
-  return async (dispatch) => {
-    const token = sessionStorage.getItem('token')
-    const response = await fetch('/api/account/result', {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      method: 'GET',
-    })
-    if (response.status === 201) {
-      const data = response.json();
-      dispatch({ type: GET_CURRENT_USER_RESULT_SUCCESSFUL, payload: data, })
-    }
-    if (response.status === 500) {
-      dispatch({ type: GET_CURRENT_USER_RESULT_FAIL, message: 'Something wrong in the connection' })
-    }
-  }
+	return async dispatch => {
+      const token =  sessionStorage.getItem('token')
+      const response = await fetch('/api/result', {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      const data = await response.json()
+      dispatch({ type: GET_RESULT_SUCCESSFUL, result: data })
+	}
 }

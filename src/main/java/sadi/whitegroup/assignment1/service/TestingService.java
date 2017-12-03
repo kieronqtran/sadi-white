@@ -112,16 +112,9 @@ public class TestingService {
         return Optional.ofNullable(testingRepository.findOne(id));
     }
 
-    @Transactional(readOnly = true)
-    public Optional<Testing> findOneWithQuestion(Long id) {
-        log.debug("Request to get Testing : {}", id);
-        return testingRepository.findOneWithQuestionAndAnswerById(id);
-    }
 
-
-    public void delete(Long id) {
-        log.debug("Request to delete Testing : {}", id);
-        testingRepository.delete(id);
+    public void deleteTest(Long id) {
+        testingRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)

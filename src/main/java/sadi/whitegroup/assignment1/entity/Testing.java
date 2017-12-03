@@ -58,11 +58,6 @@ public class Testing implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
     public Testing name(String name) {
         this.name = name;
         return this;
@@ -101,7 +96,9 @@ public class Testing implements Serializable {
     public List<Question> getQuestions() {
         return questions;
     }
-
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
     public Testing questions(List<Question> questions) {
         this.questions = questions;
         return this;

@@ -1,9 +1,6 @@
 package sadi.whitegroup.assignment1.entity;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -29,7 +26,6 @@ public class Answer implements Serializable {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
-    @JsonIgnore
     private Question question;
 
     public Long getId() {

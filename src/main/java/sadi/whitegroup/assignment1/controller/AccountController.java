@@ -70,7 +70,7 @@ public class AccountController {
             .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
     }
 
-    @GetMapping("/account/result")
+    @GetMapping("/result")
     public List<ResultDTO> getResult(){ // get the result list of user in the db
         return testingService.getResultForCurrentAccount()
                 .stream()
