@@ -11,6 +11,7 @@ const appRoutes = [
     name: 'Login',
     icon: 'pe-7s-id',
     component: Login,
+    cannotGetBack: true,
   },
   {
     path: '/signup',

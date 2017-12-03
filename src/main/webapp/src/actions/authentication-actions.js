@@ -17,6 +17,7 @@ export const UPDATE_SUCCESSFUL = 'UPDATE_SUCCESSFUL'
 export const UPDATE_ERROR = 'UPDATE_ERROR'
 
 
+
 export function refreshToken() {
 	return async dispatch => {
 		const refresh_token = sessionStorage.getItem('refresh_token')
@@ -100,6 +101,8 @@ export function signUp(info) {
 	}
 }
 
+
+
 export function signInAction({ email, password }) {
 	return async dispatch => {
     try {
@@ -113,11 +116,16 @@ export function signInAction({ email, password }) {
         body: `grant_type=password&username=${email}&password=${password}`,
       })
       const data = await response.json()
+
       sessionStorage.setItem('token', data.access_token)
       sessionStorage.setItem('refresh_token', data.refresh_token)
+
       const tokenExpireTime = Date.now() + data.expires_in * 1000
+
       sessionStorage.setItem('tet', tokenExpireTime.toString())
+
       const payload = jwtDecode(data.access_token)
+
       dispatch({type: AUTHENTICATED, payload})
     } catch (error) {
       return dispatch({type: AUTHENTICATION_ERROR, message: 'Invalid email or password'})
@@ -133,15 +141,24 @@ export function signInAction({ email, password }) {
           Authorization: `Bearer ${token}`,
         },
       })
-      
+
       const data = await response.json()
       dispatch({type: GET_CURRENT_USER_DATA_SUCCESSFUL, data})
-      return dispatch(push('/test'))
+
+      dispatch(push('/user'))
+      isLoggedIn = true;
+
     } catch (error) {
       return dispatch({type: GET_CURRENT_USER_DATA_FAIL, message: 'Network error.'})
     }
   }
 }
+
+var isLoggedIn = false;
+export function getIsLoggedIn() {
+  return isLoggedIn;
+}
+
 
 export function getResult() {
 	return async dispatch => {

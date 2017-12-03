@@ -43,6 +43,7 @@ const renderTextField = ({
 }
 
 class Login extends Component {
+
   constructor(props) {
     super(props)
 
@@ -50,12 +51,12 @@ class Login extends Component {
       email: '',
       password: '',
     }
-
   }
 
   submit(values) {
     this.props.signInAction(values)
   }
+
 
   render() {
     return (
