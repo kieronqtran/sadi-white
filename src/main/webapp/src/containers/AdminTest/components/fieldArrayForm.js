@@ -13,60 +13,87 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </FormGroup>
 );
 
-const renderAnswers = ({ fields, meta: { error } }) => (
-  <div>
+const renderAnswers = ({ fields, meta: { error } }) => {
+	const answerField = fields.getAll() || [];
+	return (<div>
     <div>
-      <Button beStyle='success' onClick={() => fields.push({'isCorrectAnswer':true})}>True Answer</Button>
-      <Button beStyle="danger" onClick={() => fields.push({ 'isCorrectAnswer': false })}>False Answer</Button>
+      <Button bsStyle='success' onClick={() => fields.push({'isCorrectAnswer':true})}>True Answer</Button>
+      <Button bsStyle="danger" onClick={() => fields.push({ 'isCorrectAnswer': false })}>False Answer</Button>
     </div>
-    {fields.map((answer, index) => (
+    {answerField.map((answer, index) => (
       <div key={index}>
-        {answer.isCorrectAnswer === true &&
-          <Field
-            name={`${answer}.content`}
-            type="text"
-            component={renderField}
-            label={`True Answer`}
-          />
-        }
-        {answer.isCorrectAnswer === false &&
-          <Field
-            name={`${answer}.content`}
-            type="text"
-            component={renderField}
-            label={`False Answer`}
-          />
-
+        {answer.isCorrectAnswer &&
+					<div>
+						<Col md={10}>
+							<Field
+								name={`questions[0].answer[${index}].content`}
+								type="text"
+								component={renderField}
+								label={`True Answer`}
+							/>
+						</Col>
+						<Col md={2}>
+							<Button
+							bsStyle='danger'
+							type="button"
+							title="Remove Answer"
+							onClick={() => fields.remove(index)}>X</Button>
+						</Col>
+					</div>
+				}
+        {!answer.isCorrectAnswer &&
+          <div>
+						<Col md={10}>
+							<Field
+								name={`answer[${index}].content`}
+								type="text"
+								component={renderField}
+								label={`False Answer`}
+							/>
+						</Col>
+						<Col md={2}>
+							<Button
+							bsStyle='danger'
+							type="button"
+							title="Remove Answer"
+							onClick={() => fields.remove(index)}>X</Button>
+						</Col>
+					</div>
         }
       </div>
     ))}
     {error && <HelpBlock className="error">{error}</HelpBlock>}
   </div>
-);
-
-{/*<Button*/}
-{/*type="button"*/}
-{/*title="Remove Answer"*/}
-{/*onClick={() => fields.remove(index)}*/}
-{/*/>*/}
+)
+};
 
 const renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => (
   <FormGroup>
-    <Col md={3}>
-      <Button beStyle='primary' onClick={() => fields.push({})}>Add Questions</Button>
+    <Col md={2}>
+      <Button bsStyle='primary' onClick={() => fields.push({})}>Add Questions</Button>
       {(touched || submitFailed) && error && <HelpBlock>{error}</HelpBlock>}
     </Col>
-    <Col md={9}>
+    <Col md={10}>
       {fields.map((question, index) => (
         <PanelGroup defaultActiveKey={index} accordion>
           <Panel header={index+1} eventKey={index}>
+					<Col md={10}>
             <Field
-              name={`${question}.content`}
+              name={`question[${index}].content`}
               type="text"
               component={renderField}
-              label="Enter a question."
-            />
-            <FieldArray name={`${question}.answer`} component={renderAnswers} />
+              label="Enter a question." />
+					</Col>
+					<Col md={2}>
+						<Button
+							bsStyle='danger'
+							type="button"
+							title="Remove Question"
+							onClick={() => fields.remove(index)}>X</Button>
+					</Col>
+					<Col md={12}>
+						<FieldArray name={`question[${index}].answer`} component={renderAnswers} />
+					</Col>
           </Panel>
         </PanelGroup>
       ))}
@@ -75,7 +102,8 @@ const renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => 
 );
 
 const FieldArraysForm = props => {
-  const { handleSubmit} = props;
+	var test = {testId: 0, testTime: 0, questions:{}}
+  const { handleSubmit } = props;
   return (
     <Form onSubmit={handleSubmit}>
       <Field
@@ -91,6 +119,7 @@ const FieldArraysForm = props => {
         label="Test Duration"
       />
       <FieldArray name="questions" component={renderQuestions} />
+			<div className="clearfix"></div>
     </Form>
   );
 };
@@ -99,3 +128,4 @@ export default reduxForm({
   form: 'fieldArrays', // a unique identifier for this form
   validate,
 })(FieldArraysForm);
+

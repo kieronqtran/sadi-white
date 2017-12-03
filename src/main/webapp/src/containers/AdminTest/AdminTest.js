@@ -26,7 +26,7 @@ import renderTestDetail from './components/editForm'
 class AdminTest extends Component {
   constructor() {
     super()
-    this.thArray = ['ID', 'Name', 'Size', 'Duration', 'Edit']
+    this.thArray = ['ID', 'Name', 'Size', 'Duration', 'Delete']
 
     this.state = {
       showModalNew: false,
@@ -74,7 +74,11 @@ class AdminTest extends Component {
 
   close() {
     this.setState({ showModalNew: false, showModalEdit: false })
-  }
+	}
+
+	remove() {
+		this.state.testData
+	}
 
   render() {
     return (
@@ -85,7 +89,7 @@ class AdminTest extends Component {
               <Card
                 title="Create test"
                 content={
-                  <Button beStyle="primary" onClick={this.openNew.bind(this)}>
+                  <Button bsStyle="primary" onClick={this.openNew.bind(this)}>
                     New test
                   </Button>
                 }
@@ -117,10 +121,10 @@ class AdminTest extends Component {
                           </td>
                           <td>
                             <Button
-                              bsStyle="primary"
-                              onClick={this.openEdit.bind(this)}
+                              bsStyle='danger'
+                              onClick={this.remove.bind(this)}
                             >
-                              Edit
+                              Delete
                             </Button>
                           </td>
                         </tr>

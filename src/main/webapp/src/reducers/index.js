@@ -5,6 +5,7 @@ import authReducer from './auth'
 import userReducer from './user'
 import getTestList from './test-reducer'
 import newQuestion from './takeTest-reducer'
+import postTest from './postTest-reducer'
 
 function resultReducer(state = [], action) {
   switch (action.type) {
@@ -24,6 +25,7 @@ const combinedReducer = combineReducers({
 	router: routerReducer,
   test: getTestList,
   takeTest: newQuestion,
+  makeTest: postTest,
 })
 
 export default combinedReducer

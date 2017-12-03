@@ -94,7 +94,7 @@ public class TestController {
     public ResponseEntity<Testing> updateTesting(@RequestBody Testing testing) throws URISyntaxException {
         log.debug("REST request to update Testing : {}", testing);
         if (testing.getId() == null) {
-            return createTesting(testing);
+            return createTesting(testing);`
         }
         Testing result = testingService.save(testing);
         return ResponseEntity.ok()
