@@ -7,9 +7,7 @@ import java.util.List;
  */
 public class StudentAnswerDTO {
     private Long testId;
-    private Long studentId;
     private List<Long> answerId;
-    private int mark;
 
     public StudentAnswerDTO() {
     }
@@ -22,25 +20,7 @@ public class StudentAnswerDTO {
         this.testId = testId;
     }
 
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
     public List<Long> getAnswerId() {
         return answerId;
     }
-
-    public int getMark() {
-        return mark;
-    }
-
-    public void setMark(int mark) {
-        this.mark = mark;
-    }
-
-
 }
