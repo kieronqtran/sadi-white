@@ -27,7 +27,7 @@ public class Answer implements Serializable {
     @Column(name = "is_correct_answer", nullable = false)
     private Boolean isCorrectAnswer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
     @JsonIgnore
     private Question question;
@@ -38,6 +38,11 @@ public class Answer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Answer id(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getContent() {

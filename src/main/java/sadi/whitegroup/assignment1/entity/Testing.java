@@ -32,14 +32,13 @@ public class Testing implements Serializable {
     @Column(name = "size")
     private int size;
 
-    @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "testing", fetch = FetchType.LAZY)
     @JsonIgnore
-    private Set<Result> results = new HashSet<>();
-
+    private List<Result> results = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -47,6 +46,12 @@ public class Testing implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Testing id(Long id) {
+        this.id = id;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -84,9 +89,13 @@ public class Testing implements Serializable {
     public void setSize(int size) {
         this.size = size;
     }
+    public Testing size(int size) {
+        this.size = size;
+        return this;
+    }
 
-    public Testing testtime(Long testtime) {
-        this.testTime = testtime;
+    public Testing testTime(Long testTime) {
+        this.testTime = testTime;
         return this;
     }
     public List<Question> getQuestions() {
@@ -107,13 +116,13 @@ public class Testing implements Serializable {
         question.setTesting(null);
         return this;
     }
-    public Set<Result> getResults() {
+    public List<Result> getResults() {
         return results;
     }
-    public void setResults(Set<Result> results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
-    public Testing results(Set<Result> results) {
+    public Testing results(List<Result> results) {
         this.results = results;
         return this;
     }
