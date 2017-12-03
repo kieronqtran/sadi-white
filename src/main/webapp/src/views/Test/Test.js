@@ -37,7 +37,6 @@ class TestList extends Component {
                     </thead>
                     <tbody>
                       {
-												//  this cause errors b/c you need to create a default value in the reducer
                         this.props.testList.map((prop, key) => {
                           const testUrl = "#!/takeTest/" + prop.id;
                           return (
@@ -45,7 +44,7 @@ class TestList extends Component {
                               <td>{prop.id}</td>
                               <td>{prop.name}</td>
                               <td>{prop.size}</td>
-                              <td>{prop.duration}</td>
+                              <td>{Math.floor(prop['testTime'] / 60000) + ' minutes'}</td>
                               <td><a href={testUrl}>Take this test</a></td>
                             </tr>
                           )

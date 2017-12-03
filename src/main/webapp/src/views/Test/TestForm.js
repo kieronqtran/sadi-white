@@ -7,7 +7,6 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import {testSample} from 'variables/mockData.js'
 import { connect } from 'react-redux'
 import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
 
@@ -19,7 +18,7 @@ class TestForm extends Component {
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
     this.props.takeTest(this.props.match.params.testId);
-    const testTime = this.props.currentTest.testTime/100;
+    const testTime = this.props.currentTest.testTime;
     console.log(testTime);
     const com = this;
     if(this.props.currentTest.size === 0){

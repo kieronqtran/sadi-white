@@ -10,7 +10,7 @@ export function getListTest(){
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-    }) 
+    })
     const data = await res.json()
     try {
       dispatch({ type: GET_LIST_TEST, testList: data })
