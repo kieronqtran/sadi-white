@@ -7,15 +7,20 @@ import { connect } from 'react-redux';
 import {getListTest} from '../../actions/test-actions.js'
 import {
   GET_LIST_TEST,
-  GET_LIST_TEST_ERROR,
+  GET_LIST_TEST_ERROR
 } from '../../actions/test-actions.js';
 
 
 class TestList extends Component {
   constructor(props){
     super(props);
+    this.props = props;
+  }
+
+  componentDidMount(){
     this.props.getListTest();
   }
+
   render() {
     return (
       <div className="content">
@@ -64,8 +69,10 @@ class TestList extends Component {
 
 function mapStateToProps(state, ownProps){
   return {
-    testList: state.test.testList,
+    testList: state.test.testList
   };
 }
 
-export default connect(mapStateToProps, {getListTest})(TestList);
+export default connect(mapStateToProps, {
+  getListTest
+})(TestList);
