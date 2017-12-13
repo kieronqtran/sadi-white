@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import {
   Grid,
   Row,
-  Col,
-  FormGroup,
-  ControlLabel,
-  FormControl
+  Col
 } from 'react-bootstrap'
 
 import { withRouter } from 'react-router'
@@ -13,8 +10,7 @@ import { connect } from 'react-redux'
 import { Card } from 'components/Card/Card'
 import { FormInputs } from 'components/FormInputs/FormInputs'
 import { UserCard } from 'components/UserCard/UserCard'
-import Button from 'elements/CustomButton/CustomButton'
-import { signInAction, logOut, updateInfo, getResult } from '../../actions/authentication-actions'
+import { logOut, updateInfo, getResult } from '../../actions/authentication-actions'
 import UserProfile from './UserProfile'
 import ResultList from './ResultList'
 
@@ -48,13 +44,14 @@ class UserAccount extends Component {
               <div className="clearfix"></div>
               <Card
                 title="Grade"
-                content={<form>{
-                  this.props.result.map(e => (
+                content={
+                  <form>
+                    {this.props.result.map(e => (
                     <ResultList testName={e.testName}
                                 numberOfCorrectAnswer={e.numberOfCorrectAnswer}
-                                size={e.size}/>
-                  ))
-                }</form>}
+                                size={e.size}/>))}
+                  </form>
+                }
               />
             </Col>
           </Row>

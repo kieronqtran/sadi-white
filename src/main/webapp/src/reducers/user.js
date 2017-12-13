@@ -1,6 +1,8 @@
 import {
   GET_CURRENT_USER_DATA_SUCCESSFUL,
-  GET_CURRENT_USER_DATA_FAIL
+  GET_CURRENT_USER_DATA_FAIL,
+  UPDATE_SUCCESSFUL,
+  GET_ALL_ACCOUNT_SUCCESSFULL
 } from '../actions/authentication-actions'
 
 const defaultValue = {
@@ -18,6 +20,8 @@ const defaultValue = {
 
 export default function userReducer(state = defaultValue, action) {
   switch (action.type) {
+    case UPDATE_SUCCESSFUL:
+      return{...state, userProfile: action.data}
     case GET_CURRENT_USER_DATA_SUCCESSFUL:
       return { ...state, userProfile: action.data }
     case GET_CURRENT_USER_DATA_FAIL:
@@ -26,3 +30,4 @@ export default function userReducer(state = defaultValue, action) {
       return state
   }
 }
+
