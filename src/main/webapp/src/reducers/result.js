@@ -1,6 +1,5 @@
 import {
-  GET_RESULT_SUCCESSFUL,
-  GET_RESULT_ERROR
+  GET_RESULT_SUCCESSFUL
 } from '../actions/authentication-actions'
 
 const initialValue = {
