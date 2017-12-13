@@ -26,6 +26,34 @@ import thunk from 'redux-thunk'
 import { AUTHENTICATED, UNAUTHENTICATED, GET_CURRENT_USER_DATA_FAIL, refreshToken } from './actions/authentication-actions'
 import jwtDecode from 'jwt-decode'
 
+function setCookie(cname,cvalue,extime){
+  var d = new Date();
+  d.setTime(d.getTime()+(extime*1000));
+  var expire = "expires=" + d.toUTCString();
+  document.cookie = cname +"=" + cvalue + ";" + expire + ";path=/";
+}
+
+function getCookie(cname){
+  var name = cname + "=";
+  var decodedCookie= decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i=0; i<ca.length; i++){
+    var c = ca[i];
+    while (c.charAt(0) == ''){
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0){
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function deleteCookie(cname){
+  setCookie(cname,"",-1);
+}
+
+
 const history = createHistory({
 	hashType: 'hashbang'
 })
@@ -38,14 +66,23 @@ const store = createStore(
 )
 
 // Login init if
-const token = sessionStorage.getItem('token')
-const refresh_token = sessionStorage.getItem('refresh_token')
-const experied = +sessionStorage.getItem('tet') || 0
-if (token && refresh_token && Date.now() < experied) {
+const token = getCookie('token')
+const refresh_token = getCookie('refresh_token')
+
+// const token = sessionStorage.getItem('token')
+// const refresh_token = sessionStorage.getItem('refresh_token')
+// const experied = +sessionStorage.getItem('tet') || 0
+
+// if (token && refresh_token && Date.now() < experied) {
+
+if (token && refresh_token) {
   const refreshTokenPayload = jwtDecode(refresh_token)
   store.dispatch(refreshToken())
   .then(() => {
-    const newToken = sessionStorage.getItem('token')
+    const newToken = getCookie('token')
+
+    // const newToken = sessionStorage.getItem('token')
+
     return fetch('/api/account', {
       method: 'GET',
       headers: {
@@ -58,10 +95,13 @@ if (token && refresh_token && Date.now() < experied) {
   .then(response => response.json())
   .then((data) => {
     if(!data.error) {
-      const payload = jwtDecode(sessionStorage.getItem('token'))
+      const payload = jwtDecode(getCookie('token'))
+
+      // const payload = jwtDecode(sessionStorage.getItem('token'))
+
       store.dispatch({ type: AUTHENTICATED, payload: payload })
       store.dispatch({ type: GET_CURRENT_USER_DATA_SUCCESSFUL, data })
-      store.dispatch(push('/test'))
+      store.dispatch(push('/user'))
     } else {
       store.dispatch({ type: UNAUTHENTICATED })
       store.dispatch({ type: GET_CURRENT_USER_DATA_FAIL, message: 'Required Login' })
