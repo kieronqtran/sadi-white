@@ -18,8 +18,6 @@ public class ResultDTO {
 
 	private int size;
 
-//	private User user; // we only return for one user
-
 	public ResultDTO() {}
 
 	public ResultDTO(long id, int numberOfCorrectAnswer, String testName, int size) {
@@ -30,7 +28,7 @@ public class ResultDTO {
 	}
 
 	public ResultDTO(Result result){
-		this(result.getId(), result.getNumberOfCorrectAnswer(), 
+		this(result.getId(), result.getNumberOfCorrectAnswer(),
 				  result.getTesting().getName(), result.getTesting().getSize());
 	}
 

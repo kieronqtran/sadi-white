@@ -10,6 +10,7 @@ import sadi.whitegroup.assignment1.entity.*;
 import sadi.whitegroup.assignment1.repository.*;
 import sadi.whitegroup.assignment1.security.SecurityUtils;
 
+import javax.persistence.OrderBy;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -119,12 +120,21 @@ public class TestingService {
 
     @Transactional(readOnly = true)
     public List<Result> getResultForCurrentAccount() {
-        User user = userRepository.findOneWithAuthoritiesByEmail(SecurityUtils.getCurrentUserLogin())
-                .orElse(null);
+        User user = userRepository
+            .findOneWithAuthoritiesByEmail(SecurityUtils.getCurrentUserLogin()).orElse(null);
 
         return user.getResultList().stream().map(e -> { // EAGER FETCHING Result
             e.getTesting();
             return e;
-        }).collect(Collectors.toList()); // we perform mapping to ResultDTO at the controller
+        }).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<Result> getAllResult() {
+        return resultRepository.findAll().stream().map(e -> {
+            e.getTesting();
+            e.getUser();
+            return e;
+        }).collect(Collectors.toList());
     }
 }

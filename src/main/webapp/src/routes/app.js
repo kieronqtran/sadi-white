@@ -4,6 +4,8 @@ import Signup from '../views/Signup/Signup'
 import Test from 'views/Test/Test'
 import TestManagement from 'containers/TestManagement/test-management'
 import TestForm from 'views/Test/TestForm'
+import AllUsers from "../views/AllUsers/AllUsers";
+import AllResult from "../views/AllResults/AllResults";
 
 const appRoutes = [
   {
@@ -24,6 +26,22 @@ const appRoutes = [
     icon: 'pe-7s-user',
     component: UserAccount,
     requiredLogin: true,
+  },
+  {
+    path: '/allUsers',
+    name: 'All Users',
+    icon: 'pe-7s-user',
+    component: AllUsers,
+    requiredLogin: true,
+    adminOnly: true,
+  },
+  {
+    path: '/allResults',
+    name: 'All Results',
+    icon: 'pe-7s-user',
+    component: AllResult,
+    requiredLogin: true,
+    adminOnly: true,
   },
   {
     path: '/test',

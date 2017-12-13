@@ -5,17 +5,22 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import sadi.whitegroup.assignment1.controller.errors.EmailAlreadyUsedException;
 import sadi.whitegroup.assignment1.controller.errors.InternalServerErrorException;
 import sadi.whitegroup.assignment1.controller.errors.InvalidPasswordException;
 import sadi.whitegroup.assignment1.controller.errors.LoginAlreadyUsedException;
 import sadi.whitegroup.assignment1.controller.vm.ManagedUserVM;
+import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.repository.UserRepository;
+import sadi.whitegroup.assignment1.security.AuthoritiesConstants;
 import sadi.whitegroup.assignment1.service.TestingService;
 import sadi.whitegroup.assignment1.service.UserService;
 import sadi.whitegroup.assignment1.service.dto.ResultDTO;
+import sadi.whitegroup.assignment1.service.dto.Result_ResultDTO;
 import sadi.whitegroup.assignment1.service.dto.UserDTO;
+import sadi.whitegroup.assignment1.service.dto.User_UserDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -71,11 +76,9 @@ public class AccountController {
     }
 
     @GetMapping("/result")
-    public List<ResultDTO> getResult(){ // get the result list of user in the db
+    public List<ResultDTO> getResult(){
         return testingService.getResultForCurrentAccount()
-                .stream()
-                .map(ResultDTO::new)
-                .collect(Collectors.toList());
+                .stream().map(ResultDTO::new).collect(Collectors.toList());
     }
 
     @PutMapping("/account")
@@ -83,4 +86,23 @@ public class AccountController {
         userService.updateUser(userDTO);
     }
 
+    @GetMapping("/allAccounts")
+    @Secured(AuthoritiesConstants.ADMIN)
+    public List<User_UserDTO> getAllAccounts(){
+        return userService.findAll()
+            .stream().map(User_UserDTO::new).collect(Collectors.toList());
+    }
+
+    @GetMapping("/allResults")
+    @Secured(AuthoritiesConstants.ADMIN)
+    public List<Result_ResultDTO> getAllResults(){
+        return testingService.getAllResult()
+            .stream().map(Result_ResultDTO::new).collect(Collectors.toList());
+    }
+
+    @DeleteMapping("/account/{id}")
+    @Secured(AuthoritiesConstants.ADMIN)
+    public void deleteAccount(@PathVariable Long id) {
+        userService.delete(id);
+    }
 }

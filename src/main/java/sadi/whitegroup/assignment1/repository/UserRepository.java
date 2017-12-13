@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.service.dto.UserDTO;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesByEmail(String email);
 
     Page<User> findAllByEmail(Pageable pageable, String email);
+
+    void deleteById(long id);
+
 }
