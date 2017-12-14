@@ -13,59 +13,41 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </FormGroup>
 );
 
-const renderAnswers = ({ fields, meta: { error } }) => {
-	const answerField = fields.getAll() || [];
-	return (<div>
+const renderAnswers = ({ fields, meta: { error } }) => (
+  <div>
     <div>
-      <Button bsStyle='success' onClick={() => fields.push({'isCorrectAnswer':true})}>True Answer</Button>
-      <Button bsStyle="danger" onClick={() => fields.push({ 'isCorrectAnswer': false })}>False Answer</Button>
+      <Button bsStyle='primary' onClick={() => fields.push()}>Add Answer</Button>
     </div>
-    {answerField.map((answer, index) => (
+    {fields.map((answer, index) => (
       <div key={index}>
-        {answer.isCorrectAnswer &&
-					<div>
-						<Col md={10}>
-							<Field
-								name={`questions[0].answer[${index}].content`}
-								type="text"
-								component={renderField}
-								label={`True Answer`}
-							/>
-						</Col>
-						<Col md={2}>
-							<Button
-							bsStyle='danger'
-							type="button"
-							title="Remove Answer"
-							onClick={() => fields.remove(index)}>X</Button>
-						</Col>
-					</div>
-				}
-        {!answer.isCorrectAnswer &&
-          <div>
-						<Col md={10}>
-							<Field
-								name={`answer[${index}].content`}
-								type="text"
-								component={renderField}
-								label={`False Answer`}
-							/>
-						</Col>
-						<Col md={2}>
-							<Button
-							bsStyle='danger'
-							type="button"
-							title="Remove Answer"
-							onClick={() => fields.remove(index)}>X</Button>
-						</Col>
-					</div>
-        }
+        <Col md={10}>
+          <Field
+            name={`${answer}.content`}
+            type="text"
+            component={renderField}
+            label={`Answer #${index + 1}`}
+          />
+        </Col>
+        <Col md={2}>
+          <Button
+            bsStyle='danger'
+            type="button"
+            title="Remove Answer"
+            onClick={() => fields.remove(index)}>Delete Answer</Button>
+        </Col>
+        <Col md={12}>
+          <label>
+            <Field name={`${answer}.isCorrectAnswer`} component='input' type='radio' value='true'/>{' '} True Answer
+          </label>{' '}
+          <label>
+            <Field name={`${answer}.isCorrectAnswer`} component='input' type='radio' value='false'/>{' '} False Answer
+          </label>
+        </Col>
       </div>
     ))}
     {error && <HelpBlock className="error">{error}</HelpBlock>}
   </div>
-)
-};
+);
 
 const renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => (
   <FormGroup>
@@ -76,10 +58,10 @@ const renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => 
     <Col md={10}>
       {fields.map((question, index) => (
         <PanelGroup defaultActiveKey={index} accordion>
-          <Panel header={index+1} eventKey={index}>
+          <Panel header={`Question ${index+1}`} eventKey={index}>
 					<Col md={10}>
             <Field
-              name={`question[${index}].content`}
+              name={`${question}.content`}
               type="text"
               component={renderField}
               label="Enter a question." />
@@ -89,10 +71,10 @@ const renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => 
 							bsStyle='danger'
 							type="button"
 							title="Remove Question"
-							onClick={() => fields.remove(index)}>X</Button>
+							onClick={() => fields.remove(index)}>Delete Question</Button>
 					</Col>
 					<Col md={12}>
-						<FieldArray name={`question[${index}].answer`} component={renderAnswers} />
+						<FieldArray name={`${question}.answer`} component={renderAnswers} />
 					</Col>
           </Panel>
         </PanelGroup>
