@@ -1,11 +1,13 @@
 import { push } from 'react-router-redux';
-export const GET_TEST = "RECEIVED_TEST";
+export const GET_TEST_FETCH = "FETCHING_TEST"
+export const GET_TEST_SUCCESSFUL = "RECEIVED_TEST";
 export const GET_TEST_ERROR = "FAILED_TO_RECEIVE_TEST";
 export const NEXT_QUESTION = "GET_NEXT_QUESTION";
 export const PREVIOUS_QUESTION = "GET_PREVIOUS_QUESTION";
 export const SUBMIT_RESULT_SUCCESSFUL = "SUBMIT_RESULT_SUCCESS";
 export const SUBMIT_RESULT_FAIL = "SUBMIT_RESULT_FAIL";
 export const ANSWER_QUESTION = "ANSWER_QUESTION";
+export const START_COUNTDOWN = "START_COUNTDOWN";
 
 export function nextQuestion(){
   return {
@@ -27,6 +29,7 @@ export function answerQuestion(questionId, answerId){
 export function takeTest(testId){
   const token = sessionStorage.getItem('token')
   return async dispatch => {
+    dispatch({ type: GET_TEST_FETCH })
     fetch('/api/testings/'+testId, {
       headers: {
         Accept: 'application/json',
@@ -38,7 +41,7 @@ export function takeTest(testId){
       .then(res => {
         try {
           dispatch({
-            type: GET_TEST,
+            type: GET_TEST_SUCCESSFUL,
             test: res
           })
         } catch (error) {
