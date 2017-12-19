@@ -43,7 +43,7 @@ export function takeTest(testId){
       .then(res => res.json())
       .then(res => {
         try {
-          dispatch({ type: GET_TEST, test: res })
+          dispatch({ type: GET_TEST_SUCCESSFUL, test: res })
         } catch (error) {
           dispatch({ type: GET_TEST_ERROR, test: {} })
         }
