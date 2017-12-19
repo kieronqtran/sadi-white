@@ -71,17 +71,11 @@ export function refreshToken() {
 				},
 				method: 'POST',
         body: `grant_type=refresh_token&refresh_token=${getCookie('refresh_token')}`,
-        // body: `grant_type=refresh_token&refresh_token=${sessionStorage.getItem('refresh_token')}`,
 			})
 				.then(res => res.json())
 				.then(res => {
           setCookie('token', res.access_token, res.expires_in)
           setCookie('refresh_token', res.refresh_token, res.expires_in)
-
-					// sessionStorage.setItem('token', res.access_token)
-          // sessionStorage.setItem('refresh_token', res.refresh_token)
-          // const tokenExpireTime = Date.now() + res.expires_in * 1000
-          // sessionStorage.setItem('tet', tokenExpireTime.toString())
 
           const payload = jwtDecode(res.access_token)
 					dispatch({ type: REFRESH_TOKEN, payload })
@@ -96,8 +90,6 @@ export function logOut() {
     deleteCookie('token')
     deleteCookie('refresh_token')
 
-    // sessionStorage.removeItem('token')
-    // sessionStorage.removeItem('refresh_token')
     dispatch({type: UNAUTHENTICATED })
   }
 }
@@ -175,12 +167,6 @@ export function signInAction({ email, password }) {
       setCookie('token', data.access_token, data.expires_in)
       setCookie('refresh_token', data.refresh_token, data.expires_in)
 
-      // sessionStorage.setItem('token', data.access_token)
-      // sessionStorage.setItem('refresh_token', data.refresh_token)
-
-      // const tokenExpireTime = Date.now() + data.expires_in * 1000
-      // sessionStorage.setItem('tet', tokenExpireTime.toString())
-
       const payload = jwtDecode(data.access_token)
 
       dispatch({type: AUTHENTICATED, payload})
@@ -191,7 +177,6 @@ export function signInAction({ email, password }) {
     try {
       const token = getCookie('token')
 
-      // const token = sessionStorage.getItem('token')
       const response = await fetch('/api/account', {
         method: 'GET',
         headers: {
@@ -236,8 +221,6 @@ export function getAllResult() {
 
     const token = getCookie('token')
 
-    // const token =  sessionStorage.getItem('token')
-
     const response = await fetch('/api/allResults', {
       method: 'GET',
       headers: {
@@ -256,8 +239,6 @@ export function getAllAccount() {
 
     const token = getCookie('token')
 
-    // const token =  sessionStorage.getItem('token')
-
     const response = await fetch('/api/allAccounts', {
       method: 'GET',
       headers: {
@@ -275,8 +256,6 @@ export function deleteAccount(id) {
   return async dispatch => {
 
     const token = getCookie('token')
-
-    // const token =  sessionStorage.getItem('token')
 
     const response = await fetch(`/api/account/${id}`, {
       method: 'DELETE',
