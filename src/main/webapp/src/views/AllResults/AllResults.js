@@ -11,7 +11,7 @@ import { deleteAccount, getAllResult } from '../../actions/authentication-action
 class AllResults extends Component {
   constructor(props) {
     super(props)
-    this.thArray = ['Test Name', 'First Name', 'Last Name', 'Mark']
+    this.thArray = ['Test Name', 'First Name', 'Last Name', 'Correct', 'Total', 'Mark']
     this.props.getAllResult()
   }
 
@@ -38,6 +38,8 @@ class AllResults extends Component {
                   <td>{prop['testName']}</td>
                   <td>{prop['firstName']}</td>
                   <td>{prop['lastName']}</td>
+                  <td>{prop['numberOfCorrectAnswer']}</td>
+                  <td>{prop['size']}</td>
                   <td>{prop['numberOfCorrectAnswer'] / prop['size'] * 100} % </td>
                 </tr>
                 ))
