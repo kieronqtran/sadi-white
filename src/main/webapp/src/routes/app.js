@@ -6,6 +6,7 @@ import AdminTest from 'containers/AdminTest/AdminTest'
 import TestForm from 'views/Test/TestForm'
 import AllUsers from "../views/AllUsers/AllUsers";
 import AllResult from "../views/AllResults/AllResults";
+import TopScorer from "../views/TopScorers/TopScorers"
 
 const appRoutes = [
   {
@@ -42,6 +43,13 @@ const appRoutes = [
     component: AllResult,
     requiredLogin: true,
     adminOnly: true,
+  },
+  {
+    path: '/topScorers',
+    name: 'Top Scorers',
+    icon: 'pe-7s-study',
+    component: TopScorer,
+    requiredLogin: true,
   },
   {
     path: '/test',
