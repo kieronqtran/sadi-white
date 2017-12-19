@@ -1,3 +1,4 @@
+import docCookies from '../helper/cookie'
 export const POST_TEST_SUCCESSFUL = "SUCCESS_POSTING_TEST";
 export const POST_TEST_FAIL = "FAILED_TO_POST_TEST";
 export const DELETE_TEST_SUCCESSFUL = "DELETE_TEST_SUCCESSFUL";
@@ -6,8 +7,7 @@ export const GET_LIST_TEST = "SUCCESS_GET_LIST_TEST";
 export const GET_LIST_TEST_ERROR = "GET_LIST_TEST_ERROR";
 export function getListTest(){
 	return async dispatch => {
-    
-    const token = sessionStorage.getItem('token')
+    const token = docCookies.getItem('token')
     const res = await fetch('/api/testings',{
       headers: {
         Accept: 'application/json',
@@ -51,7 +51,7 @@ export function postTest(test){
 
 export function deleteTest(testId){
   return function(dispatch) {
-    const token = sessionStorage.getItem('token')
+    const token = docCookies.getItem('token')
     return fetch(`/api/testings/${testId}`,{
       headers: {
         Accept: "application/json",

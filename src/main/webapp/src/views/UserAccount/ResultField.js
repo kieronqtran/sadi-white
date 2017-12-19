@@ -3,7 +3,7 @@ import React, { Component }  from 'react'
 import { FormInputs } from "../../components/FormInputs/FormInputs";
 
 
-export class ResultList extends Component {
+export class ResultField extends Component {
   render() {
     return (
       <FormInputs
@@ -43,4 +43,4 @@ export class ResultList extends Component {
   }
 }
 
-export default ResultList
+export default ResultField

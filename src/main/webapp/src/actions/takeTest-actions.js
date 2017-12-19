@@ -1,3 +1,4 @@
+import docCookies from '../helper/cookie';
 import { push } from 'react-router-redux';
 export const GET_TEST_FETCH = "FETCHING_TEST"
 export const GET_TEST_SUCCESSFUL = "RECEIVED_TEST";
@@ -14,11 +15,13 @@ export function nextQuestion(){
     type: NEXT_QUESTION,
   }
 }
+
 export function previousQuestion(){
   return {
     type: PREVIOUS_QUESTION
   }
 }
+
 export function answerQuestion(questionId, answerId){
   return {
     type: ANSWER_QUESTION,
@@ -27,7 +30,7 @@ export function answerQuestion(questionId, answerId){
 }
 
 export function takeTest(testId){
-  const token = sessionStorage.getItem('token')
+  const token = docCookies.getItem('token')
   return async dispatch => {
     dispatch({ type: GET_TEST_FETCH })
     fetch('/api/testings/'+testId, {
@@ -40,22 +43,17 @@ export function takeTest(testId){
       .then(res => res.json())
       .then(res => {
         try {
-          dispatch({
-            type: GET_TEST_SUCCESSFUL,
-            test: res
-          })
+          dispatch({ type: GET_TEST_SUCCESSFUL, test: res })
         } catch (error) {
-          dispatch({
-            type: GET_TEST_ERROR,
-            test: {}
-          })
+          dispatch({ type: GET_TEST_ERROR, test: {} })
         }
       })
   }
 }
+
 export function submitTest(test){
   return function(dispatch) {
-    const token = sessionStorage.getItem('token')
+    const token = docCookies.getItem('token')
     return fetch('/api/testing/result',{
       headers: {
         Accept: "application/json",
