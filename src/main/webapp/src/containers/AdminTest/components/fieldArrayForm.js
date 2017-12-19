@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import {
-  Col, Button, Form, FormGroup, HelpBlock, FormControl, ControlLabel, Panel, PanelGroup
+  Col, Button, Form, FormGroup, HelpBlock, FormControl, ControlLabel, Panel, PanelGroup, Row
 } from 'react-bootstrap';
 import validate from './validate';
 
@@ -84,8 +84,7 @@ const renderQuestions = ({ fields, meta: { touched, error, submitFailed } }) => 
 );
 
 const FieldArraysForm = props => {
-	var test = {testId: 0, testTime: 0, questions:{}}
-  const { handleSubmit } = props;
+  const { handleSubmit, onClose } = props;
   return (
     <Form onSubmit={handleSubmit}>
       <Field
@@ -102,6 +101,17 @@ const FieldArraysForm = props => {
       />
       <FieldArray name="questions" component={renderQuestions} />
 			<div className="clearfix"></div>
+      <Row>
+        <Col className="col-md-12">
+        <Button bsStyle="danger" className="pull-right" onClick={onClose}>
+          Close
+        </Button>{' '}
+        <Button bsStyle="primary" className="pull-right" onClick={handleSubmit}>
+          Save
+        </Button>
+        </Col>
+      </Row>
+
     </Form>
   );
 };

@@ -1,9 +1,17 @@
 import React from 'react';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import {
-  Col, Button, Form, FormGroup, HelpBlock, FormControl, ControlLabel
+  Col, Button, Form, FormGroup, HelpBlock, FormControl, ControlLabel, Panel, PanelGroup, Row
 } from 'react-bootstrap';
-import { testData } from '../../../variables/mockData'
+import { connect } from 'react-redux';
+
+const data = {
+  id: 1, name: 'assignment', size: 10, duration: 6000,
+  questions: [
+    {content: 'this is question 1', answer: [{content: 'true', isCorrectAnswer: true}, {content: 'false', isCorrectAnswer: false}]},
+    {content: 'this is question 2', answer: [{content: 'true', isCorrectAnswer: true}, {content: 'false', isCorrectAnswer: false}]}
+  ]
+}
 
 const renderField = ({ input, label, type, meta: { touched, error } }) => (
   <FormGroup>
@@ -13,54 +21,86 @@ const renderField = ({ input, label, type, meta: { touched, error } }) => (
   </FormGroup>
 );
 
-const renderTestDetail = props => {
+const TestForm = props => {
+  const { handleSubmit, onClose} = props;
   return (
-    <div>
+    <Form>
       <Field
         name='name'
         type='text'
-        label='Test name: '
+        label='Test Name'
         component={renderField}
-        input={testData.name}
       />
       <Field
         name='duration'
         type='text'
-        label='Duration: '
+        label='Test Duration'
         component={renderField}
-        input={testData.duration}
       />
-      <Field
-        name='testContent'
-        type='text'
-        component={renderQuestionForm}
-      />
-    </div>
+      <FieldArray name='questions' component={renderQuestionForm}/>
+      <Row>
+        <Col className="col-md-12">
+          <Button bsStyle="danger" className="pull-right" onClick={onClose}>
+            Close
+          </Button>{'  '}
+          <Button bsStyle="primary" className="pull-right" onClick={handleSubmit}>
+            Save
+          </Button>
+        </Col>
+      </Row>
+    </Form>
   )
 };
 
-const renderQuestionForm = ({testData}) => (
+const renderQuestionForm = props => (
   <div>
-    {testData.questions.map((e, i) => (
+    {data.questions.map((question, i) => (
       <FormGroup>
-        <Field
-          name = 'questions'
-          type = 'text'
-          component = {renderField}
-          input = {e}/>
-        {
-          e.answers.map((e, i) => (
-            <div>
-              <Field
-                name='answers'
-                typd='text'
-                label = {i+1}
-                input = {e}
-                component ={renderField}
-              />
-            </div>
-        ))}
+        <PanelGroup accordion>
+          <Panel header={`Question ${i +1}`} eventKey={i}>
+            <Field
+              name = 'questions'
+              type = 'text'
+              component = {renderField}
+              label = 'Question: '/>
+            <FieldArray name='answer' component={renderAnswerForm}/>
+          </Panel>
+        </PanelGroup>
       </FormGroup>
     ))}
   </div>
 );
+
+const renderAnswerForm = props => (
+  <div>
+    {data.questions[0].answer.map((answer, index) => (
+      <div>
+        <Field
+          name='answer'
+          type='text'
+          component={renderField}
+          label={`Answer #${index+1}`}/>
+        <label>
+          <Field name='isCorrectAnswer' component='input' type='radio' value='true'/>{' '}True Answer
+        </label>{' '}
+        <label>
+          <Field name='isCorrectAnswer' component='input' type='radio' value='false'/>{' '}False Answer
+        </label>
+      </div>
+    ))}
+  </div>
+)
+
+// export default reduxForm({
+//   form: 'updateForm', // a unique identifier for this form
+// })(TestForm);
+
+const reduxUpdateForm = reduxForm({
+  form: 'updateForm', // a unique identifier for this form
+})(TestForm);
+
+export default connect(
+  (state) => ({
+    initialValues: data
+  })
+)(reduxUpdateForm)
