@@ -31,7 +31,7 @@ const appRoutes = [
   {
     path: '/allUsers',
     name: 'All Users',
-    icon: 'pe-7s-user',
+    icon: 'pe-7s-smile',
     component: AllUsers,
     requiredLogin: true,
     adminOnly: true,
@@ -39,7 +39,7 @@ const appRoutes = [
   {
     path: '/allResults',
     name: 'All Results',
-    icon: 'pe-7s-user',
+    icon: 'pe-7s-study',
     component: AllResult,
     requiredLogin: true,
     adminOnly: true,
