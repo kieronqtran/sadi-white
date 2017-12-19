@@ -6,6 +6,7 @@ import TestManagement from 'containers/TestManagement/test-management'
 import TestForm from 'views/Test/TestForm'
 import AllUsers from "../views/AllUsers/AllUsers";
 import AllResult from "../views/AllResults/AllResults";
+import TopScorer from "../views/TopScorers/TopScorers"
 
 const appRoutes = [
   {
@@ -40,6 +41,14 @@ const appRoutes = [
     name: 'All Results',
     icon: 'pe-7s-study',
     component: AllResult,
+    requiredLogin: true,
+    adminOnly: true,
+  },
+  {
+    path: '/topScorers',
+    name: 'Top Scorers',
+    icon: 'pe-7s-study',
+    component: TopScorer,
     requiredLogin: true,
   },
   {
