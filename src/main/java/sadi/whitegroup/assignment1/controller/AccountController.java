@@ -94,7 +94,6 @@ public class AccountController {
     }
 
     @GetMapping("/allResults")
-    @Secured(AuthoritiesConstants.ADMIN)
     public List<Result_ResultDTO> getAllResults(){
         return testingService.getAllResult()
             .stream().map(Result_ResultDTO::new).collect(Collectors.toList());

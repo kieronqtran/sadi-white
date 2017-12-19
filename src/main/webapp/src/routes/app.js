@@ -41,7 +41,6 @@ const appRoutes = [
     icon: 'pe-7s-study',
     component: AllResult,
     requiredLogin: true,
-    adminOnly: true,
   },
   {
     path: '/test',
