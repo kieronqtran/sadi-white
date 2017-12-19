@@ -16,7 +16,7 @@ import { UserCard } from 'components/UserCard/UserCard'
 import Button from 'elements/CustomButton/CustomButton'
 import { signInAction, logOut, updateInfo, getResult } from '../../actions/authentication-actions'
 import UserProfile from './UserProfile'
-import ResultList from './ResultList'
+import ResultField from './ResultField'
 
 
 class UserAccount extends Component {
@@ -48,13 +48,13 @@ class UserAccount extends Component {
               <div className="clearfix"></div>
               <Card
                 title="Grade"
-                content={<form>{
-                  this.props.result.map(e => (
-                    <ResultList testName={e.testName}
-                                numberOfCorrectAnswer={e.numberOfCorrectAnswer}
-                                size={e.size}/>
-                  ))
-                }</form>}
+                content={
+                    this.props.result.map(e => (
+                    <ResultField testName={e.testName}
+                                 numberOfCorrectAnswer={e.numberOfCorrectAnswer}
+                                 size={e.size}/>
+                    ))
+                }
               />
             </Col>
           </Row>
@@ -67,7 +67,7 @@ class UserAccount extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user.userProfile,
-    result: state.result,
+    result: state.result.entities,
   }
 }
 
