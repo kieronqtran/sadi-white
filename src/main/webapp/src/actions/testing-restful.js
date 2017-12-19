@@ -5,7 +5,6 @@ export const DELETE_TEST_SUCCESSFUL = "DELETE_TEST_SUCCESSFUL";
 export const DELETE_TEST_FAIL = "FAILED_TO_DELETE_TEST";
 export const GET_LIST_TEST = "SUCCESS_GET_LIST_TEST";
 export const GET_LIST_TEST_ERROR = "GET_LIST_TEST_ERROR";
-
 export function getListTest(){
 	return async dispatch => {
     const token = docCookies.getItem('token')

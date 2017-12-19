@@ -9,7 +9,9 @@ import {
 } from 'react-router-dom'
 import {testSample} from 'variables/mockData.js'
 import { connect } from 'react-redux'
-import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION, submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
+import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION
+, START_COUNTDOWN
+  , submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
 
 class TestForm extends Component {
   constructor(props) {
@@ -18,22 +20,34 @@ class TestForm extends Component {
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
-    this.props.takeTest(this.props.match.params.testId);
-    const testTime = this.props.currentTest.testTime;
-    const com = this;
-    if(this.props.currentTest.size === 0){
-    } else {
-      var a = 0
-      var t = setInterval(function(){
-        a = a + 1000;
-        if(a === testTime){
-          clearInterval(t);
-          com.submit("#!/user");
-          alert("You will be now redirected to the user page")
-        }
-      }, 1000);
-    }
   }
+
+  componentWillMount(){
+    this.props.takeTest(this.props.match.params.testId);
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if(nextProps.testLoaded && !nextProps.countdownStarted && nextProps.currentTest.testTime > 0) {
+      this.props.startCountDown();
+      const testTime = nextProps.currentTest.testTime/100;
+        console.log(testTime)
+        const com = this;
+        var a = 0
+        var t = setInterval(function(){
+          a = a + 1000;
+          console.log(a);
+          if(a === testTime){
+            clearInterval(t);
+            alert("You will be now redirected to the user page")
+            com.submit("#!/user");
+          
+          }}, 1000);
+        
+      return true;
+    }
+    return true;
+  }
+
   nextQuestion() {
     this.props.nextQuestion()
   }
@@ -90,7 +104,13 @@ function mapStateToProps(state, ownProps) {
     currentTest: state.takeTest.currentTest,
     currentQuestion: state.takeTest.currentQuestion,
     answer: state.takeTest.answer,
+    testLoaded: state.takeTest.loaded,
+    countdownStarted: state.takeTest.countdownStarted,
   };
 }
 
-export default connect(mapStateToProps, {takeTest, submitTest, nextQuestion, previousQuestion, answerQuestion})(TestForm);
+export default connect(mapStateToProps, {
+  takeTest, submitTest, nextQuestion, previousQuestion, answerQuestion,
+  startCountDown: () => ({
+    type: START_COUNTDOWN
+  })})(TestForm);

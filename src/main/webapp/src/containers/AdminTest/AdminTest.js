@@ -161,27 +161,27 @@ class AdminTest extends Component {
           </Modal.Footer>
         </Modal>
 
-        <Modal
-          show={this.state.showModalEdit}
-          dialogClassName="custom-modal"
-          onHide={this.close.bind(this)}>
-          <Modal.Header>
-            <Modal.Title>
-              Test form
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <renderTestDetail/>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button bsStyle="danger" onClick={this.close.bind(this)}>
-              Close
-            </Button>
-            <Button bsStyle="primary" onClick={this.close.bind(this)}>
-              Save
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        {/*<Modal*/}
+          {/*show={this.state.showModalEdit}*/}
+          {/*dialogClassName="custom-modal"*/}
+          {/*onHide={this.close.bind(this)}>*/}
+          {/*<Modal.Header>*/}
+            {/*<Modal.Title>*/}
+              {/*Test form*/}
+            {/*</Modal.Title>*/}
+          {/*</Modal.Header>*/}
+          {/*<Modal.Body>*/}
+            {/*<renderTestDetail/>*/}
+          {/*</Modal.Body>*/}
+          {/*<Modal.Footer>*/}
+            {/*<Button bsStyle="danger" onClick={this.close.bind(this)}>*/}
+              {/*Close*/}
+            {/*</Button>*/}
+            {/*<Button bsStyle="primary" onClick={this.close.bind(this)}>*/}
+              {/*Save*/}
+            {/*</Button>*/}
+          {/*</Modal.Footer>*/}
+        {/*</Modal>*/}
 
         {/*<Modal*/}
           {/*show={this.state.showModalNew}*/}
