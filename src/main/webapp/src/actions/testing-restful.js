@@ -5,9 +5,32 @@ export const DELETE_TEST_FAIL = "FAILED_TO_DELETE_TEST";
 export const GET_LIST_TEST = "SUCCESS_GET_LIST_TEST";
 export const GET_LIST_TEST_ERROR = "GET_LIST_TEST_ERROR";
 
+function setCookie(cname,cvalue,extime){
+  var d = new Date();
+  d.setTime(d.getTime()+(extime*1000));
+  var expire = "expires=" + d.toUTCString();
+  document.cookie = cname +"=" + cvalue + ";" + expire + ";path=/";
+}
+
+function getCookie(cname){
+  var name = cname + "=";
+  var decodedCookie= decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i=0; i<ca.length; i++){
+    var c = ca[i];
+    while (c.charAt(0) == ' '){
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0){
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 export function getListTest(){
 	return async dispatch => {
-    const token = sessionStorage.getItem('token')
+    const token = getCookie('token')
     const res = await fetch('/api/testings',{
       headers: {
         Accept: 'application/json',
@@ -51,7 +74,7 @@ export function postTest(test){
 
 export function deleteTest(testId){
   return function(dispatch) {
-    const token = sessionStorage.getItem('token')
+    const token = getCookie('token')
     return fetch(`/api/testings/${testId}`,{
       headers: {
         Accept: "application/json",

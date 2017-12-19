@@ -33,7 +33,7 @@ class UserAccount extends Component {
           <Row>
             <Col md={12}>
               <Card
-                title="Edit Profile"
+                title="Profile"
                 content={
                   <UserProfile onSubmit={this.updateInfo.bind(this)}
                                firstName={this.props.user.firstName}

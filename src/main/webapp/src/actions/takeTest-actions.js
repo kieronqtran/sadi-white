@@ -7,6 +7,29 @@ export const SUBMIT_RESULT_SUCCESSFUL = "SUBMIT_RESULT_SUCCESS";
 export const SUBMIT_RESULT_FAIL = "SUBMIT_RESULT_FAIL";
 export const ANSWER_QUESTION = "ANSWER_QUESTION";
 
+function setCookie(cname,cvalue,extime){
+  var d = new Date();
+  d.setTime(d.getTime()+(extime*1000));
+  var expire = "expires=" + d.toUTCString();
+  document.cookie = cname +"=" + cvalue + ";" + expire + ";path=/";
+}
+
+function getCookie(cname){
+  var name = cname + "=";
+  var decodedCookie= decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i=0; i<ca.length; i++){
+    var c = ca[i];
+    while (c.charAt(0) == ' '){
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0){
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 export function nextQuestion(){
   return {
     type: NEXT_QUESTION,
@@ -25,7 +48,7 @@ export function answerQuestion(questionId, answerId){
 }
 
 export function takeTest(testId){
-  const token = sessionStorage.getItem('token')
+  const token = getCookie('token')
   return async dispatch => {
     fetch('/api/testings/'+testId, {
       headers: {
@@ -52,7 +75,7 @@ export function takeTest(testId){
 }
 export function submitTest(test){
   return function(dispatch) {
-    const token = sessionStorage.getItem('token')
+    const token = getCookie('token')
     return fetch('/api/testing/result',{
       headers: {
         Accept: "application/json",
