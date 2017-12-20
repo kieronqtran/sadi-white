@@ -1,6 +1,8 @@
 import docCookies from '../helper/cookie'
 export const POST_TEST_SUCCESSFUL = "SUCCESS_POSTING_TEST";
 export const POST_TEST_FAIL = "FAILED_TO_POST_TEST";
+export const PUT_TEST_SUCCESSFUL = "SUCCESS_PUTTING_TEST";
+export const PUT_TEST_FAIL = "FAILED_TO_PUT_TEST";
 export const DELETE_TEST_SUCCESSFUL = "DELETE_TEST_SUCCESSFUL";
 export const DELETE_TEST_FAIL = "FAILED_TO_DELETE_TEST";
 export const GET_LIST_TEST = "SUCCESS_GET_LIST_TEST";
@@ -43,6 +45,31 @@ export function postTest(test){
         if(res.status === 500) {
           dispatch({
             type: POST_TEST_FAIL,
+          })
+        }
+      });
+  };
+}
+
+export function putTest(test) {
+  return function(dispatch) {
+    return fetch('/api/testings', {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "PUT",
+      body: JSON.stringify(test),
+    })
+      .then(res => {
+        if (res.status === 201) {
+          dispatch({
+            type: PUT_TEST_SUCCESSFUL,
+          });
+        }
+        if (res.status === 500) {
+          dispatch({
+            type: PUT_TEST_FAIL,
           })
         }
       });
