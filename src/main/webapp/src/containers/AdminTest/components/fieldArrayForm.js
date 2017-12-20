@@ -117,7 +117,7 @@ const FieldArraysForm = props => {
 };
 
 export default reduxForm({
-  form: 'fieldArrays', // a unique identifier for this form
+  form: 'createTest', // a unique identifier for this form
   validate,
 })(FieldArraysForm);
 
