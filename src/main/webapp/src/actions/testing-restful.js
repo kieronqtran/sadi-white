@@ -44,29 +44,6 @@ export function getTestById(id) {
   }
 }
 
-function setCookie(cname,cvalue,extime){
-  var d = new Date();
-  d.setTime(d.getTime()+(extime*1000));
-  var expire = "expires=" + d.toUTCString();
-  document.cookie = cname +"=" + cvalue + ";" + expire + ";path=/";
-}
-
-function getCookie(cname){
-  var name = cname + "=";
-  var decodedCookie= decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for (var i=0; i<ca.length; i++){
-    var c = ca[i];
-    while (c.charAt(0) == ' '){
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0){
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
 export function getListTest(){
 	return async dispatch => {
     const token = docCookies.getItem('token')
@@ -98,19 +75,13 @@ export function postTest(test){
       method: "POST",
       body: JSON.stringify(test),
     })
-      .then(res => {
-        if(res.status === 201) {
-          dispatch({
-            type: POST_TEST_SUCCESSFUL,
-          });
-        }
-        if(res.status === 500) {
-          dispatch({
-            type: POST_TEST_FAIL,
-          })
-        }
-      });
-  };
+    if(response.status === 201) {
+      dispatch({ type: POST_TEST_SUCCESSFUL, })
+    }
+    if(response.status === 500) {
+      dispatch({ type: POST_TEST_FAIL, })
+    }
+  }
 }
 
 export function putTest(test) {
@@ -141,9 +112,9 @@ export function putTest(test) {
 }
 
 export function deleteTest(testId){
-  return function(dispatch) {
+  return async (dispatch) => {
     const token = docCookies.getItem('token')
-    return fetch(`/api/testings/${testId}`,{
+    const response = await fetch(`/api/testings/${testId}`,{
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -151,18 +122,14 @@ export function deleteTest(testId){
       },
       method: "DELETE",
     })
-      .then(async res => {
-        if(res.status === 200) {
-          await dispatch(getListTest());
-          return dispatch({
-            type: DELETE_TEST_SUCCESSFUL,
-          });
-        }
-        if(res.status === 500) {
-          return dispatch({
-            type: DELETE_TEST_FAIL,
-          })
-        }
-      });
-  };
+
+    if(response.status === 200) {
+      await dispatch(getListTest());
+      return dispatch({ type: DELETE_TEST_SUCCESSFUL, });
+    }
+
+    if(response.status === 500) {
+      return dispatch({ type: DELETE_TEST_FAIL, })
+    }
+  }
 }
