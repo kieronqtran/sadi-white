@@ -5,6 +5,7 @@ export const DELETE_TEST_SUCCESSFUL = "DELETE_TEST_SUCCESSFUL";
 export const DELETE_TEST_FAIL = "FAILED_TO_DELETE_TEST";
 export const GET_LIST_TEST = "SUCCESS_GET_LIST_TEST";
 export const GET_LIST_TEST_ERROR = "GET_LIST_TEST_ERROR";
+
 export function getListTest(){
 	return async dispatch => {
     const token = docCookies.getItem('token')
@@ -25,8 +26,8 @@ export function getListTest(){
 }
 
 export function postTest(test){
-  return function(dispatch) {
-    return fetch('/api/testings',{
+  return async (dispatch) => {
+    const response = await fetch('/api/testings',{
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -34,25 +35,19 @@ export function postTest(test){
       method: "POST",
       body: JSON.stringify(test),
     })
-      .then(res => {
-        if(res.status === 201) {
-          dispatch({
-            type: POST_TEST_SUCCESSFUL,
-          });
-        }
-        if(res.status === 500) {
-          dispatch({
-            type: POST_TEST_FAIL,
-          })
-        }
-      });
-  };
+    if(response.status === 201) {
+      dispatch({ type: POST_TEST_SUCCESSFUL, })
+    }
+    if(response.status === 500) {
+      dispatch({ type: POST_TEST_FAIL, })
+    }
+  }
 }
 
 export function deleteTest(testId){
-  return function(dispatch) {
+  return async (dispatch) => {
     const token = docCookies.getItem('token')
-    return fetch(`/api/testings/${testId}`,{
+    const response = await fetch(`/api/testings/${testId}`,{
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -60,18 +55,14 @@ export function deleteTest(testId){
       },
       method: "DELETE",
     })
-      .then(async res => {
-        if(res.status === 200) {
-          await dispatch(getListTest());
-          return dispatch({
-            type: DELETE_TEST_SUCCESSFUL,
-          });
-        }
-        if(res.status === 500) {
-          return dispatch({
-            type: DELETE_TEST_FAIL,
-          })
-        }
-      });
-  };
+
+    if(response.status === 200) {
+      await dispatch(getListTest());
+      return dispatch({ type: DELETE_TEST_SUCCESSFUL, });
+    }
+
+    if(response.status === 500) {
+      return dispatch({ type: DELETE_TEST_FAIL, })
+    }
+  }
 }

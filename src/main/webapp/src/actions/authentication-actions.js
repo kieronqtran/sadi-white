@@ -30,11 +30,11 @@ export const DELETE_ACCOUNT_SUCCESSFULL = 'DELETE_ACCOUNT_SUCCESSFULL'
 export const DELETE_ACCOUNT_ERROR = 'DELETE_ACCOUNT_ERROR';
 
 export function refreshToken() {
-	return async dispatch => {
+	return async (dispatch) => {
     const refresh_token = docCookies.getItem('refresh_token')
 
     if (refresh_token) {
-			fetch('/oauth/token', {
+			const response = await fetch('/oauth/token', {
 				headers: {
 					Accept: 'application/json',
 					'Content-Type': 'application/x-www-form-urlencoded',
@@ -44,15 +44,14 @@ export function refreshToken() {
         body: `grant_type=refresh_token&refresh_token=${docCookies.getItem('refresh_token')}`,
 
 			})
-				.then(res => res.json())
-				.then(res => {
 
-         docCookies.setItem('token', res.access_token, res.expires_in*1000);
-         docCookies.setItem('refresh_token', res.refresh_token, res.expires_in*1000);
+      const data = await response.json()
 
-					const payload = jwtDecode(res.access_token)
-					dispatch({ type: REFRESH_TOKEN, payload })
-				})
+      docCookies.setItem('token', data.access_token, data.expires_in*1000);
+			docCookies.setItem('refresh_token', data.refresh_token, data.expires_in*1000);
+
+			const payload = jwtDecode(data.access_token)
+      dispatch({ type: REFRESH_TOKEN, payload })
 		}
 	}
 }
@@ -94,23 +93,24 @@ export function updateInfo(info) {
 
 export function signUp(info) {
 	return async (dispatch) => {
-		fetch('/api/signUp', {
+		const response = await fetch('/api/signUp', {
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
 			method: 'POST',
 			body: JSON.stringify(info),
-		}).then(res => {
-			if (res.status === 201) {
-				dispatch({ type: SIGN_UP_SUCCESSFUL, })
-        alert("Sign Up succeeded")
-        dispatch(push('/login'))
-			}
-			if (res.status === 500) {
-				dispatch({ type: SIGN_UP_FAILED })
-			}
 		})
+
+    if (response.status === 201) {
+      dispatch({ type: SIGN_UP_SUCCESSFUL, })
+      alert("Sign Up succeeded")
+      dispatch(push('/login'))
+    }
+
+    if (response.status === 500) {
+      dispatch({ type: SIGN_UP_FAILED })
+    }
 	}
 }
 
@@ -201,7 +201,9 @@ export function getAllResult() {
         Authorization: `Bearer ${token}`,
       },
     })
+
     const data = await response.json()
+
     dispatch({ type: GET_ALL_RESULT_SUCCESSFUL, allResults: data })
   }
 }
@@ -219,7 +221,9 @@ export function getAllAccount() {
         Authorization: `Bearer ${token}`,
       },
     })
+
     const data = await response.json()
+
     dispatch({ type: GET_ALL_ACCOUNT_SUCCESSFULL, allAccounts: data })
   }
 }
@@ -237,7 +241,9 @@ export function deleteAccount(id) {
         Authorization: `Bearer ${token}`,
       },
     })
+
     await dispatch(getAllAccount());
+
     dispatch({ type: DELETE_ACCOUNT_SUCCESSFULL})
   }
 }
