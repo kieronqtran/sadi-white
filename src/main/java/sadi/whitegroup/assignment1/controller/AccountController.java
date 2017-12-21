@@ -15,6 +15,7 @@ import sadi.whitegroup.assignment1.controller.vm.ManagedUserVM;
 import sadi.whitegroup.assignment1.entity.User;
 import sadi.whitegroup.assignment1.repository.UserRepository;
 import sadi.whitegroup.assignment1.security.AuthoritiesConstants;
+import sadi.whitegroup.assignment1.service.MailService;
 import sadi.whitegroup.assignment1.service.TestingService;
 import sadi.whitegroup.assignment1.service.UserService;
 import sadi.whitegroup.assignment1.service.dto.ResultDTO;
@@ -27,6 +28,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.thymeleaf.context.IWebContext;
 
 
 @RestController
@@ -38,11 +40,14 @@ public class AccountController {
     private final UserRepository userRepository;
     private final UserService userService;
     private final TestingService testingService;
+    private final MailService mailService;
 
-    public AccountController(UserRepository userRepository, UserService userService, TestingService testingService) {
+    public AccountController(UserRepository userRepository, UserService userService,
+                             TestingService testingService, MailService mailService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.testingService = testingService;
+        this.mailService = mailService;
     }
 
     private static boolean checkPasswordLength(String password) {
@@ -64,8 +69,8 @@ public class AccountController {
             throw new EmailAlreadyUsedException();
         });
 
-        userService.registerUser(managedUserVM);
-
+        User user = userService.registerUser(managedUserVM);
+        mailService.sendCreationEmail(user);
     }
 
     @GetMapping("/account")

@@ -25,9 +25,7 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://localhost:5432/assignment1_new
         username: postgres
-        password: default
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQLDialect
         database: POSTGRESQL
@@ -37,6 +35,18 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: SADIWhite2017@gmail.com
+        password: imagination
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
+
 
 # ===================================================================
 # To enable SSL, generate a certificate using:
