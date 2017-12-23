@@ -39,7 +39,29 @@ exports[`fieldArrayForm should render 1`] = `
     <input
       className="form-control"
       id={undefined}
-      name="duration"
+      name="testTime"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label"
+      htmlFor={undefined}
+    >
+      Test Type
+    </label>
+    <input
+      className="form-control"
+      id={undefined}
+      name="type"
       onBlur={[Function]}
       onChange={[Function]}
       onDragStart={[Function]}
@@ -71,5 +93,30 @@ exports[`fieldArrayForm should render 1`] = `
   <div
     className="clearfix"
   />
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-12 "
+    >
+      <button
+        className="pull-right btn btn-danger"
+        disabled={false}
+        onClick={undefined}
+        type="button"
+      >
+        Close
+      </button>
+       
+      <button
+        className="pull-right btn btn-primary"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Save
+      </button>
+    </div>
+  </div>
 </form>
 `;

@@ -1,18 +1,35 @@
 import React from 'react';
 
+import {
+  Grid,
+  Row,
+  Col,
+  Table,
+  Button,
+  Modal,
+  OverlayTrigger,
+  Tab,
+  Nav,
+  NavItem,
+  FormGroup,
+  Radio,
+  FormControl,
+  ControlLabel,
+  InputGroup
+} from "react-bootstrap";
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 import { Provider } from 'react-redux'
-import { Button, Welcome } from '@storybook/react/demo';
 
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { reducer as formReducer } from "redux-form";
 
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import thunk from 'redux-thunk'
 
-import FieldArrayForm from "../containers/AdminTest/components/fieldArrayForm";
+import FieldArrayForm from "../containers/TestManagement/components/fieldArrayForm";
 import combinedReducer from "../reducers/index";
 
 
@@ -22,12 +39,25 @@ import '../assets/sass/light-bootstrap-dashboard.css'
 import '../assets/css/demo.css'
 import '../assets/css/pe-icon-7-stroke.css'
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
-
-  const store = createStore(
-    combinedReducer,
-    composeWithDevTools(applyMiddleware(thunk)),
-  )
+const store = createStore(
+  combineReducers({form: formReducer}),
+  composeWithDevTools(applyMiddleware(thunk)),
+)
 
 storiesOf('Admin Test', module)
-  .add('create a Test', () => <Provider store={store}><FieldArrayForm/></Provider>)
+  .add('create a Test', () =>
+  <Provider store={store}>
+    <Row>
+      <Col md={12}>
+        <Modal show={true} dialogClassName="custom-modal">
+          <Modal.Header>
+            <Modal.Title>Test form</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FieldArrayForm/>
+          </Modal.Body>
+        </Modal>
+      </Col>
+    </Row>
+  </Provider>)
+

@@ -6,7 +6,7 @@ import userReducer from './user'
 import getTestList from './test-reducer'
 import newQuestion from './takeTest-reducer'
 import resultReducer from './result'
-import manageTest from './postTest-reducer'
+import testManagement from './test-management'
 
 
 const combinedReducer = combineReducers({
@@ -17,7 +17,7 @@ const combinedReducer = combineReducers({
 	router: routerReducer,
   test: getTestList,
   takeTest: newQuestion,
-  makeTest: manageTest,
+  testManagement: testManagement,
 })
 
 export default combinedReducer
