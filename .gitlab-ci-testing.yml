@@ -1,0 +1,37 @@
+## INCOMPLETED
+image: openjdk:8
+
+cache:
+    key: "$CI_BUILD_REF_NAME"
+    paths:
+        - node_modules
+        - .maven
+stages:
+    - build
+    - test
+    - package
+    # - deploy
+
+before_script:
+    - export MAVEN_USER_HOME=`pwd`/.maven
+    - chmod +x mvnw
+
+maven-build:
+    stage: build
+    script: ./mvnw compile -Dmaven.repo.local=$MAVEN_USER_HOME
+
+maven-test:
+    stage: test
+    script:
+        - ./mvnw test -Dmaven.repo.local=$MAVEN_USER_HOME
+
+maven-package:
+    stage: package
+    script:
+        - ./mvnw verify -Pprod -DskipTests -Dmaven.repo.local=$MAVEN_USER_HOME
+    artifacts:
+        paths:
+            - target/*.war
+
+# maven-deploy:
+#     stage: deploy

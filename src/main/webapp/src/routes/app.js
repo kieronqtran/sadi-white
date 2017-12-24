@@ -2,7 +2,7 @@ import UserAccount from 'views/UserAccount/UserAccount'
 import Login from 'views/Login/Login'
 import Signup from '../views/Signup/Signup'
 import Test from 'views/Test/Test'
-import AdminTest from 'containers/AdminTest/AdminTest'
+import TestManagement from 'containers/TestManagement/test-management'
 import TestForm from 'views/Test/TestForm'
 
 const appRoutes = [
@@ -33,17 +33,16 @@ const appRoutes = [
     requiredLogin: true,
   },
   {
-    path: '/takeTest/:testId',
-    name: 'TakeTest',
-    component: TestForm,
-    hiddenLink: true,
-  },
-  {
-    path: '/admintest',
+    path: '/admin-test-management',
     name: 'Manage Test',
     icon: 'pe-7s-bookmarks',
-    component: AdminTest,
+    component: TestManagement,
     adminOnly: true,
+  },
+  {
+    path: '/takeTest/:testId',
+    component: TestForm,
+    hiddenLink: true,
   },
   {
     redirect: true,

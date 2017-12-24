@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fieldArrayForm should render 1`] = `
+<form
+  className=""
+  onSubmit={[Function]}
+>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label"
+      htmlFor={undefined}
+    >
+      Test Name
+    </label>
+    <input
+      className="form-control"
+      id={undefined}
+      name="name"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label"
+      htmlFor={undefined}
+    >
+      Test Duration
+    </label>
+    <input
+      className="form-control"
+      id={undefined}
+      name="testTime"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label"
+      htmlFor={undefined}
+    >
+      Test Type
+    </label>
+    <input
+      className="form-control"
+      id={undefined}
+      name="type"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onDragStart={[Function]}
+      onDrop={[Function]}
+      onFocus={[Function]}
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group"
+  >
+    <div
+      className="col-md-2"
+    >
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Add Questions
+      </button>
+    </div>
+    <div
+      className="col-md-10"
+    />
+  </div>
+  <div
+    className="clearfix"
+  />
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-12 "
+    >
+      <button
+        className="pull-right btn btn-danger"
+        disabled={false}
+        onClick={undefined}
+        type="button"
+      >
+        Close
+      </button>
+       
+      <button
+        className="pull-right btn btn-primary"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>
+`;
