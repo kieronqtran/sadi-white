@@ -11,7 +11,7 @@ import { getAllResult } from '../../actions/authentication-actions'
 class TopScorers extends Component {
   constructor(props) {
     super(props)
-    this.thArray = ['Test Name', 'First Name', 'Last Name', 'Mark']
+    this.thArray = ['Name', 'Test', 'Mark']
     this.props.getAllResult()
   }
 
@@ -19,7 +19,7 @@ class TopScorers extends Component {
     return(
       <Col md={12}>
         <Card
-          title="All Results"
+          title="Top Scorers"
           ctTableFullWidth
           ctTableResponsive
           content={
@@ -35,9 +35,8 @@ class TopScorers extends Component {
               {
                 this.props.listResult.slice(0,3).map((prop, key) => (
                   <tr key={key}>
+                    <td>{prop['firstName']} {prop['lastName']}</td>
                     <td>{prop['testName']}</td>
-                    <td>{prop['firstName']}</td>
-                    <td>{prop['lastName']}</td>
                     <td>{prop['numberOfCorrectAnswer'] / prop['size'] * 100} % </td>
                   </tr>
                 ))
