@@ -34,9 +34,7 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final AuthorityRepository authorityRepository;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
@@ -85,16 +83,19 @@ public class UserService {
             .map(UserDTO::new);
     }
 
-    public void deleteUser(String email) {
-        userRepository.findOneByEmailIgnoreCase(email).ifPresent(user -> {
-            userRepository.delete(user);
-            log.debug("Deleted User: {}", user);
-        });
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<User> findAll(){
+        return userRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
         return userRepository.findOneWithAuthoritiesByEmail(SecurityUtils.getCurrentUserLogin()).orElse(null);
     }
+
 
 }

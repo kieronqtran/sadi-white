@@ -9,7 +9,7 @@ import appRoutes from 'routes/app'
 import Header from '../../components/Header/Header'
 import { refreshToken } from "../../actions/authentication-actions";
 
-const PrivateRoute = ({ component: Component, isAuthenticated, redirectPath,...rest }) => (
+const PrivateRoute = ({ component: Component, isAuthenticated, redirectPath, ...rest }) => (
   <Route {...rest} render={props => (
     isAuthenticated ? (
       <Component {...props}/>
@@ -25,10 +25,10 @@ const PrivateRoute = ({ component: Component, isAuthenticated, redirectPath,...r
 class App extends Component {
   constructor(props) {
     super(props)
-      const app = this;
-      setInterval(function() {
-          app.props.refreshToken();
-      }, 1200000);
+    const app = this;
+    setInterval(() => {
+        app.props.refreshToken();
+    }, 120000);
   }
 
   componentDidUpdate(e) {

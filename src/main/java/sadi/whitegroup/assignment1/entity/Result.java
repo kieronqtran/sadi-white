@@ -1,7 +1,13 @@
 package sadi.whitegroup.assignment1.entity;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.JoinFormula;
+import org.springframework.data.annotation.CreatedDate;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -28,6 +34,16 @@ public class Result implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    // Read only field
+    // @Formula("(SELECT c * 100/t.size FROM testing t WHERE testing_id = t.id)")
+    // @Basic(fetch = FetchType.LAZY)
+    // private Integer score;
+
+    @CreatedDate
+    @Column(name = "created_date", nullable = false)
+    @JsonIgnore
+    private Instant createdDate = Instant.now();
 
     public Long getId() {
         return id;
@@ -70,6 +86,10 @@ public class Result implements Serializable {
 
     public User getUser() {
         return user;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
     @Override

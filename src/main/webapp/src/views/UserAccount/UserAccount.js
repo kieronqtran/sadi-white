@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import {
   Grid,
   Row,
-  Col,
-  FormGroup,
-  ControlLabel,
-  FormControl
+  Col
 } from 'react-bootstrap'
 
 import { withRouter } from 'react-router'
@@ -13,8 +10,7 @@ import { connect } from 'react-redux'
 import { Card } from 'components/Card/Card'
 import { FormInputs } from 'components/FormInputs/FormInputs'
 import { UserCard } from 'components/UserCard/UserCard'
-import Button from 'elements/CustomButton/CustomButton'
-import { signInAction, logOut, updateInfo, getResult } from '../../actions/authentication-actions'
+import { logOut, updateInfo, getResult } from '../../actions/authentication-actions'
 import UserProfile from './UserProfile'
 import ResultField from './ResultField'
 
@@ -37,7 +33,7 @@ class UserAccount extends Component {
           <Row>
             <Col md={12}>
               <Card
-                title="Edit Profile"
+                title="Profile"
                 content={
                   <UserProfile onSubmit={this.updateInfo.bind(this)}
                                firstName={this.props.user.firstName}

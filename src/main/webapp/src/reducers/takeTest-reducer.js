@@ -35,16 +35,18 @@ export default function newQuestion(state=initState, action){
       var new_answer = state.answer;
       new_answer[action.ans.question] = action.ans.answer;
       return {...state, answer: new_answer}
-    case NEXT_QUESTION:
-      var new_question = state.currentQuestion + 1;
+    case NEXT_QUESTION: {
+      const new_question = state.currentQuestion + 1;
       return {...state, currentQuestion:  new_question};
-    case PREVIOUS_QUESTION:
-      var new_question = state.currentQuestion - 1;
+    }
+    case PREVIOUS_QUESTION: {
+      const new_question = state.currentQuestion - 1;
       return {...state, currentQuestion:  new_question};
+    }
     case SUBMIT_RESULT_SUCCESSFUL:
-      return {...state, currentTest:initState.currentTest, answer: {}}
+      return { ...state, currentTest: initState.currentTest, answer: {}}
     case SUBMIT_RESULT_FAIL:
-      return {...state, answer_test: {}};
+      return { ...state, answer_test: {}};
     case START_COUNTDOWN:
       return {...state, countdownStarted: true};
     default:
