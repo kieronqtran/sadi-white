@@ -173,7 +173,7 @@ export function getResult() {
 
 	  const token = docCookies.getItem('token')
 
-    const response = await fetch('/api/result', {
+    const response = await fetch('/api/account/result', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -193,7 +193,7 @@ export function getAllResult() {
 
     const token = docCookies.getItem('token')
 
-    const response = await fetch('/api/allResults', {
+    const response = await fetch('/api/results', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -204,7 +204,7 @@ export function getAllResult() {
 
     const data = await response.json()
 
-    dispatch({ type: GET_ALL_RESULT_SUCCESSFUL, allResults: data })
+    dispatch({ type: GET_ALL_RESULT_SUCCESSFUL, data: data.content })
   }
 }
 

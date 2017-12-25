@@ -2,6 +2,10 @@ package sadi.whitegroup.assignment1.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sadi.whitegroup.assignment1.controller.dto.AdminTestingDTO;
@@ -130,11 +134,7 @@ public class TestingService {
     }
 
     @Transactional(readOnly = true)
-    public List<Result> getAllResult() {
-        return resultRepository.findAll().stream().map(e -> {
-            e.getTesting();
-            e.getUser();
-            return e;
-        }).collect(Collectors.toList());
+    public Page<Result> getAllResult(Pageable pageable) {
+        return resultRepository.findAllTopScore(pageable);
     }
 }

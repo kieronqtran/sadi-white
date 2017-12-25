@@ -64,9 +64,9 @@ export function getListTest(){
 }
 
 export function postTest(test){
-  return function(dispatch) {
+  return async (dispatch) => {
     const token = docCookies.getItem('token')
-    return fetch('/api/testings',{
+    const response = await fetch('/api/testings',{
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

@@ -3,10 +3,13 @@ package sadi.whitegroup.assignment1.service.dto;
 import sadi.whitegroup.assignment1.entity.Result;
 import sadi.whitegroup.assignment1.entity.User;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class Result_ResultDTO {
-    private long id;
+
+    private Long resultId;
 
     private int numberOfCorrectAnswer;
 
@@ -18,30 +21,28 @@ public class Result_ResultDTO {
 
     private String lastName;
 
+    private Instant createDate;
+
     public Result_ResultDTO() {}
 
-    public Result_ResultDTO(long id, int numberOfCorrectAnswer, String testName, int size,
-                            String firstName, String lastName) {
-        this.id = id;
+    public Result_ResultDTO(Long resultId, int numberOfCorrectAnswer, String testName, int size,
+                            String firstName, String lastName, Instant createDate) {
+        this.resultId = resultId;
         this.numberOfCorrectAnswer = numberOfCorrectAnswer;
         this.testName = testName;
         this.size = size;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.createDate = createDate;
     }
 
     public Result_ResultDTO(Result result){
         this(result.getId(), result.getNumberOfCorrectAnswer(),
             result.getTesting().getName(), result.getTesting().getSize(),
-            result.getUser().getFirstName(),result.getUser().getLastName());
+            result.getUser().getFirstName(),result.getUser().getLastName(),
+            result.getCreatedDate());
     }
 
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
     public int getNumberOfCorrectAnswer() {
         return numberOfCorrectAnswer;
     }
@@ -72,4 +73,26 @@ public class Result_ResultDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+	/**
+	 * @return the createDate
+	 */
+	public Instant getCreateDate() {
+		return createDate;
+	}
+
+	/**
+	 * @return the resultId
+	 */
+	public Long getResultId() {
+		return resultId;
+	}
+
+	/**
+	 * @param resultId the resultId to set
+	 */
+	public void setResultId(Long resultId) {
+		this.resultId = resultId;
+	}
+
 }

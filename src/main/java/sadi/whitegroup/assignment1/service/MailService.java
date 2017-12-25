@@ -24,18 +24,15 @@ public class MailService {
     private static final String BASE_URL = "baseUrl";
 
     private final JavaMailSender javaMailSender;
-    private final MessageSource messageSource;
     private final SpringTemplateEngine templateEngine;
 
-    public MailService(JavaMailSender javaMailSender,
-                       MessageSource messageSource, SpringTemplateEngine templateEngine) {
+    public MailService(JavaMailSender javaMailSender, SpringTemplateEngine templateEngine) {
         this.javaMailSender = javaMailSender;
-        this.messageSource = messageSource;
         this.templateEngine = templateEngine;
     }
 
     @Async
-    public void sendEmail(String to, String content,
+    public void sendEmail(String to, String content, String subject,
                           boolean isMultipart, boolean isHtml) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, content);
@@ -45,6 +42,7 @@ public class MailService {
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
             message.setTo(to);
+            message.setSubject(subject);
             message.setFrom("Admin@localhost");
             message.setText(content, isHtml);
             javaMailSender.send(mimeMessage);
@@ -60,19 +58,19 @@ public class MailService {
     }
 
     @Async
-    public void sendEmailFromTemplate(User user, String templateName) {
+    public void sendEmailFromTemplate(User user,String subject, String templateName) {
         Context context = new Context();
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, "http://127.0.0.1:8080");
         String content = templateEngine.process(templateName, context);
-        sendEmail(user.getEmail(), content, false, true);
+        sendEmail(user.getEmail(), content, subject, false, true);
 
     }
 
     @Async
     public void sendCreationEmail(User user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "creationEmail");
+        sendEmailFromTemplate(user, "Create account successful", "creationEmail");
     }
 
 }

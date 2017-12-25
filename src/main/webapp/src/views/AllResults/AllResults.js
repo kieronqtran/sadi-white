@@ -11,7 +11,10 @@ import { deleteAccount, getAllResult } from '../../actions/authentication-action
 class AllResults extends Component {
   constructor(props) {
     super(props)
-    this.thArray = ['Test Name', 'First Name', 'Last Name', 'Correct', 'Total', 'Mark']
+    this.thArray = ['Test Name', 'First Name', 'Last Name', 'Correct', 'Total', 'Date Taken', 'Mark']
+  }
+
+  componentDidMount() {
     this.props.getAllResult()
   }
 
@@ -40,6 +43,7 @@ class AllResults extends Component {
                   <td>{prop['lastName']}</td>
                   <td>{prop['numberOfCorrectAnswer']}</td>
                   <td>{prop['size']}</td>
+                  <td>{new Date(prop['createDate']).toLocaleDateString()}</td>
                   <td>{prop['numberOfCorrectAnswer'] / prop['size'] * 100} % </td>
                 </tr>
                 ))
@@ -55,7 +59,7 @@ class AllResults extends Component {
 
 function mapStateToProps(state) {
   return {
-    listResult: state.allResult,
+    listResult: state.allResult.data,
   };
 }
 

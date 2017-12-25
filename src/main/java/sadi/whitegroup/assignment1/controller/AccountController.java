@@ -4,6 +4,10 @@ package sadi.whitegroup.assignment1.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -80,7 +84,8 @@ public class AccountController {
             .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
     }
 
-    @GetMapping("/result")
+    // Get test results of the current account
+    @GetMapping("/account/result")
     public List<ResultDTO> getResult(){
         return testingService.getResultForCurrentAccount()
                 .stream().map(ResultDTO::new).collect(Collectors.toList());
@@ -98,11 +103,10 @@ public class AccountController {
             .stream().map(User_UserDTO::new).collect(Collectors.toList());
     }
 
-    @GetMapping("/allResults")
-    @Secured(AuthoritiesConstants.ADMIN)
-    public List<Result_ResultDTO> getAllResults(){
-        return testingService.getAllResult()
-            .stream().map(Result_ResultDTO::new).collect(Collectors.toList());
+    @GetMapping("/results")
+    public Page<Result_ResultDTO> getAllResults(@PageableDefault(page = 0, size = 10, direction = Direction.DESC)Pageable pageable){
+        return testingService.getAllResult(pageable)
+                .map(Result_ResultDTO::new);
     }
 
     @DeleteMapping("/account/{id}")
