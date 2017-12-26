@@ -82,7 +82,7 @@ const QuestionForm = props => {
 }
 
 export default reduxForm({
-  form: 'wizard', //                 <------ same form name
-  destroyOnUnmount: false, //        <------ preserve form data
-  forceUnregisterOnUnmount: true, // <------ unregister fields on unmount
+  form: 'takingTest',
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true,
 })(QuestionForm)

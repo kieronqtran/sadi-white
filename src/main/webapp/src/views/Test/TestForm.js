@@ -7,16 +7,22 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import { Grid, Row, Col } from "react-bootstrap";
 import {testSample} from 'variables/mockData.js'
 import { connect } from 'react-redux'
 import {NEXT_QUESTION, PREVIOUS_QUESTION, ANSWER_QUESTION
-, START_COUNTDOWN
-  , submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
+, START_COUNTDOWN,
+  STOP_COUNTDOWN,
+  submitTest, takeTest, answerQuestion, nextQuestion, previousQuestion} from '../../actions/takeTest-actions'
+import Card from "../../components/Card/Card";
+import Countdown from "./components/Countdown";
 
 class TestForm extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      submitted: false,
+    }
     this.nextQuestion = this.nextQuestion.bind(this);
     this.previousQuestion = this.previousQuestion.bind(this);
     this.answerQuestion = this.answerQuestion.bind(this);
@@ -26,24 +32,13 @@ class TestForm extends Component {
     this.props.takeTest(this.props.match.params.testId);
   }
 
+  componentWillUnmount() {
+    !this.state.submitted && this.onCountdownComplete()
+  }
+
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     if(nextProps.testLoaded && !nextProps.countdownStarted && nextProps.currentTest.testTime > 0) {
       this.props.startCountDown();
-      const testTime = nextProps.currentTest.testTime/100;
-        console.log(testTime)
-        const com = this;
-        var a = 0
-        var t = setInterval(function(){
-          a = a + 1000;
-          console.log(a);
-          if(a === testTime){
-            clearInterval(t);
-            alert("You will be now redirected to the user page")
-            com.submit("#!/user");
-          
-          }}, 1000);
-        
-      return true;
     }
     return true;
   }
@@ -61,35 +56,69 @@ class TestForm extends Component {
   }
 
   submit(){
+    this.props.stopCountDown();
+    this.setState({submitted: true})
     const finalResult = {testId: this.props.currentTest.id,
                           answerId: Object.values(this.props.answer)};
     this.props.submitTest(finalResult);
   }
 
+  onCountdownClick(timeLeft) {
+    console.log('Timeleft: ', timeLeft);
+  }
+
+  onCountdownComplete() {
+    alert("You will be now redirected to the user page");
+    this.submit();
+  }
+
   render() {
     const setResult = this.answerQuestion.bind(this);
     const { onSubmit, currentQuestion, currentTest } = this.props;
-
+    const {child} = this;
+    this.child && this.props.countdownStarted && child.startTimer()
     return (
       <div className="content">
-        {currentQuestion < currentTest.size && (
-          <QuestionForm
-            previousQuestion={this.previousQuestion.bind(this)}
-            onSubmit={this.nextQuestion}
-            test={currentTest}
-            currentQuestion={currentQuestion}
-            setResult={this.answerQuestion.bind(this)}
-          />
-        )}
-        {currentQuestion === currentTest.size && (
-          <QuestionForm
-            previousQuestion={this.previousQuestion}
-            onSubmit={this.submit.bind(this)}
-            test={currentTest}
-            currentQuestion={currentQuestion}
-            setResult={setResult}
-          />
-        )}
+        <Grid fluid>
+          <Row>
+            <Col md={12}>
+              <div className="card">
+                <div className="header">
+                    <h4 className="title">Test Name: {this.props.currentTest.name}
+                      <div className="pull-right">
+                      {this.props.currentTest.testTime && <Countdown
+                        onRef={instance => { this.child = instance; }}
+                        seconds={this.props.currentTest.testTime/1000}
+                        onTick={this.onCountdownClick.bind(this)}
+                        onComplete={this.onCountdownComplete.bind(this)}/>}
+                      </div>
+                    </h4>
+                    <p className="category">Question number {currentQuestion} out of {currentTest.size}</p>
+                </div>
+                <div className="content">
+                  {currentQuestion < currentTest.size && (
+                      <QuestionForm
+                        previousQuestion={this.previousQuestion.bind(this)}
+                        onSubmit={this.nextQuestion}
+                        test={currentTest}
+                        currentQuestion={currentQuestion}
+                        setResult={this.answerQuestion.bind(this)}
+                      />
+                    )}
+                    {currentQuestion === currentTest.size && (
+                      <QuestionForm
+                        previousQuestion={this.previousQuestion}
+                        onSubmit={this.submit.bind(this)}
+                        test={currentTest}
+                        currentQuestion={currentQuestion}
+                        setResult={setResult}
+                      />
+                    )}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     )
   }
@@ -113,4 +142,8 @@ export default connect(mapStateToProps, {
   takeTest, submitTest, nextQuestion, previousQuestion, answerQuestion,
   startCountDown: () => ({
     type: START_COUNTDOWN
-  })})(TestForm);
+  }),
+  stopCountDown: () => ({
+    type: STOP_COUNTDOWN
+  })
+})(TestForm);

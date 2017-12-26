@@ -6,6 +6,7 @@ import {GET_TEST_FETCH,
         SUBMIT_RESULT_SUCCESSFUL,
         SUBMIT_RESULT_FAIL,
         START_COUNTDOWN,
+        STOP_COUNTDOWN,
         ANSWER_QUESTION} from '../actions/takeTest-actions';
 
 const initState = {
@@ -22,6 +23,7 @@ const initState = {
   loaded: false,
   loading: false,
   countdownStarted: false,
+  countdownFinished: false,
 }
 export default function newQuestion(state=initState, action){
   switch(action.type){
@@ -48,7 +50,9 @@ export default function newQuestion(state=initState, action){
     case SUBMIT_RESULT_FAIL:
       return { ...state, answer_test: {}};
     case START_COUNTDOWN:
-      return {...state, countdownStarted: true};
+      return {...state, currentQuestion: initState.currentQuestion, countdownStarted: true, countdownFinished: false };
+    case STOP_COUNTDOWN:
+      return { ...state, countdownStarted: false, countdownFinished: true };
     default:
       return state;
   }

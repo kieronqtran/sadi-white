@@ -10,6 +10,8 @@ import {
   GET_LIST_TEST_ERROR
 } from '../../actions/test-actions.js';
 
+import { Link } from 'react-router-dom'
+
 
 class TestList extends Component {
   constructor(props){
@@ -32,7 +34,7 @@ class TestList extends Component {
                 ctTableFullWidth
                 ctTableResponsive
                 content={
-                  <Table class="table" striped hover>
+                  <Table className="table" striped hover>
                     <thead>
                       <tr>
                         {testTh.map((prop, key) => {
@@ -43,14 +45,14 @@ class TestList extends Component {
                     <tbody>
                       {
                         this.props.testList.map((prop, key) => {
-                          const testUrl = "#!/takeTest/" + prop.id;
+                          const testUrl = "/takeTest/" + prop.id;
                           return (
                             <tr key={key}>
                               <td>{prop.id}</td>
                               <td>{prop.name}</td>
                               <td>{prop.size}</td>
                               <td>{Math.floor(prop['testTime'] / 60000) + ' minutes'}</td>
-                              <td><a href={testUrl}>Take this test</a></td>
+                              <td><Link to={testUrl}>Take this test</Link></td>
                             </tr>
                           )
                         })

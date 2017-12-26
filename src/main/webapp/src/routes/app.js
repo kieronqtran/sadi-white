@@ -59,16 +59,17 @@ const appRoutes = [
     requiredLogin: true,
   },
   {
+    path: '/takeTest/:testId',
+    name: 'Take Test',
+    component: TestForm,
+    hiddenLink: true,
+  },
+  {
     path: '/admin-test-management',
     name: 'Manage Test',
     icon: 'pe-7s-bookmarks',
     component: TestManagement,
     adminOnly: true,
-  },
-  {
-    path: '/takeTest/:testId',
-    component: TestForm,
-    hiddenLink: true,
   },
   {
     redirect: true,

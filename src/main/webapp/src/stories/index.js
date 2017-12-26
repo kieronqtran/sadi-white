@@ -31,13 +31,14 @@ import thunk from 'redux-thunk'
 
 import FieldArrayForm from "../containers/TestManagement/components/fieldArrayForm";
 import combinedReducer from "../reducers/index";
-
+import Countdown from "../views/Test/components/Countdown";
 
 import '../assets/css/bootstrap.min.css'
 import '../assets/css/animate.min.css'
 import '../assets/sass/light-bootstrap-dashboard.css'
 import '../assets/css/demo.css'
 import '../assets/css/pe-icon-7-stroke.css'
+import CountDown from '../views/Test/components/Countdown';
 
 const store = createStore(
   combineReducers({form: formReducer}),
@@ -61,3 +62,14 @@ storiesOf('Admin Test', module)
     </Row>
   </Provider>)
 
+storiesOf('Countdown', module)
+  .add('countdown component', () => {
+    let countdownCom = {};
+    return (<div>
+              <button onClick={() => countdownCom.startTimer()}>Start Timer</button>
+              <CountDown
+                ref={instance => {countdownCom = instance;}}
+                seconds={60}
+                onTick={(timeLeft) => console.log('Timeleft: ', timeLeft)}
+                onComplete={() => console.log('done')}/>
+            </div>)})
