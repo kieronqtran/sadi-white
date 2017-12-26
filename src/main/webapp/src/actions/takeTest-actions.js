@@ -9,6 +9,7 @@ export const SUBMIT_RESULT_SUCCESSFUL = "SUBMIT_RESULT_SUCCESS";
 export const SUBMIT_RESULT_FAIL = "SUBMIT_RESULT_FAIL";
 export const ANSWER_QUESTION = "ANSWER_QUESTION";
 export const START_COUNTDOWN = "START_COUNTDOWN";
+export const STOP_COUNTDOWN = "STOP_COUNTDOWN";
 
 export function nextQuestion(){
   return {
@@ -42,7 +43,7 @@ export function takeTest(testId){
         },
       })
 
-      const data = response.json()
+      const data = await response.json()
 
       dispatch({ type: GET_TEST_SUCCESSFUL, test: data})
     } catch (error) {
