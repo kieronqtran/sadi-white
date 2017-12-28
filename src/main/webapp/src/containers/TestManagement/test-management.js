@@ -46,12 +46,16 @@ const CreateTestModal = connect()(({ onSubmit, showModal, onClose, dispatch }) =
       />
     </Modal.Body>
     <Modal.Footer>
-      <Button onClick={onClose}>Close</Button>
-      <Button bsStyle="primary" onClick={() => dispatch(submit('adminTestForm'))} >Create</Button>
+      <Button className="btn-fill" onClick={onClose}>Close</Button>
+      <Button className="btn-fill" bsStyle="primary" onClick={
+        () => {
+          dispatch(submit('adminTestForm'))
+          onSubmit()
+        }} >Create</Button>
     </Modal.Footer>
   </Modal>))
 
-const UpdateTestModal = connect()(({ showModal, onClose, test, dispatch }) => {
+const UpdateTestModal = connect()(({ onSubmit, showModal, onClose, test, dispatch }) => {
   return (
   <Modal
     show={showModal}
@@ -68,8 +72,15 @@ const UpdateTestModal = connect()(({ showModal, onClose, test, dispatch }) => {
       />
     </Modal.Body>
     <Modal.Footer>
-      <Button onClick={onClose}>Close</Button>
-      <Button bsStyle="primary" onClick={() => dispatch(submit('adminTestForm'))}>Update</Button>
+      <Button
+      className="btn-fill"
+      onClick={onClose}>Close</Button>
+      <Button
+        className="btn-fill"
+        bsStyle="primary" onClick={() => {
+        dispatch(submit('adminTestForm'))
+        onSubmit();
+      }}>Update</Button>
     </Modal.Footer>
   </Modal>);
 })
@@ -85,8 +96,8 @@ const DeleteTestModal = ({ onSubmit, showModal, onClose, test }) => (<Modal
     Are you sure to delete this test?
   </Modal.Body>
   <Modal.Footer>
-    <Button onClick={onClose}>Close</Button>
-    <Button bsStyle="primary" onClick={() => {onSubmit(test.id)}}>Delete</Button>
+    <Button className="btn-fill" onClick={onClose}>Close</Button>
+    <Button className="btn-fill" bsStyle="primary" onClick={() => {onSubmit(test.id)}}>Delete</Button>
   </Modal.Footer>
 </Modal>)
 
@@ -115,7 +126,7 @@ class TestManagement extends Component {
 
   openEdit(testId) {
     this.props.getTestById(testId)
-      .then(() => this.setState({ showModalNew: false, showModalEdit: true, showModalDelete: false }))
+    .then(() => this.setState({ showModalNew: false, showModalEdit: true, showModalDelete: false }))
   }
 
   openDelete(testId) {
@@ -125,10 +136,13 @@ class TestManagement extends Component {
 
   close() {
     this.setState({ showModalNew: false, showModalEdit: false, showModalDelete: false, deleteTestData: null });
+    this.props.getListTest();
   }
 
   remove(testId) {
     this.props.deleteTest(testId);
+    this.props.getListTest();
+    this.setState({ showModalNew: false, showModalEdit: false, showModalDelete: false, deleteTestData: null });
   }
 
   render() {
@@ -140,14 +154,15 @@ class TestManagement extends Component {
             <Col md={12}>
               <div className='card' style={{marginTop: 10}}>
                 <Row className='header'>
-                  <Col md={6}> <h4 className="title">Test</h4> </Col>
-                  <Col md={6}>
+                  <Col md={12}>
+                    <h4 className="title">Test
                     <Button
-                    className="pull-right"
+                    className="pull-right btn-fill"
                     bsStyle="primary"
                     onClick={this.openNew.bind(this)}>
                       New test
                     </Button>
+                    </h4>
                   </Col>
                 </Row>
                 <div className={'content table-full-width table-responsive'}>
@@ -170,6 +185,7 @@ class TestManagement extends Component {
                           </td>
                           <td>
                             <Button
+                              className="btn-fill"
                               key={key + "edit" + prop.id}
                               bsStyle="primary"
                               onClick={this.openEdit.bind(this, prop.id)}
@@ -177,6 +193,7 @@ class TestManagement extends Component {
                               Edit
                             </Button>{" "}
                             <Button
+                              className="btn-fill"
                               key={key + "delete"}
                               bsStyle="danger"
                               onClick={this.openDelete.bind(this,prop.id)}
@@ -196,9 +213,9 @@ class TestManagement extends Component {
           </Row>
         </Grid>
 
-        <CreateTestModal showModal={this.state.showModalNew} onClose={this.close.bind(this)}/>
+        <CreateTestModal onSubmit={this.close.bind(this)} showModal={this.state.showModalNew} onClose={this.close.bind(this)}/>
 
-        {this.props.editTest && <UpdateTestModal showModal={this.state.showModalEdit} onClose={this.close.bind(this)} test={this.props.editTest}/>}
+        {this.props.editTest && <UpdateTestModal onSubmit={this.close.bind(this)} showModal={this.state.showModalEdit} onClose={this.close.bind(this)} test={this.props.editTest}/>}
 
         {this.state.showModalDelete && <DeleteTestModal onSubmit={this.remove.bind(this)} showModal={this.state.showModalDelete} onClose={this.close.bind(this)} test={this.state.deleteTestData}/>}
       </div>
