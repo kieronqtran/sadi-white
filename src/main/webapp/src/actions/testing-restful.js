@@ -15,11 +15,15 @@ export const GET_TEST_BY_ID_SUCCESSFUL = "GET_TEST_BY_ID_SUCCESSFUL";
 // this action is used by redux-form
 export function createOrUpdateTest(values, dispatch) {
     const test = { ...values, size: values.questions.length }
+    let promise;
     if(test.id) {
-      dispatch(putTest(test))
+      promise = dispatch(putTest(test))
     } else {
-      dispatch(postTest(test))
+      promise = dispatch(postTest(test))
     }
+
+    return promise
+      .then(() => dispatch(getListTest()))
 }
 
 export function getTestById(id) {

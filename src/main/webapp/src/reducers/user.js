@@ -21,7 +21,7 @@ const defaultValue = {
 export default function userReducer(state = defaultValue, action) {
   switch (action.type) {
     case UPDATE_SUCCESSFUL:
-      return{...state, userProfile: action.data}
+      return{ ...state }
     case GET_CURRENT_USER_DATA_SUCCESSFUL:
       return { ...state, userProfile: action.data }
     case GET_CURRENT_USER_DATA_FAIL:

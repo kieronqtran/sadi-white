@@ -48,7 +48,7 @@ class TestList extends Component {
                           const testUrl = "/takeTest/" + prop.id;
                           return (
                             <tr key={key}>
-                              <td>{prop.id}</td>
+                              <td>{key + 1}</td>
                               <td>{prop.name}</td>
                               <td>{prop.size}</td>
                               <td>{Math.floor(prop['testTime'] / 60000) + ' minutes'}</td>

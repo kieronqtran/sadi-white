@@ -66,7 +66,6 @@ const renderAnswers = ({ fields, meta: { error } }) => {
             type="text"
             component={renderField}
             label={`Answer #${index + 1}`}
-            validate={required}
           />
         </Col>
         <Col md={2}>
@@ -87,7 +86,6 @@ const renderAnswers = ({ fields, meta: { error } }) => {
               component="input"
               type="checkbox"
               value="true"
-              validate={required}
             />{" "}
             is Correct Answer
           </label>
@@ -123,7 +121,6 @@ const renderQuestions = ({
                 type="text"
                 component={renderField}
                 label="Enter a question."
-                validate={required}
               />
             </Col>
             <Col md={2}>
