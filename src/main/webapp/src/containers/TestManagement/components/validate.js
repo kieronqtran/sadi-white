@@ -18,10 +18,12 @@ const validate = values => {
     const questionsArrayErrors = [];
     values.questions.forEach((question, questionIndex) => {
       const questionErrors = {};
+
       if (!question || !question.question) {
         questionErrors.question = "Required";
         questionsArrayErrors[questionIndex] = questionErrors;
       }
+
       if (question && question.answer && question.answer.length) {
         const answerArrayErrors = [];
         question.answer.forEach((answer, answerIndex) => {
@@ -33,6 +35,15 @@ const validate = values => {
           questionErrors.answer = answerArrayErrors;
           questionsArrayErrors[questionIndex] = questionErrors;
         }
+
+        if (question.answer.length < 4) {
+          if (!questionErrors.answer) {
+            questionErrors.answer = [];
+          }
+          questionErrors.answer._error = "There must be at least 4 answers";
+          questionsArrayErrors[questionIndex] = questionErrors;
+        }
+
         if (question.answer.length > 5) {
           if (!questionErrors.answer) {
             questionErrors.answer = [];

@@ -14,14 +14,12 @@ export const GET_TEST_BY_ID_SUCCESSFUL = "GET_TEST_BY_ID_SUCCESSFUL";
 
 // this action is used by redux-form
 export function createOrUpdateTest(values, dispatch) {
-    console.log('Dispatch function: ',dispatch);
-    if(values.id) {
-      dispatch(putTest(values))
+    const test = { ...values, size: values.questions.length }
+    if(test.id) {
+      dispatch(putTest(test))
     } else {
-      const test = { ...values, size: values.questions.length + 1}
-      dispatch(postTest(values))
+      dispatch(postTest(test))
     }
-    return dispatch(getListTest())
 }
 
 export function getTestById(id) {
