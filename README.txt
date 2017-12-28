@@ -7,9 +7,11 @@ Members: Nguyen Hoang Minh: s3634696,
 	 Quach Phuong Toan: s3634953,
 	 Jeon So Yeun: s3622567
 
-Assignment 1
+Assignment 2
 
 I. Overview
+* This is the extended version of the previous assignment (assignment 1) with improvements and more sensational functions.
+
 * In this assignment, we used Spring Hibernate, SpringMVC, Spring Security to build a Educational Website.
 * Link to the website: "http://45.55.90.193" or "http://sadi-white.kieronqtran.me".
 * In order to start using this website, user needs to Log In using his/her Email and Password.
@@ -18,6 +20,8 @@ I. Overview
 * For users with the role: "ROLE_ADMIN", he/she can Manage the tests (Create a new test and Delete a test).
 * For users with the role: "ROLE_USER", he/she can Take the test.
 * User can Log Out when ever he/she wants.
+* After Signing Up, user will receive an welcome email coming from "SADIWhite@gmail.com"
+* The Cookies is going to make sure that users stay logged in when open a new tab (This is an improvement compared to the previous version in which sessionStorage was used).
 
 II. Functioning
 * In the Log In step, after entering their Email and Password and clicking the "Log In" button, those 2 fields will be sent to the server which will create a token (using the OAuth2 technique) and send back to the user/admin.
@@ -39,6 +43,14 @@ The token will expire after 5 minutes and then it will be refreshed with a new o
 
 * Admins can delete tests and create new tests. For the Test creating phrase, the admins can create as many questions as they want to put inside the test.
 
+* Admins can update the tests. For example, Add Questions to tests, Change the Correct Answer and Remove Questions from the test.
+
+* Both Admins and Users can see top 10 Results, ordered by the highest mark on top.
+
+* Admins can see all the Results.
+
+* Admins can see all the Accounts and Delete them.
+
 III. Technologies Used
 * JSON Web Token (JWT)
 * OAuth2
@@ -48,13 +60,15 @@ III. Technologies Used
 * PostgreSQL
 * Docker
 * DigitalOcean
+* Cookies
 * (A lot of help from one of the team member)
 * (Our Imagination)
 
 IV. Work Division
-* Test Creating and Test Taking 	| 	Quach Phuong Toan and Jeon So Yeun
-* Log In, Log Out and Get User's info 	| 	Nguyen Hoang Minh and Tran Huu Quang
-* Deploying the Server			|	Tran Huu Quang
-* Great help				| 	Tran Huu Quang
+* Test Creating, Test Taking, Test Editing, Test Deleting and Count down the time                            	| 	Quach Phuong Toan and Jeon So Yeun
+* Log In, Log Out, Get User's info, Get All Results, Get All Accounts, Delete Accounts and Update Profile 	    | 	Nguyen Hoang Minh and Tran Huu Quang
+* Deploying the Server                                                                               			|	Tran Huu Quang
+* Great help				                                                                                    | 	Tran Huu Quang
 
-### Because of the limitation of time, we cannot make the Test Creating Function work on the Front-end; however, on the Back-end side, it functions just perfectly.###
+
+### If only we could find meeting rooms at school easily and conveniently, this product would be more completed. ###
